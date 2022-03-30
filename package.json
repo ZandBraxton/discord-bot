@@ -1,0 +1,25 @@
+{
+  "name": "test-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "devStart": "nodemon bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
+    "better-sqlite3": "^7.5.0",
+    "discord-api-types": "^0.30.0",
+    "discord-reply": "^0.1.2",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "node-gyp": "^9.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
