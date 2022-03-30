@@ -75,7 +75,7 @@ client.on("messageCreate", (message) => {
       };
     }
     const filter = (reaction, user) => {
-      return ["omegalul", "acompletemiss"].includes(
+      return ["omegalul", "acompletemiss", "😭"].includes(
         reaction.emoji.name.toLocaleLowerCase()
       );
     };
@@ -83,6 +83,8 @@ client.on("messageCreate", (message) => {
     message.awaitReactions({ filter, time: 20000 }).then((collected) => {
       collected.forEach((reaction) => {
         if (reaction.emoji.name.toLocaleLowerCase() === "omegalul") {
+          score.points += reaction.count * 2;
+        } else if (reaction.emoji.name.toLocaleLowerCase() === "😭") {
           score.points += reaction.count;
         } else {
           score.points -= reaction.count;
@@ -241,6 +243,10 @@ client.on("messageCreate", (message) => {
       return message.reply("You must mention someone or give their ID!");
     let userScore = client.getScore.get(user.id, message.guild.id);
     return message.channel.send(`${user.tag} has ${userScore.points} points`);
+  }
+
+  if (command === "compare") {
+    console.log(message.mentions.users);
   }
 
   if (command === "help") {
