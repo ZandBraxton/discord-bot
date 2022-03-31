@@ -434,7 +434,7 @@ client.on("messageCreate", (message) => {
       )
       .all(message.guild.id);
 
-    // Now shake it and show it! (as a nice embed, too!)
+ 
     const embed = new MessageEmbed()
       .setTitle("Leader board")
       .setAuthor({
