@@ -1,5 +1,16 @@
 // Require the necessary discord.js classes
-const { Client, Intents, MessageEmbed } = require("discord.js");
+const {
+  Client,
+  Intents,
+  MessageEmbed,
+  Interaction,
+  MessageCollector,
+  createMessageComponentCollector,
+  MessageActionRow,
+  MessageButton,
+  MessageComponentInteraction,
+} = require("discord.js");
+const { v4: uuidv4 } = require("uuid");
 const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
@@ -42,6 +53,10 @@ client.on("ready", () => {
   client.setScore = sql.prepare(
     "INSERT OR REPLACE INTO scores (id, user, username, guild, points) VALUES (@id, @user, @username, @guild, @points);"
   );
+
+  // client.updateScore = sql.prepare(
+
+  // )
   console.log("ready!");
 });
 
@@ -55,16 +70,22 @@ client.on("ready", () => {
 
 client.on("messageCreate", (message) => {
   if (message.author.bot) return;
+  // if (message.content.indexOf(config.prefix) === 0) {
+  //   console.log("return");
+  //   return;
+  // }
   let score;
-  const omegalulEmoji = message.guild.emojis.cache.find(
-    (emoji) => emoji.name.toLocaleLowerCase() === "omegalul"
-  );
-  const missEmoji = message.guild.emojis.cache.find(
-    (emoji) => emoji.name.toLocaleLowerCase === "acompletemiss"
-  );
+  // const omegalulEmoji = message.guild.emojis.cache.find(
+  //   (emoji) => emoji.name.toLocaleLowerCase() === "omegalul"
+  // );
+  // const missEmoji = message.guild.emojis.cache.find(
+  //   (emoji) => emoji.name.toLocaleLowerCase === "acompletemiss"
+  // );
 
   if (message.guild) {
     score = client.getScore.get(message.author.id, message.guild.id);
+    let points = 0;
+    // x = score.points;
     if (!score) {
       score = {
         id: `${message.guild.id}-${message.author.id}`,
@@ -83,18 +104,19 @@ client.on("messageCreate", (message) => {
     message.awaitReactions({ filter, time: 20000 }).then((collected) => {
       collected.forEach((reaction) => {
         if (reaction.emoji.name.toLocaleLowerCase() === "omegalul") {
-          score.points += reaction.count * 2;
+          points += reaction.count * 2;
         } else if (reaction.emoji.name.toLocaleLowerCase() === "😭") {
-          score.points += reaction.count;
+          points += reaction.count;
         } else {
-          score.points -= reaction.count;
+          points -= reaction.count;
         }
-        console.log(reaction.emoji.name);
       });
 
       if (score.points < 0) {
         score.points = 0;
       }
+      score = client.getScore.get(message.author.id, message.guild.id);
+      score.points += points;
 
       client.setScore.run(score);
     });
@@ -178,6 +200,7 @@ client.on("messageCreate", (message) => {
       userScore = {
         id: `${message.guild.id}-${user.id}`,
         user: user.id,
+        username: message.author.username,
         guild: message.guild.id,
         points: 0,
       };
@@ -219,6 +242,7 @@ client.on("messageCreate", (message) => {
       userScore = {
         id: `${message.guild.id}-${user.id}`,
         user: user.id,
+        username: user.username,
         guild: message.guild.id,
         points: 0,
       };
@@ -239,18 +263,168 @@ client.on("messageCreate", (message) => {
   if (command === "check") {
     const user =
       message.mentions.users.first() || client.users.cache.get(args[0]);
+    console.log(user);
     if (!user)
       return message.reply("You must mention someone or give their ID!");
     let userScore = client.getScore.get(user.id, message.guild.id);
+    if (!userScore) {
+      console.log("HERE");
+
+      userScore = {
+        id: `${message.guild.id}-${user.id}`,
+        user: user.id,
+        username: user.username,
+        guild: message.guild.id,
+        points: 0,
+      };
+      client.setScore.run(userScore);
+    }
     return message.channel.send(`${user.tag} has ${userScore.points} points`);
   }
 
-  if (command === "compare") {
-    console.log(message.mentions.users);
+  function ComparePoints() {
+    const user =
+      message.mentions.users.first() || client.users.cache.get(args[0]);
+    if (!user) return undefined;
+    //doesn't let you duel yourself
+    // if (user.id === message.author.id) {
+    //   return undefined;
+    // }
+    let authorScore = client.getScore.get(message.author.id, message.guild.id);
+    let userScore = client.getScore.get(user.id, message.guild.id);
+    if (!userScore) {
+      userScore = {
+        id: `${message.guild.id}-${user.id}`,
+        user: user.id,
+        username: user.username,
+        guild: message.guild.id,
+        points: 0,
+      };
+      client.setScore.run(userScore);
+    }
+    return [authorScore, userScore];
   }
 
-  if (command === "help") {
-    console.log(client.users.cache);
+  if (command === "compare") {
+    let pointsArray = ComparePoints();
+    if (pointsArray === undefined) {
+      return message.reply("You must mention someone.");
+    }
+    // console.log(pointsArray[0]);
+    return message.channel.send(
+      `${pointsArray[0].username} has ${pointsArray[0].points} points, while ${pointsArray[1].username} has ${pointsArray[1].points} points.`
+    );
+  }
+
+  if (command === "duel") {
+    let amount = parseInt(args[1], 10);
+    let pointsArray = ComparePoints();
+    if (pointsArray === undefined) {
+      return message.reply("You must mention someone or give their ID!");
+    }
+    let p1 = pointsArray[0];
+    let p2 = pointsArray[1];
+    if (!amount || amount === 0) {
+      return message.reply("You need to specify how many points to bet");
+    }
+    if (p1.points < amount) {
+      return message.reply("You don't have that many points to bet");
+    }
+    if (p2.points < amount) {
+      return message.reply(`That is more points than ${p2.username} has`);
+    }
+    let filter = (i) => i.user.id === p2.user;
+    // console.log(filter);
+
+    const row = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+          .setCustomId("accepted")
+          .setLabel("Accept Duel")
+          .setStyle("PRIMARY")
+      )
+      .addComponents(
+        new MessageButton()
+          .setCustomId("decline")
+          .setLabel("Decline Duel")
+          .setStyle("SECONDARY")
+      );
+
+    message.channel.send({
+      content: `<@${p2.user}> ${p1.username} has challenged you to a duel for ${amount} points, do you accept?`,
+      components: [row],
+      id: 12345678,
+    });
+
+    const collector = message.channel.createMessageComponentCollector({
+      filter,
+      componentType: "BUTTON",
+      max: 1,
+      maxComponents: 1,
+      time: 30000,
+    });
+
+    // collector.on("collect", (i) => {
+    //   console.log(i);
+    //   if (i.user.id === p2.user) {
+    //     i.reply(`${i.user.id} clicked on the ${i.customId} button.`);
+    //   } else {
+    //     i.reply({ content: `These buttons aren't for you!`, ephemeral: true });
+    //   }
+    // });
+
+    // collector.on("end", (collected) => {
+    //   console.log(`Collected ${collected.size} interactions.`);
+    // });
+
+    // const collector = new MessageCollector(message.channel, {
+    //   filter,
+    //   time: 10000,
+    //   errors: ["time"],
+    // }); // <--- Line edited
+    collector.on("collect", async (message) => {
+      console.log(message);
+      let result;
+      if (message.user.id === p2.user && message.customId === "accepted") {
+        message.reply("Then let the duel commence");
+        collector.stop("user accepted");
+        //duel function
+        result = Duel(p1, p2);
+        message.channel.send(
+          `The winner is ${result.winner.username}! ${result.loser.username} handed over ${amount} points`
+        );
+        result.winner.points += amount;
+        result.loser.points -= amount;
+        if (result.loser.points < 0) {
+          result.loser.points = 0;
+        }
+        client.setScore.run(result.winner);
+        client.setScore.run(result.loser);
+      } else if (
+        message.user.id === p2.user &&
+        message.customId === "decline"
+      ) {
+        message.reply("Challenge Declined");
+        collector.stop("user declined");
+        return;
+      }
+    });
+
+    collector.on("end", (collected) => {
+      console.log(collected.size);
+      if (collected.size === 0) {
+        message.reply("Duel terminated");
+      }
+    });
+  }
+
+  function Duel(p1, p2) {
+    const result = Math.random() < 0.5;
+    if (result) {
+      return { winner: p1, loser: p2 };
+    } else {
+      return { winner: p2, loser: p1 };
+    }
   }
 
   if (command === "leaderboard") {
