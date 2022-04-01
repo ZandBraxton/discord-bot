@@ -1,0 +1,49 @@
+{
+  "weapons": [
+    {
+      "itemId": 1,
+      "name": "Sword",
+      "type": "melee",
+      "minDamage": 4,
+      "maxDamage": 6,
+      "critChance": 20,
+      "accuracy": 90
+    },
+    {
+      "itemId": 2,
+      "name": "Mace",
+      "type": "melee",
+      "minDamage": 4,
+      "maxDamage": 6,
+      "critChance": 20,
+      "accuracy": 90
+    },
+    {
+      "itemId": 3,
+      "name": "Knife",
+      "type": "melee",
+      "minDamage": 4,
+      "maxDamage": 6,
+      "critChance": 20,
+      "accuracy": 90
+    },
+    {
+      "itemId": 4,
+      "name": "Golf Club",
+      "type": "melee",
+      "minDamage": 4,
+      "maxDamage": 6,
+      "critChance": 20,
+      "accuracy": 90
+    },
+    {
+      "itemId": 5,
+      "name": "Baseball Bat",
+      "type": "melee",
+      "minDamage": 4,
+      "maxDamage": 6,
+      "critChance": 20,
+      "accuracy": 90
+    }
+  ]
+}

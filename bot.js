@@ -22,6 +22,7 @@ const client = new Client({
 const config = require("./config.json");
 const SQLite = require("better-sqlite3");
 const sql = new SQLite("./scores.sqlite");
+const { BetterDuel } = require("./duel");
 
 // When the client is ready, run this code (only once)
 client.on("ready", () => {
@@ -316,7 +317,7 @@ client.on("messageCreate", (message) => {
     );
   }
 
-  if (command === "duel") {
+  if (command === "duel3") {
     let amount = parseInt(args[1], 10);
     let pointsArray = ComparePoints();
     if (pointsArray === undefined) {
@@ -334,18 +335,19 @@ client.on("messageCreate", (message) => {
       return message.reply(`That is more points than ${p2.username} has`);
     }
     let filter = (i) => i.user.id === p2.user;
-    // console.log(filter);
 
+    let accept = uuidv4();
+    let decline = uuidv4();
     const row = new MessageActionRow()
       .addComponents(
         new MessageButton()
-          .setCustomId("accepted")
+          .setCustomId(accept)
           .setLabel("Accept Duel")
           .setStyle("PRIMARY")
       )
       .addComponents(
         new MessageButton()
-          .setCustomId("decline")
+          .setCustomId(decline)
           .setLabel("Decline Duel")
           .setStyle("SECONDARY")
       );
@@ -364,46 +366,28 @@ client.on("messageCreate", (message) => {
       time: 30000,
     });
 
-    // collector.on("collect", (i) => {
-    //   console.log(i);
-    //   if (i.user.id === p2.user) {
-    //     i.reply(`${i.user.id} clicked on the ${i.customId} button.`);
-    //   } else {
-    //     i.reply({ content: `These buttons aren't for you!`, ephemeral: true });
-    //   }
-    // });
-
-    // collector.on("end", (collected) => {
-    //   console.log(`Collected ${collected.size} interactions.`);
-    // });
-
-    // const collector = new MessageCollector(message.channel, {
-    //   filter,
-    //   time: 10000,
-    //   errors: ["time"],
-    // }); // <--- Line edited
     collector.on("collect", async (message) => {
-      console.log(message);
-      let result;
-      if (message.user.id === p2.user && message.customId === "accepted") {
+      // console.log(message);
+      let winner = {};
+      if (message.user.id === p2.user && message.customId === accept) {
         message.reply("Then let the duel commence");
         collector.stop("user accepted");
         //duel function
-        result = Duel(p1, p2);
-        message.channel.send(
-          `The winner is ${result.winner.username}! ${result.loser.username} handed over ${amount} points`
-        );
-        result.winner.points += amount;
-        result.loser.points -= amount;
-        if (result.loser.points < 0) {
-          result.loser.points = 0;
-        }
-        client.setScore.run(result.winner);
-        client.setScore.run(result.loser);
-      } else if (
-        message.user.id === p2.user &&
-        message.customId === "decline"
-      ) {
+        BetterDuel(p1, p2, message, client);
+        console.log("here" + winner);
+        // setTimeout(() => {
+        //   message.channel.send(
+        //     `The winner is ${result.winner.username}! ${result.loser.username} handed over ${amount} points`
+        //   );
+        // }, 1000);
+        // result.winner.points += amount;
+        // result.loser.points -= amount;
+        // if (result.loser.points < 0) {
+        //   result.loser.points = 0;
+        // }
+        // client.setScore.run(result.winner);
+        // client.setScore.run(result.loser);
+      } else if (message.user.id === p2.user && message.customId === decline) {
         message.reply("Challenge Declined");
         collector.stop("user declined");
         return;
@@ -418,14 +402,43 @@ client.on("messageCreate", (message) => {
     });
   }
 
-  function Duel(p1, p2) {
+  function Duel(p1, p2, message) {
     const result = Math.random() < 0.5;
+    message.channel.send("hi lol");
     if (result) {
       return { winner: p1, loser: p2 };
     } else {
       return { winner: p2, loser: p1 };
     }
   }
+
+  let p1 = {
+    name: "Jet",
+    hp: 100,
+    weapon: "",
+  };
+  let p2 = {
+    name: "Steven",
+    hp: 100,
+    weapon: "",
+  };
+
+  if (command === "test2") {
+    BetterDuel(p1, p2, message);
+  }
+
+  // function BetterDuel(p1, p2, message) {
+  //   //first init health values
+  //   Player1 = {
+  //     name: p1.username,
+  //     hp: 100,
+  //   };
+  //   Player2 = {
+  //     name: p2.username,
+  //     hp: 100,
+  //   };
+
+  // }
 
   if (command === "leaderboard") {
     const top10 = sql
@@ -434,7 +447,6 @@ client.on("messageCreate", (message) => {
       )
       .all(message.guild.id);
 
- 
     const embed = new MessageEmbed()
       .setTitle("Leader board")
       .setAuthor({
