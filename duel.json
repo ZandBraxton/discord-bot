@@ -13,37 +13,91 @@
       "itemId": 2,
       "name": "Mace",
       "type": "melee",
-      "minDamage": 4,
-      "maxDamage": 6,
-      "critChance": 20,
-      "accuracy": 90
+      "minDamage": 5,
+      "maxDamage": 8,
+      "critChance": 30,
+      "accuracy": 75
     },
     {
       "itemId": 3,
       "name": "Knife",
       "type": "melee",
-      "minDamage": 4,
-      "maxDamage": 6,
-      "critChance": 20,
-      "accuracy": 90
+      "minDamage": 3,
+      "maxDamage": 4,
+      "critChance": 50,
+      "accuracy": 95
     },
     {
       "itemId": 4,
       "name": "Golf Club",
       "type": "melee",
       "minDamage": 4,
-      "maxDamage": 6,
-      "critChance": 20,
-      "accuracy": 90
+      "maxDamage": 9,
+      "critChance": 25,
+      "accuracy": 80
     },
     {
       "itemId": 5,
       "name": "Baseball Bat",
       "type": "melee",
       "minDamage": 4,
-      "maxDamage": 6,
+      "maxDamage": 8,
       "critChance": 20,
       "accuracy": 90
+    },
+    {
+      "itemId": 6,
+      "name": "M3D's can of beans",
+      "type": "melee",
+      "minDamage": 2,
+      "maxDamage": 3,
+      "critChance": 70,
+      "accuracy": 85
+    },
+    {
+      "itemId": 7,
+      "name": "Kunai",
+      "type": "melee",
+      "minDamage": 4,
+      "maxDamage": 5,
+      "critChance": 40,
+      "accuracy": 90
+    },
+    {
+      "itemId": 8,
+      "name": "Kaio's jar",
+      "type": "melee",
+      "minDamage": 1,
+      "maxDamage": 99,
+      "critChance": 50,
+      "accuracy": 10
+    },
+    {
+      "itemId": 9,
+      "name": "Keyblade",
+      "type": "melee",
+      "minDamage": 6,
+      "maxDamage": 10,
+      "critChance": 20,
+      "accuracy": 70
+    },
+    {
+      "itemId": 10,
+      "name": "Mickey Mouse Gun",
+      "type": "ranged",
+      "minDamage": 9,
+      "maxDamage": 12,
+      "critChance": 40,
+      "accuracy": 40
+    },
+    {
+      "itemId": 11,
+      "name": "Boomerang",
+      "type": "ranged",
+      "minDamage": 5,
+      "maxDamage": 7,
+      "critChance": 55,
+      "accuracy": 60
     }
   ]
 }

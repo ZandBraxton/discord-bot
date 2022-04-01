@@ -1,5 +1,5 @@
+const cli = require("nodemon/lib/cli");
 const duelItems = require("./duel.json");
-console.log(duelItems.weapons.length);
 
 function randomInt(max) {
   return Math.floor(Math.random() * max);
@@ -61,84 +61,26 @@ function getWeapon(Player1, Player2, message) {
     }
     return;
   }
-  console.log("weapon check");
 }
 
 function Turn(Player1, Player2, message, client, p1, p2, amount) {
-  console.log(Player1.hp, Player2.hp);
   if (Player1.hp <= 0) {
-    message.channel.send(`**${Player2.name}** wins!`);
-    console.log(Player1.name);
-    console.log(Player2.name);
-    console.log(p1.username);
-    console.log(p2.username);
-    switch (Player2.name) {
-      case p1.username:
-        p1.points += amount;
-        p2.points -= amount;
-        if (p2.points < 0) {
-          p2.points = 0;
-        }
-        console.log(p1);
-        console.log(p2);
-        client.setScore.run(p1);
-        client.setScore.run(p2);
-        break;
-      case p2.username:
-        p2.points += amount;
-        p1.points -= amount;
-        if (p2.points < 0) {
-          p2.points = 0;
-        }
-        console.log(p1);
-        console.log(p2);
-        client.setScore.run(p1);
-        client.setScore.run(p2);
-        break;
-      default:
-        break;
-    }
+    message.channel.send(
+      `**${Player2.name}** wins! **${Player1.name}** handed over ${amount} points`
+    );
+    gameOver(Player2, message, client, p1, p2, amount);
     return;
   }
   if (Player2.hp <= 0) {
-    message.channel.send(`**${Player1.name}** wins!`);
-    console.log(Player1.name);
-    console.log(Player2.name);
-    console.log(p1.name);
-    console.log(p2.name);
-    switch (Player1.name) {
-      case p1.username:
-        p1.points += amount;
-        p2.points -= amount;
-        if (p2.points < 0) {
-          p2.points = 0;
-        }
-        console.log(p1);
-        console.log(p2);
-        client.setScore.run(p1);
-        client.setScore.run(p2);
-        break;
-      case p2.username:
-        p2.points += amount;
-        p1.points -= amount;
-        if (p2.points < 0) {
-          p2.points = 0;
-        }
-        console.log(p1);
-        console.log(p2);
-        client.setScore.run(p1);
-        client.setScore.run(p2);
-        break;
-      default:
-        break;
-    }
+    message.channel.send(
+      `**${Player1.name}** wins! **${Player2.name}** handed over ${amount} points`
+    );
+    gameOver(Player1, message, client, p1, p2, amount);
     return;
   }
   const result = Math.random() < 0.5;
-  console.log("random" + result);
   if (result) {
     Battle(Player1, Player2, message);
-    // return { attacker: Player1, defender: Player2 };
   } else {
     Battle(Player2, Player1, message);
   }
@@ -191,34 +133,64 @@ function Battle(attacker, defender, message) {
 
 function Round(Player1, Player2, message, client, p1, p2, amount) {
   getWeapon(Player1, Player2, message);
-  console.log(Player1.hp, Player2.hp);
   setTimeout(() => {
     Turn(Player1, Player2, message, client, p1, p2, amount);
   }, 2500);
 }
 
+function gameOver(winner, message, client, p1, p2, amount) {
+  let newP1 = client.getScore.get(p1.user, p1.guild);
+  let newP2 = client.getScore.get(p2.user, p1.guild);
+  switch (winner.name) {
+    case p1.username:
+      newP1.points += amount;
+      newP2.points -= amount;
+      if (newP2.points < 0) {
+        newP2.points = 0;
+      }
+      client.setScore.run(newP1);
+      client.setScore.run(newP2);
+      break;
+    case p2.username:
+      newP2.points += amount;
+      newP1.points -= amount;
+      if (newP2.points < 0) {
+        newP2.points = 0;
+      }
+      client.setScore.run(newP1);
+      client.setScore.run(newP2);
+      break;
+    default:
+      break;
+  }
+}
+
+function getHP(amount) {
+  if (amount <= 50) {
+    return 1;
+  } else if (amount > 50 && amount <= 100) {
+    return 10;
+  } else {
+    return 20;
+  }
+}
+
 function BetterDuel(p1, p2, message, client, amount) {
-  console.log(client);
-  console.log("here");
-  console.log("bd" + p1.name);
-  console.log("bd" + p2.name);
+  // let hp = getHP(amount);
+  let hp = 20;
   let Player1 = {
     name: p1.username,
-    hp: 20,
+    hp: hp,
     weapon: "",
   };
   let Player2 = {
     name: p2.username,
-    hp: 20,
+    hp: hp,
     weapon: "",
   };
   setTimeout(() => {
     Round(Player1, Player2, message, client, p1, p2, amount);
   }, 1000);
 }
-
-// function gameOver(loser, winner) {
-
-// }
 
 module.exports = { BetterDuel };

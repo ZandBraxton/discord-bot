@@ -317,7 +317,7 @@ client.on("messageCreate", (message) => {
     );
   }
 
-  if (command === "duel3") {
+  if (command === "duel") {
     let amount = parseInt(args[1], 10);
     let pointsArray = ComparePoints();
     if (pointsArray === undefined) {
@@ -373,8 +373,7 @@ client.on("messageCreate", (message) => {
         message.reply("Then let the duel commence");
         collector.stop("user accepted");
         //duel function
-        BetterDuel(p1, p2, message, client);
-        console.log("here" + winner);
+        BetterDuel(p1, p2, message, client, amount);
         // setTimeout(() => {
         //   message.channel.send(
         //     `The winner is ${result.winner.username}! ${result.loser.username} handed over ${amount} points`
@@ -402,15 +401,15 @@ client.on("messageCreate", (message) => {
     });
   }
 
-  function Duel(p1, p2, message) {
-    const result = Math.random() < 0.5;
-    message.channel.send("hi lol");
-    if (result) {
-      return { winner: p1, loser: p2 };
-    } else {
-      return { winner: p2, loser: p1 };
-    }
-  }
+  // function Duel(p1, p2, message) {
+  //   const result = Math.random() < 0.5;
+  //   message.channel.send("hi lol");
+  //   if (result) {
+  //     return { winner: p1, loser: p2 };
+  //   } else {
+  //     return { winner: p2, loser: p1 };
+  //   }
+  // }
 
   let p1 = {
     name: "Jet",
@@ -423,9 +422,9 @@ client.on("messageCreate", (message) => {
     weapon: "",
   };
 
-  if (command === "test2") {
-    BetterDuel(p1, p2, message);
-  }
+  // if (command === "test2") {
+  //   BetterDuel(p1, p2, message);
+  // }
 
   // function BetterDuel(p1, p2, message) {
   //   //first init health values
