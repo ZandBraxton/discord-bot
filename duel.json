@@ -2,48 +2,53 @@
   "weapons": [
     {
       "itemId": 1,
-      "name": "Sword",
+      "name": "a Sword",
       "type": "melee",
       "minDamage": 4,
       "maxDamage": 6,
       "critChance": 20,
-      "accuracy": 90
+      "accuracy": 90,
+      "breakChance": 15
     },
     {
       "itemId": 2,
-      "name": "Mace",
+      "name": "a Mace",
       "type": "melee",
       "minDamage": 5,
       "maxDamage": 8,
       "critChance": 30,
-      "accuracy": 75
+      "accuracy": 85,
+      "breakChance": 15
     },
     {
       "itemId": 3,
-      "name": "Knife",
+      "name": "a Knife",
       "type": "melee",
       "minDamage": 3,
       "maxDamage": 4,
       "critChance": 50,
-      "accuracy": 95
+      "accuracy": 95,
+      "breakChance": 10
     },
     {
       "itemId": 4,
-      "name": "Golf Club",
+      "name": "a Golf Club",
       "type": "melee",
       "minDamage": 4,
       "maxDamage": 9,
       "critChance": 25,
-      "accuracy": 80
+      "accuracy": 80,
+      "breakChance": 30
     },
     {
       "itemId": 5,
-      "name": "Baseball Bat",
+      "name": "a Baseball Bat",
       "type": "melee",
       "minDamage": 4,
       "maxDamage": 8,
       "critChance": 20,
-      "accuracy": 90
+      "accuracy": 90,
+      "breakChance": 25
     },
     {
       "itemId": 6,
@@ -52,16 +57,18 @@
       "minDamage": 2,
       "maxDamage": 3,
       "critChance": 70,
-      "accuracy": 85
+      "accuracy": 85,
+      "breakChance": 15
     },
     {
       "itemId": 7,
-      "name": "Kunai",
+      "name": "a Kunai",
       "type": "melee",
       "minDamage": 4,
       "maxDamage": 5,
       "critChance": 40,
-      "accuracy": 90
+      "accuracy": 90,
+      "breakChance": 15
     },
     {
       "itemId": 8,
@@ -70,34 +77,331 @@
       "minDamage": 1,
       "maxDamage": 99,
       "critChance": 50,
-      "accuracy": 10
+      "accuracy": 10,
+      "breakChance": 75
     },
     {
       "itemId": 9,
-      "name": "Keyblade",
+      "name": "a Keyblade",
       "type": "melee",
       "minDamage": 6,
       "maxDamage": 10,
       "critChance": 20,
-      "accuracy": 70
+      "accuracy": 70,
+      "breakChance": 20
     },
     {
       "itemId": 10,
-      "name": "Mickey Mouse Gun",
+      "name": "a Mickey Mouse Gun",
       "type": "ranged",
       "minDamage": 9,
       "maxDamage": 12,
       "critChance": 40,
-      "accuracy": 40
+      "accuracy": 50,
+      "breakChance": 40
     },
     {
       "itemId": 11,
-      "name": "Boomerang",
+      "name": "a Boomerang",
       "type": "ranged",
       "minDamage": 5,
       "maxDamage": 7,
       "critChance": 55,
-      "accuracy": 60
+      "accuracy": 60,
+      "breakChance": 20
+    },
+    {
+      "itemId": 12,
+      "name": "a Duck",
+      "type": "melee",
+      "minDamage": 3,
+      "maxDamage": 10,
+      "critChance": 5,
+      "accuracy": 95,
+      "breakChance": 60
+    },
+    {
+      "itemId": 13,
+      "name": "a Meat Mountain",
+      "type": "melee",
+      "minDamage": 5,
+      "maxDamage": 9,
+      "critChance": 100,
+      "accuracy": 30,
+      "breakChance": 100
+    },
+    {
+      "itemId": 14,
+      "name": "a can of Four Loko",
+      "type": "melee",
+      "minDamage": 7,
+      "maxDamage": 13,
+      "critChance": 35,
+      "accuracy": 60,
+      "breakChance": 25
+    },
+    {
+      "itemId": 15,
+      "name": "Chasem's Grenade",
+      "type": "ranged",
+      "minDamage": 30,
+      "maxDamage": 60,
+      "critChance": 55,
+      "accuracy": 20,
+      "breakChance": 100
+    },
+    {
+      "itemId": 16,
+      "name": "a Bicycle",
+      "type": "melee",
+      "minDamage": 14,
+      "maxDamage": 20,
+      "critChance": 30,
+      "accuracy": 30,
+      "breakChance": 50
+    },
+    {
+      "itemId": 17,
+      "name": "a Ninja Dagger",
+      "type": "melee",
+      "minDamage": 4,
+      "maxDamage": 8,
+      "critChance": 70,
+      "accuracy": 70,
+      "breakChance": 20
+    },
+    {
+      "itemId": 18,
+      "name": "a Label",
+      "type": "melee",
+      "minDamage": 8,
+      "maxDamage": 14,
+      "critChance": 60,
+      "accuracy": 56,
+      "breakChance": 35
+    },
+    {
+      "itemId": 19,
+      "name": "Brass Knuckles",
+      "type": "melee",
+      "minDamage": 4,
+      "maxDamage": 6,
+      "critChance": 40,
+      "accuracy": 100,
+      "breakChance": 30
+    },
+    {
+      "itemId": 20,
+      "name": "a Katana",
+      "type": "melee",
+      "minDamage": 7,
+      "maxDamage": 11,
+      "critChance": 40,
+      "accuracy": 60,
+      "breakChance": 40
+    },
+    {
+      "itemId": 21,
+      "name": "a Laser Rifle",
+      "type": "ranged",
+      "minDamage": 5,
+      "maxDamage": 12,
+      "critChance": 10,
+      "accuracy": 65,
+      "breakChance": 50
+    },
+    {
+      "itemId": 22,
+      "name": "Seraph's Hatred",
+      "type": "ranged",
+      "minDamage": 9,
+      "maxDamage": 10,
+      "critChance": 10,
+      "accuracy": 40,
+      "breakChance": 40
+    },
+    {
+      "itemId": 23,
+      "name": "a bag of Taco Johns",
+      "type": "melee",
+      "minDamage": 6,
+      "maxDamage": 8,
+      "critChance": 60,
+      "accuracy": 60,
+      "breakChance": 40
+    }
+  ],
+  "events": [
+    {
+      "eventId": 1,
+      "message": "**Mickey Mimic Kaio crawls onto the battlefield, he's feeling hungry.**",
+      "attack": "*He attempts to vore the duelists!*",
+      "miss": "Mickey Mimic Kaio accidentally eats a fire hydrant and implodes!",
+      "minDamage": 999,
+      "maxDamage": 1000,
+      "accuracy": 5
+    },
+    {
+      "eventId": 2,
+      "message": "**Mickey Mimic Disco causes a white woman stampede, watch out!**",
+      "attack": "*The duelists attempt to evade*",
+      "miss": "The white women turned on Mickey Mimic Disco and trampled him instead",
+      "minDamage": 15,
+      "maxDamage": 25,
+      "accuracy": 40
+    },
+    {
+      "eventId": 3,
+      "message": "**Mickey Mimic Chasem powerwalks onto the battlefield and pulls the pin**",
+      "attack": "*A massive explosion erupts outwards!*",
+      "miss": "Both duelists avoid the explosion and continue over Mickey Mimic Chasem's remains",
+      "minDamage": 30,
+      "maxDamage": 50,
+      "accuracy": 40
+    },
+    {
+      "eventId": 4,
+      "message": "**Mickey Mimic Jet sprints into battle while flailing his arms rapidly**",
+      "attack": "*Like two wet noodles flipping about*",
+      "miss": "Mickey Mimic Jet trips and then dies",
+      "minDamage": 1,
+      "maxDamage": 2,
+      "accuracy": 20
+    },
+    {
+      "eventId": 5,
+      "message": "**Mickey Mimic Pitinn falls from the sky like a meteor**",
+      "attack": "*His massive dumpy crashes down with a shattering boom*",
+      "miss": "Mickey Mimic Pitinn bounces off the ground and launches back into orbit",
+      "minDamage": 27,
+      "maxDamage": 54,
+      "accuracy": 40
+    },
+    {
+      "eventId": 6,
+      "message": "**Mickey Mimic Seraph warps onto the battlefield**",
+      "attack": "*His anime theme starts to play as he draws his blade*",
+      "miss": "He ends up cutting himself accidentally and bleeds out",
+      "minDamage": 50,
+      "maxDamage": 100,
+      "accuracy": 30
+    },
+    {
+      "eventId": 7,
+      "message": "**Mickey Mimic Bubbles calls in a ratio**",
+      "attack": "*Deadly omegaluls rain down from the sky*",
+      "miss": "It is too much to handle as Mickey Mimic Bubbles is buried alive instead",
+      "minDamage": 30,
+      "maxDamage": 60,
+      "accuracy": 30
+    },
+    {
+      "eventId": 8,
+      "message": "**Mickey Mimic Kshue forms an extremely rare W**",
+      "attack": "*The duelists are baffled by this outcome*",
+      "miss": "The duelists ignore Kshue and he just leaves",
+      "minDamage": 1000,
+      "maxDamage": 2000,
+      "accuracy": 5
+    },
+    {
+      "eventId": 9,
+      "message": "**Mickey Mimic Fortnite dickrides into battle**",
+      "attack": "*He tosses lightspeed basketballs at the duelists*",
+      "miss": "He misses every shot, just like the heat did against the bucks",
+      "minDamage": 20,
+      "maxDamage": 35,
+      "accuracy": 20
+    },
+    {
+      "eventId": 10,
+      "message": "**Mickey Mimic Steven rampages through the battlefield**",
+      "attack": "*A war machine of unparalleled might*",
+      "miss": "Both players miraculously survive as Steven's rampage travels to Jet's house",
+      "minDamage": 50,
+      "maxDamage": 200,
+      "accuracy": 30
+    },
+    {
+      "eventId": 11,
+      "message": "**Mickey Mimic Super_Hats constructs a nuclear meat mountain**",
+      "attack": "*He attempts to force feed the duelists*",
+      "miss": "He gets hungry and eats it himself, he dies",
+      "minDamage": 10000,
+      "maxDamage": 10000,
+      "accuracy": 5
+    },
+    {
+      "eventId": 12,
+      "message": "**Mickey Mimic Leek summons his Persona for battle!**",
+      "attack": "*It's just Leek in a frozone costume, he launches an assault!*",
+      "miss": "He ends up getting bored and goes to olive garden",
+      "minDamage": 20,
+      "maxDamage": 50,
+      "accuracy": 40
+    },
+    {
+      "eventId": 13,
+      "message": "**Mickey Mimic Nakk emerges from the woods!**",
+      "attack": "*He T-Poses on the duelists, striking fear into their hearts*",
+      "miss": "A sudden JRPG drops from the sky, saving the duelists as Nakk leaves",
+      "minDamage": 20,
+      "maxDamage": 50,
+      "accuracy": 30
+    },
+    {
+      "eventId": 14,
+      "message": "**Mickey Mimic M3D devours a can of beans!**",
+      "attack": "*He attempts to summon forth a storm of shit*",
+      "miss": "One of the duelists calls him M1D and he leaves in tears",
+      "minDamage": 70,
+      "maxDamage": 100,
+      "accuracy": 30
+    },
+    {
+      "eventId": 15,
+      "message": "**Mickey Mimic Nine walks onto the battlefield!**",
+      "attack": "*A sea of vicious rats follows his every step*",
+      "miss": "The duelists stay perfectly still until he's finally gone",
+      "minDamage": 10,
+      "maxDamage": 30,
+      "accuracy": 40
+    },
+    {
+      "eventId": 16,
+      "message": "**Mickey Mimic Gabe stinks up the air!**",
+      "attack": "*The awful stench begins to strangle the duelists*",
+      "miss": "Neeko announces she has a bf on twitter, Gabe falls to his knees and dies",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40
+    },
+    {
+      "eventId": 17,
+      "message": "**Mickey Mimic Enzo commits a drive-by!**",
+      "attack": "*He's drifting while aiming out the window*",
+      "miss": "He ends up drifting into a whataburger and explodes",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 35
+    },
+    {
+      "eventId": 18,
+      "message": "**Mickey Mimic Senna floats onto the battlefield!**",
+      "attack": "*He sucks dick y'all*",
+      "miss": "A gateway opens underneath Mickey Mimic Senna that drags him to Brazil ",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 35
+    },
+    {
+      "eventId": 19,
+      "message": "**Mickey Mimic Stormblaze launches out of a cannon!**",
+      "attack": "*His forehead is on course to crash into the battle!*",
+      "miss": "He misses and flies into nearby town, reducing it to atoms",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 35
     }
   ]
 }

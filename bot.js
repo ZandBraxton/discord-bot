@@ -23,6 +23,7 @@ const config = require("./config.json");
 const SQLite = require("better-sqlite3");
 const sql = new SQLite("./scores.sqlite");
 const { BetterDuel } = require("./duel");
+let duelRunning = false;
 
 // When the client is ready, run this code (only once)
 client.on("ready", () => {
@@ -287,7 +288,7 @@ client.on("messageCreate", (message) => {
     const user =
       message.mentions.users.first() || client.users.cache.get(args[0]);
     if (!user) return undefined;
-    //doesn't let you duel yourself
+    // doesn't let you duel yourself
     // if (user.id === message.author.id) {
     //   return undefined;
     // }
@@ -318,6 +319,9 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "duel") {
+    if (duelRunning) {
+      return message.reply("Another duel is happening!");
+    }
     let amount = parseInt(args[1], 10);
     let pointsArray = ComparePoints();
     if (pointsArray === undefined) {
@@ -325,7 +329,7 @@ client.on("messageCreate", (message) => {
     }
     let p1 = pointsArray[0];
     let p2 = pointsArray[1];
-    if (!amount || amount === 0) {
+    if (!amount || amount <= 0) {
       return message.reply("You need to specify how many points to bet");
     }
     if (p1.points < amount) {
@@ -367,25 +371,15 @@ client.on("messageCreate", (message) => {
     });
 
     collector.on("collect", async (message) => {
-      // console.log(message);
-      let winner = {};
+      if (duelRunning) {
+        return message.channel.send("Another duel is happening!");
+      }
       if (message.user.id === p2.user && message.customId === accept) {
         message.reply("Then let the duel commence");
         collector.stop("user accepted");
         //duel function
-        BetterDuel(p1, p2, message, client, amount);
-        // setTimeout(() => {
-        //   message.channel.send(
-        //     `The winner is ${result.winner.username}! ${result.loser.username} handed over ${amount} points`
-        //   );
-        // }, 1000);
-        // result.winner.points += amount;
-        // result.loser.points -= amount;
-        // if (result.loser.points < 0) {
-        //   result.loser.points = 0;
-        // }
-        // client.setScore.run(result.winner);
-        // client.setScore.run(result.loser);
+        duelRunning = true;
+        BetterDuel(p1, p2, message, client, amount, duelCheck);
       } else if (message.user.id === p2.user && message.customId === decline) {
         message.reply("Challenge Declined");
         collector.stop("user declined");
@@ -466,6 +460,10 @@ client.on("messageCreate", (message) => {
     return message.channel.send({ embeds: [embed] });
   }
 });
+
+function duelCheck() {
+  duelRunning = !duelRunning;
+}
 
 // Login to Discord with your client's token
 client.login(config.token);
