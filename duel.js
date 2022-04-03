@@ -46,11 +46,9 @@ function getWeapon(Player1, Player2, message) {
     message.channel.send(
       `**${Player1.name}** picked up a ${Player1.weapon.name} **[${rarity}]** `
     );
-    console.log(Player1.weapon);
   }
   if (Player2.weapon === "") {
     rarity = randomInt(100) + 1;
-    console.log("p2" + rarity);
     if (rarity <= 40) {
       rarity = "Common";
     } else if (rarity >= 41 && rarity <= 75) {
@@ -63,7 +61,6 @@ function getWeapon(Player1, Player2, message) {
     message.channel.send(
       `**${Player2.name}** picked up a ${Player2.weapon.name} **[${rarity}]**`
     );
-    console.log(Player2.weapon);
   }
 
   if (Player1.weapon.name === "Fists") {
@@ -124,14 +121,12 @@ function Turn(Player1, Player2, message, client, p1, p2, amount, duelCheck) {
     return;
   }
   let eventChance = randomInt(100) + 1;
-  console.log(eventChance);
   if (eventChance < 5) {
     randomEvent(Player1, Player2, message, client, p1, p2, amount, duelCheck);
     return;
   } else {
     if (Player1.attacking === true) {
       let result = randomInt(100) + 1;
-      console.log("p2 should attack" + result);
       if (result <= 75) {
         Battle(Player2, Player1, message);
         Player2.attacking = true;
@@ -141,7 +136,6 @@ function Turn(Player1, Player2, message, client, p1, p2, amount, duelCheck) {
       }
     } else {
       let result = randomInt(100) + 1;
-      console.log("p1 should attack" + result);
       if (result <= 75) {
         Battle(Player1, Player2, message);
         Player1.attacking = true;
@@ -167,7 +161,6 @@ function Battle(attacker, defender, message) {
         defender.weapon.special["type"] === "block" &&
         hit <= defender.weapon.special["value"]
       ) {
-        console.log("HI");
         message.channel.send(
           ` **${attacker.name}**(${attacker.hp}HP) attacks! HOWEVER!, **${defender.name}**(${defender.hp}HP) ${defender.weapon.special["message"]}!`
         );
