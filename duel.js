@@ -13,7 +13,7 @@ function calculateDamage(min, max, crit) {
     return dmg;
   }
   let criticalHit = false;
-  let critical = randomInt(100);
+  let critical = randomInt(100) + 1;
   if (critical <= crit) {
     dmg = dmg * 2;
     criticalHit = true;
@@ -21,9 +21,9 @@ function calculateDamage(min, max, crit) {
   return { dmg: dmg, criticalHit: criticalHit };
 }
 
-function getRandomItem(max) {
+function getRandomItem(max, rarity) {
   let index = randomInt(max);
-  return duelItems.weapons[index];
+  return duelItems.weapons[rarity][index];
 }
 
 function getRandomEvent(max) {
@@ -33,38 +33,73 @@ function getRandomEvent(max) {
 
 function getWeapon(Player1, Player2, message) {
   if (Player1.weapon === "") {
-    let item = getRandomItem(duelItems.weapons.length);
+    let rarity = randomInt(100) + 1;
+    if (rarity <= 50) {
+      rarity = "Common";
+    } else if (rarity > 51 && rarity <= 80) {
+      rarity = "Rare";
+    } else {
+      rarity = "Legendary";
+    }
+    let item = getRandomItem(duelItems.weapons[rarity].length, rarity);
     Player1.weapon = item;
     message.channel.send(
-      `**${Player1.name}** picked up ${Player1.weapon.name}`
+      `**${Player1.name}** picked up a ${Player1.weapon.name} **[${rarity}]** `
     );
+    console.log(Player1.weapon);
   }
   if (Player2.weapon === "") {
-    item = getRandomItem(duelItems.weapons.length);
+    rarity = randomInt(100) + 1;
+    console.log("p2" + rarity);
+    if (rarity <= 40) {
+      rarity = "Common";
+    } else if (rarity >= 41 && rarity <= 75) {
+      rarity = "Rare";
+    } else {
+      rarity = "Legendary";
+    }
+    item = getRandomItem(duelItems.weapons[rarity].length, rarity);
     Player2.weapon = item;
     message.channel.send(
-      `**${Player2.name}** picked up ${Player2.weapon.name}`
+      `**${Player2.name}** picked up a ${Player2.weapon.name} **[${rarity}]**`
     );
+    console.log(Player2.weapon);
   }
 
   if (Player1.weapon.name === "Fists") {
-    let roll = randomInt(100);
+    let roll = randomInt(100) + 1;
     if (roll < 40) {
-      item = getRandomItem(duelItems.weapons.length);
+      let rarity = randomInt(100) + 1;
+      if (rarity <= 40) {
+        rarity = "Common";
+      } else if (rarity > 41 && rarity <= 75) {
+        rarity = "Rare";
+      } else {
+        rarity = "Legendary";
+      }
+      item = getRandomItem(duelItems.weapons[rarity].length, rarity);
       Player1.weapon = item;
       message.channel.send(
-        `**${Player1.name}** picked up ${Player1.weapon.name}`
+        `**${Player1.name}** picked up a ${Player1.weapon.name} **[${rarity}]**`
       );
     }
     return;
   }
   if (Player2.weapon.name === "Fists") {
-    let roll = randomInt(100);
+    let roll = randomInt(100) + 1;
     if (roll < 40) {
-      item = getRandomItem(duelItems.weapons.length);
+      let rarity = randomInt(100) + 1;
+      if (rarity <= 40) {
+        rarity = "Common";
+      } else if (rarity > 41 && rarity <= 75) {
+        rarity = "Rare";
+      } else {
+        rarity = "Legendary";
+      }
+      item = getRandomItem(duelItems.weapons[rarity].length, rarity);
       Player2.weapon = item;
       message.channel.send(
-        `**${Player2.name}** picked up ${Player2.weapon.name}`
+        `**${Player2.name}** picked up a ${Player2.weapon.name} **[${rarity}]**`
       );
     }
     return;
@@ -88,17 +123,32 @@ function Turn(Player1, Player2, message, client, p1, p2, amount, duelCheck) {
     duelCheck();
     return;
   }
-  let eventChance = randomInt(100);
+  let eventChance = randomInt(100) + 1;
   console.log(eventChance);
-  if (eventChance < 8) {
+  if (eventChance < 5) {
     randomEvent(Player1, Player2, message, client, p1, p2, amount, duelCheck);
     return;
   } else {
-    let result = Math.random() < 0.5;
-    if (result) {
-      Battle(Player1, Player2, message);
+    if (Player1.attacking === true) {
+      let result = randomInt(100) + 1;
+      console.log("p2 should attack" + result);
+      if (result <= 75) {
+        Battle(Player2, Player1, message);
+        Player2.attacking = true;
+        Player1.attacking = false;
+      } else {
+        Battle(Player1, Player2, message);
+      }
     } else {
-      Battle(Player2, Player1, message);
+      let result = randomInt(100) + 1;
+      console.log("p1 should attack" + result);
+      if (result <= 75) {
+        Battle(Player1, Player2, message);
+        Player1.attacking = true;
+        Player2.attacking = false;
+      } else {
+        Battle(Player2, Player1, message);
+      }
     }
   }
 
@@ -106,12 +156,40 @@ function Turn(Player1, Player2, message, client, p1, p2, amount, duelCheck) {
 }
 
 function Battle(attacker, defender, message) {
-  let hit = randomInt(100);
+  let hit = randomInt(100) + 1;
   if (hit <= attacker.weapon.accuracy) {
     if (hit <= defender.evadeChance) {
       message.channel.send(
         ` **${attacker.name}**(${attacker.hp}HP) attacks! HOWEVER!, **${defender.name}**(${defender.hp}HP) evades it!`
       );
+    } else if (defender.weapon.special !== null) {
+      if (
+        defender.weapon.special["type"] === "block" &&
+        hit <= defender.weapon.special["value"]
+      ) {
+        console.log("HI");
+        message.channel.send(
+          ` **${attacker.name}**(${attacker.hp}HP) attacks! HOWEVER!, **${defender.name}**(${defender.hp}HP) ${defender.weapon.special["message"]}!`
+        );
+        defender.weapon.special["value"] -= 5;
+      } else {
+        let strike = calculateDamage(
+          attacker.weapon.minDamage,
+          attacker.weapon.maxDamage,
+          attacker.weapon.critChance
+        );
+        if (strike.criticalHit === true) {
+          message.channel.send(
+            `Critical hit! **${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for **${strike.dmg}** damage!`
+          );
+        } else {
+          message.channel.send(
+            `**${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for ${strike.dmg} damage!`
+          );
+        }
+        defender.hp -= strike.dmg;
+        defender.evadeChance += 2;
+      }
     } else {
       let strike = calculateDamage(
         attacker.weapon.minDamage,
@@ -137,10 +215,55 @@ function Battle(attacker, defender, message) {
   if (defender.hp < 0) {
     return;
   }
+  if (attacker.weapon.special !== null) {
+    if (
+      attacker.weapon.special["trigger-name"] === attacker.name &&
+      attacker.weapon.special["used"] === false
+    ) {
+      if (attacker.weapon.special["type"] === "damage") {
+        message.channel.send(
+          `**${attacker.name}**(${attacker.hp}HP) activated their weapons ability!`
+        );
+        message.channel.send(`${attacker.weapon.special["message"]}`);
+        message.channel.send(
+          `**${defender.name}**(${defender.hp}HP) ${attacker.weapon.special["message-effect"]}`
+        );
+        attacker.weapon.special["used"] = true;
+        defender.hp -= attacker.weapon.special["value"];
+      } else if (attacker.weapon.special["type"] === "heal") {
+        message.channel.send(
+          `**${attacker.name}**(${attacker.hp}HP) activated their weapons ability!`
+        );
+        message.channel.send(`${attacker.weapon.special["message"]}`);
+        message.channel.send(
+          `**${attacker.name}**(${attacker.hp}HP) ${attacker.weapon.special["message-effect"]}`
+        );
+        attacker.weapon.special["used"] = true;
+        attacker.hp += attacker.weapon.special["value"];
+      }
+    }
+  } else if (defender.weapon.special !== null) {
+    if (
+      defender.weapon.special["trigger-name"] === defender.name &&
+      defender.weapon.special["used"] === false
+    ) {
+      if (defender.weapon.special["type"] === "heal") {
+        message.channel.send(
+          `**${defender.name}**(${defender.hp}HP) activated their weapons ability!`
+        );
+        message.channel.send(`${defender.weapon.special["message"]}`);
+        message.channel.send(
+          `**${defender.name}**(${defender.hp}HP) ${defender.weapon.special["message-effect"]}`
+        );
+        defender.weapon.special["used"] = true;
+        defender.hp += defender.weapon.special["value"];
+      }
+    }
+  }
   if (attacker.weapon.name === "Fists") {
     return;
   }
-  let breakWeapon = randomInt(100);
+  let breakWeapon = randomInt(100) + 1;
   if (breakWeapon <= attacker.weapon.breakChance) {
     message.channel.send(
       `**${attacker.name}'s** ${attacker.weapon.name} broke!`
@@ -153,6 +276,7 @@ function Battle(attacker, defender, message) {
       critChance: 20,
       accuracy: 90,
       breakChance: 0,
+      special: null,
     };
   }
 }
@@ -225,16 +349,26 @@ function randomEvent(
 
 function getEventResult(event, attacker, defender, message) {
   //decide if miss
-  let hit = randomInt(100);
-  if (hit <= attacker.weapon.accuracy) {
+  let hit = randomInt(100) + 1;
+  if (hit <= event.accuracy) {
     let strike = calculateDamage(event.minDamage, event.maxDamage, null);
     let result = Math.random() < 0.5;
-    if (result) {
-      message.channel.send(`${attacker.name} takes ${strike} damage!`);
-      attacker.hp -= strike;
+    if (event.type === heal) {
+      if (result) {
+        message.channel.send(`${attacker.name} was healed for ${strike} hp!`);
+        attacker.hp += strike;
+      } else {
+        message.channel.send(`${defender.name} was healed for ${strike} hp!`);
+        defender.hp += strike;
+      }
     } else {
-      message.channel.send(`${defender.name} takes ${strike} damage!`);
-      defender.hp -= strike;
+      if (result) {
+        message.channel.send(`${attacker.name} takes ${strike} damage!`);
+        attacker.hp -= strike;
+      } else {
+        message.channel.send(`${defender.name} takes ${strike} damage!`);
+        defender.hp -= strike;
+      }
     }
   } else {
     message.channel.send(`${event.miss}`);
@@ -243,19 +377,27 @@ function getEventResult(event, attacker, defender, message) {
 
 function BetterDuel(p1, p2, message, client, amount, duelCheck) {
   // let hp = getHP(amount);
-  let hp = 20;
+  let hp = 25;
   let Player1 = {
     name: p1.username,
     hp: hp,
     weapon: "",
+    attacking: false,
     evadeChance: 2,
   };
   let Player2 = {
     name: p2.username,
     hp: hp,
     weapon: "",
+    attacking: false,
     evadeChance: 2,
   };
+  let result = Math.random() < 0.5;
+  if (result) {
+    Player1.attacking = true;
+  } else {
+    Player2.attacking = true;
+  }
   setTimeout(() => {
     Round(Player1, Player2, message, client, p1, p2, amount, duelCheck);
   }, 1000);

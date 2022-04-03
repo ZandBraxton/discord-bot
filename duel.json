@@ -1,236 +1,1011 @@
 {
-  "weapons": [
-    {
-      "itemId": 1,
-      "name": "a Sword",
-      "type": "melee",
-      "minDamage": 4,
-      "maxDamage": 6,
-      "critChance": 20,
-      "accuracy": 90,
-      "breakChance": 15
-    },
-    {
-      "itemId": 2,
-      "name": "a Mace",
-      "type": "melee",
-      "minDamage": 5,
-      "maxDamage": 8,
-      "critChance": 30,
-      "accuracy": 85,
-      "breakChance": 15
-    },
-    {
-      "itemId": 3,
-      "name": "a Knife",
-      "type": "melee",
-      "minDamage": 3,
-      "maxDamage": 4,
-      "critChance": 50,
-      "accuracy": 95,
-      "breakChance": 10
-    },
-    {
-      "itemId": 4,
-      "name": "a Golf Club",
-      "type": "melee",
-      "minDamage": 4,
-      "maxDamage": 9,
-      "critChance": 25,
-      "accuracy": 80,
-      "breakChance": 30
-    },
-    {
-      "itemId": 5,
-      "name": "a Baseball Bat",
-      "type": "melee",
-      "minDamage": 4,
-      "maxDamage": 8,
-      "critChance": 20,
-      "accuracy": 90,
-      "breakChance": 25
-    },
-    {
-      "itemId": 6,
-      "name": "M3D's can of beans",
-      "type": "melee",
-      "minDamage": 2,
-      "maxDamage": 3,
-      "critChance": 70,
-      "accuracy": 85,
-      "breakChance": 15
-    },
-    {
-      "itemId": 7,
-      "name": "a Kunai",
-      "type": "melee",
-      "minDamage": 4,
-      "maxDamage": 5,
-      "critChance": 40,
-      "accuracy": 90,
-      "breakChance": 15
-    },
-    {
-      "itemId": 8,
-      "name": "Kaio's jar",
-      "type": "melee",
-      "minDamage": 1,
-      "maxDamage": 99,
-      "critChance": 50,
-      "accuracy": 10,
-      "breakChance": 75
-    },
-    {
-      "itemId": 9,
-      "name": "a Keyblade",
-      "type": "melee",
-      "minDamage": 6,
-      "maxDamage": 10,
-      "critChance": 20,
-      "accuracy": 70,
-      "breakChance": 20
-    },
-    {
-      "itemId": 10,
-      "name": "a Mickey Mouse Gun",
-      "type": "ranged",
-      "minDamage": 9,
-      "maxDamage": 12,
-      "critChance": 40,
-      "accuracy": 50,
-      "breakChance": 40
-    },
-    {
-      "itemId": 11,
-      "name": "a Boomerang",
-      "type": "ranged",
-      "minDamage": 5,
-      "maxDamage": 7,
-      "critChance": 55,
-      "accuracy": 60,
-      "breakChance": 20
-    },
-    {
-      "itemId": 12,
-      "name": "a Duck",
-      "type": "melee",
-      "minDamage": 3,
-      "maxDamage": 10,
-      "critChance": 5,
-      "accuracy": 95,
-      "breakChance": 60
-    },
-    {
-      "itemId": 13,
-      "name": "a Meat Mountain",
-      "type": "melee",
-      "minDamage": 5,
-      "maxDamage": 9,
-      "critChance": 100,
-      "accuracy": 30,
-      "breakChance": 100
-    },
-    {
-      "itemId": 14,
-      "name": "a can of Four Loko",
-      "type": "melee",
-      "minDamage": 7,
-      "maxDamage": 13,
-      "critChance": 35,
-      "accuracy": 60,
-      "breakChance": 25
-    },
-    {
-      "itemId": 15,
-      "name": "Chasem's Grenade",
-      "type": "ranged",
-      "minDamage": 30,
-      "maxDamage": 60,
-      "critChance": 55,
-      "accuracy": 20,
-      "breakChance": 100
-    },
-    {
-      "itemId": 16,
-      "name": "a Bicycle",
-      "type": "melee",
-      "minDamage": 14,
-      "maxDamage": 20,
-      "critChance": 30,
-      "accuracy": 30,
-      "breakChance": 50
-    },
-    {
-      "itemId": 17,
-      "name": "a Ninja Dagger",
-      "type": "melee",
-      "minDamage": 4,
-      "maxDamage": 8,
-      "critChance": 70,
-      "accuracy": 70,
-      "breakChance": 20
-    },
-    {
-      "itemId": 18,
-      "name": "a Label",
-      "type": "melee",
-      "minDamage": 8,
-      "maxDamage": 14,
-      "critChance": 60,
-      "accuracy": 56,
-      "breakChance": 35
-    },
-    {
-      "itemId": 19,
-      "name": "Brass Knuckles",
-      "type": "melee",
-      "minDamage": 4,
-      "maxDamage": 6,
-      "critChance": 40,
-      "accuracy": 100,
-      "breakChance": 30
-    },
-    {
-      "itemId": 20,
-      "name": "a Katana",
-      "type": "melee",
-      "minDamage": 7,
-      "maxDamage": 11,
-      "critChance": 40,
-      "accuracy": 60,
-      "breakChance": 40
-    },
-    {
-      "itemId": 21,
-      "name": "a Laser Rifle",
-      "type": "ranged",
-      "minDamage": 5,
-      "maxDamage": 12,
-      "critChance": 10,
-      "accuracy": 65,
-      "breakChance": 50
-    },
-    {
-      "itemId": 22,
-      "name": "Seraph's Hatred",
-      "type": "ranged",
-      "minDamage": 9,
-      "maxDamage": 10,
-      "critChance": 10,
-      "accuracy": 40,
-      "breakChance": 40
-    },
-    {
-      "itemId": 23,
-      "name": "a bag of Taco Johns",
-      "type": "melee",
-      "minDamage": 6,
-      "maxDamage": 8,
-      "critChance": 60,
-      "accuracy": 60,
-      "breakChance": 40
-    }
-  ],
+  "weapons": {
+    "Common": [
+      {
+        "itemId": 1,
+        "name": "Sword",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 6,
+        "critChance": 20,
+        "accuracy": 90,
+        "breakChance": 15,
+        "special": null
+      },
+      {
+        "itemId": 2,
+        "name": "Mace",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 8,
+        "critChance": 15,
+        "accuracy": 85,
+        "breakChance": 15,
+        "special": null
+      },
+      {
+        "itemId": 3,
+        "name": "Knife",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 4,
+        "critChance": 45,
+        "accuracy": 95,
+        "breakChance": 15,
+        "special": null
+      },
+      {
+        "itemId": 4,
+        "name": "Golf Club",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 9,
+        "critChance": 20,
+        "accuracy": 80,
+        "breakChance": 24,
+        "special": null
+      },
+      {
+        "itemId": 5,
+        "name": "Baseball Bat",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 6,
+        "critChance": 30,
+        "accuracy": 85,
+        "breakChance": 25,
+        "special": null
+      },
+      {
+        "itemId": 6,
+        "name": "M3D's can of beans",
+        "type": "melee",
+        "minDamage": 2,
+        "maxDamage": 3,
+        "critChance": 80,
+        "accuracy": 90,
+        "breakChance": 15,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "M3D",
+          "value": 15,
+          "message": "**M3D** ate out of the can!",
+          "message-effect": "healed for 15hp"
+        }
+      },
+
+      {
+        "itemId": 7,
+        "name": "Boomerang",
+        "type": "ranged",
+        "minDamage": 5,
+        "maxDamage": 7,
+        "critChance": 55,
+        "accuracy": 70,
+        "breakChance": 20,
+        "special": null
+      },
+      {
+        "itemId": 8,
+        "name": "Duck",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 10,
+        "critChance": 5,
+        "accuracy": 95,
+        "breakChance": 50,
+        "special": null
+      },
+
+      {
+        "itemId": 9,
+        "name": "Brass Knuckles",
+        "type": "melee",
+        "minDamage": 2,
+        "maxDamage": 5,
+        "critChance": 40,
+        "accuracy": 98,
+        "breakChance": 25,
+        "special": null
+      },
+      {
+        "itemId": 10,
+        "name": "Axe",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 9,
+        "critChance": 25,
+        "accuracy": 75,
+        "breakChance": 22,
+        "special": null
+      },
+      {
+        "itemId": 11,
+        "name": "Shovel",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 6,
+        "critChance": 35,
+        "accuracy": 90,
+        "breakChance": 25,
+        "special": null
+      },
+      {
+        "itemId": 12,
+        "name": "Handgun",
+        "type": "ranged",
+        "minDamage": 8,
+        "maxDamage": 11,
+        "critChance": 10,
+        "accuracy": 70,
+        "breakChance": 25,
+        "special": null
+      },
+      {
+        "itemId": 13,
+        "name": "Wet Paper Bag",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 4,
+        "critChance": 60,
+        "accuracy": 77,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 14,
+        "name": "Stick",
+        "type": "melee",
+        "minDamage": 1,
+        "maxDamage": 2,
+        "critChance": 40,
+        "accuracy": 100,
+        "breakChance": 98,
+        "special": null
+      },
+      {
+        "itemId": 15,
+        "name": "Spatula",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 4,
+        "critChance": 40,
+        "accuracy": 90,
+        "breakChance": 18,
+        "special": null
+      },
+      {
+        "itemId": 16,
+        "name": "Mickey Mouse Shield",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 5,
+        "critChance": 15,
+        "accuracy": 90,
+        "breakChance": 10,
+        "special": {
+          "type": "block",
+          "value": 35,
+          "message": "blocked with their shield!"
+        }
+      },
+      {
+        "itemId": 17,
+        "name": "Cardboard Box",
+        "type": "melee",
+        "minDamage": 2,
+        "maxDamage": 5,
+        "critChance": 20,
+        "accuracy": 95,
+        "breakChance": 35,
+        "special": null
+      },
+      {
+        "itemId": 18,
+        "name": "Rock",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 8,
+        "critChance": 15,
+        "accuracy": 80,
+        "breakChance": 20,
+        "special": null
+      },
+      {
+        "itemId": 19,
+        "name": "piece of wood",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 6,
+        "critChance": 10,
+        "accuracy": 89,
+        "breakChance": 25,
+        "special": null
+      },
+      {
+        "itemId": 20,
+        "name": "stick of deodorant",
+        "type": "melee",
+        "minDamage": 2,
+        "maxDamage": 4,
+        "critChance": 20,
+        "accuracy": 95,
+        "breakChance": 20,
+        "special": null
+      },
+      {
+        "itemId": 21,
+        "name": "Ps3 Controller",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 8,
+        "critChance": 5,
+        "accuracy": 80,
+        "breakChance": 15,
+        "special": null
+      },
+      {
+        "itemId": 22,
+        "name": "Screwdriver",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 7,
+        "critChance": 15,
+        "accuracy": 85,
+        "breakChance": 20,
+        "special": null
+      },
+      {
+        "itemId": 23,
+        "name": "Fork",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 6,
+        "critChance": 20,
+        "accuracy": 80,
+        "breakChance": 20,
+        "special": null
+      },
+      {
+        "itemId": 24,
+        "name": "Pool Noodle",
+        "type": "melee",
+        "minDamage": 2,
+        "maxDamage": 3,
+        "critChance": 40,
+        "accuracy": 90,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 25,
+        "name": "cup of McDonalds Sprite",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 6,
+        "critChance": 70,
+        "accuracy": 80,
+        "breakChance": 70,
+        "special": null
+      }
+    ],
+    "Rare": [
+      {
+        "itemId": 1,
+        "name": "Kunai",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 8,
+        "critChance": 40,
+        "accuracy": 88,
+        "breakChance": 15,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Kunai",
+          "value": 12,
+          "message": "**Kunai's** expertise allowed him to strike twice!",
+          "message-effect": "took an additional 12 damage!"
+        }
+      },
+      {
+        "itemId": 2,
+        "name": "Bicycle",
+        "type": "melee",
+        "minDamage": 14,
+        "maxDamage": 19,
+        "critChance": 10,
+        "accuracy": 30,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 3,
+        "name": "Ninja Dagger",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 9,
+        "critChance": 45,
+        "accuracy": 78,
+        "breakChance": 25,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "VHS Tape",
+          "value": 12,
+          "message": "**The weapon grows stronger in **VHS Tape's** hands!",
+          "message-effect": "took an additional 12 damage!"
+        }
+      },
+      {
+        "itemId": 4,
+        "name": "Label",
+        "type": "melee",
+        "minDamage": 8,
+        "maxDamage": 12,
+        "critChance": 50,
+        "accuracy": 62,
+        "breakChance": 30,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "Eduardo_Hook",
+          "value": 8,
+          "message": "**Eduardo_Hook** took a sip of the Label!",
+          "message-effect": "healed for 8hp!"
+        }
+      },
+      {
+        "itemId": 5,
+        "name": "Katana",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 10,
+        "critChance": 40,
+        "accuracy": 80,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 6,
+        "name": "Laser Rifle",
+        "type": "ranged",
+        "minDamage": 5,
+        "maxDamage": 10,
+        "critChance": 10,
+        "accuracy": 75,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 7,
+        "name": "Barbed Bat",
+        "type": "melee",
+        "minDamage": 8,
+        "maxDamage": 11,
+        "critChance": 5,
+        "accuracy": 74,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 8,
+        "name": "Great Sword",
+        "type": "melee",
+        "minDamage": 9,
+        "maxDamage": 12,
+        "critChance": 3,
+        "accuracy": 60,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 9,
+        "name": "Keyblade",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 8,
+        "critChance": 30,
+        "accuracy": 85,
+        "breakChance": 20,
+        "special": null
+      },
+      {
+        "itemId": 10,
+        "name": "Crossbow",
+        "type": "ranged",
+        "minDamage": 6,
+        "maxDamage": 8,
+        "critChance": 40,
+        "accuracy": 75,
+        "breakChance": 22,
+        "special": null
+      },
+      {
+        "itemId": 11,
+        "name": "Sickle",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 8,
+        "critChance": 20,
+        "accuracy": 90,
+        "breakChance": 15,
+        "special": null
+      },
+      {
+        "itemId": 12,
+        "name": "Nunchucks",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 7,
+        "critChance": 50,
+        "accuracy": 95,
+        "breakChance": 20,
+        "special": null
+      },
+      {
+        "itemId": 13,
+        "name": "Shotgun",
+        "type": "ranged",
+        "minDamage": 9,
+        "maxDamage": 13,
+        "critChance": 5,
+        "accuracy": 55,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 14,
+        "name": "Great Axe",
+        "type": "melee",
+        "minDamage": 9,
+        "maxDamage": 13,
+        "critChance": 5,
+        "accuracy": 60,
+        "breakChance": 35,
+        "special": null
+      },
+      {
+        "itemId": 15,
+        "name": "PS5",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 10,
+        "critChance": 10,
+        "accuracy": 65,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 16,
+        "name": "copy of KOF",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 7,
+        "critChance": 30,
+        "accuracy": 87,
+        "breakChance": 32,
+        "special": null
+      },
+      {
+        "itemId": 17,
+        "name": "Amongus Plush",
+        "type": "melee",
+        "minDamage": 2,
+        "maxDamage": 3,
+        "critChance": 70,
+        "accuracy": 90,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 18,
+        "name": "Shopping Cart",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 14,
+        "critChance": 15,
+        "accuracy": 35,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 19,
+        "name": "Airfryer",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 9,
+        "critChance": 40,
+        "accuracy": 80,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 20,
+        "name": "Cinder Block",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 15,
+        "critChance": 5,
+        "accuracy": 55,
+        "breakChance": 45,
+        "special": null
+      },
+      {
+        "itemId": 21,
+        "name": "Energy Sword",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 10,
+        "critChance": 40,
+        "accuracy": 90,
+        "breakChance": 45,
+        "special": null
+      },
+      {
+        "itemId": 22,
+        "name": "Slash's Popeyes Order",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 10,
+        "critChance": 45,
+        "accuracy": 90,
+        "breakChance": 45,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "DarkSlash",
+          "value": 10,
+          "message": "**The order was incorrect, but **DarkSlash** ate some anyway!",
+          "message-effect": "healed for 10hp!"
+        }
+      },
+      {
+        "itemId": 23,
+        "name": "pair of Black Air Forces",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 9,
+        "critChance": 40,
+        "accuracy": 80,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 24,
+        "name": "Hammer",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 10,
+        "critChance": 15,
+        "accuracy": 80,
+        "breakChance": 35,
+        "special": null
+      }
+    ],
+    "Legendary": [
+      {
+        "itemId": 1,
+        "name": "Kaio's jar",
+        "type": "melee",
+        "minDamage": 1,
+        "maxDamage": 99,
+        "critChance": 50,
+        "accuracy": 20,
+        "breakChance": 75,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "diego",
+          "value": 15,
+          "message": "**diego** used the jar, try not to think about it",
+          "message-effect": "healed for 15hp!"
+        }
+      },
+
+      {
+        "itemId": 2,
+        "name": "Mickey Mouse Gun",
+        "type": "ranged",
+        "minDamage": 10,
+        "maxDamage": 14,
+        "critChance": 40,
+        "accuracy": 65,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 3,
+        "name": "Meat Mountain",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 8,
+        "critChance": 100,
+        "accuracy": 80,
+        "breakChance": 100,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "EnzoMenso",
+          "value": 15,
+          "message": "Somehow **EnzoMenso's** stomach is stronger than the meat mountain!",
+          "message-effect": "healed for 15hp!"
+        }
+      },
+      {
+        "itemId": 4,
+        "name": "can of Four Loko",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 13,
+        "critChance": 35,
+        "accuracy": 60,
+        "breakChance": 25,
+        "special": null
+      },
+      {
+        "itemId": 5,
+        "name": "Chasem's Grenade",
+        "type": "ranged",
+        "minDamage": 30,
+        "maxDamage": 60,
+        "critChance": 55,
+        "accuracy": 41,
+        "breakChance": 100,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Chasem121",
+          "value": 50,
+          "message": "The pin has been pulled, there's no escape!",
+          "message-effect": "took an additional 50 damage!"
+        }
+      },
+      {
+        "itemId": 6,
+        "name": "Seraph's Hatred",
+        "type": "ranged",
+        "minDamage": 9,
+        "maxDamage": 10,
+        "critChance": 10,
+        "accuracy": 70,
+        "breakChance": 40,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "EXSeraph",
+          "value": 20,
+          "message": "**EXSeraph's** immense hatred allows him to strike two more times!",
+          "message-effect": "took an additional 20 damage!"
+        }
+      },
+      {
+        "itemId": 7,
+        "name": "bag of Taco Johns",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 8,
+        "critChance": 60,
+        "accuracy": 65,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 8,
+        "name": "Bazooka",
+        "type": "ranged",
+        "minDamage": 12,
+        "maxDamage": 17,
+        "critChance": 20,
+        "accuracy": 70,
+        "breakChance": 60,
+        "special": null
+      },
+      {
+        "itemId": 9,
+        "name": "Scythe",
+        "type": "melee",
+        "minDamage": 11,
+        "maxDamage": 15,
+        "critChance": 25,
+        "accuracy": 75,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 10,
+        "name": "incredible Hulk Gloves",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 12,
+        "critChance": 10,
+        "accuracy": 85,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 11,
+        "name": "NERF Fortnite AR-L Elite Dart Blaster",
+        "type": "ranged",
+        "minDamage": 8,
+        "maxDamage": 12,
+        "critChance": 35,
+        "accuracy": 85,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 12,
+        "name": "The Super Hat",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 15,
+        "critChance": 25,
+        "accuracy": 80,
+        "breakChance": 40,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "super_hats",
+          "value": 20,
+          "message": "**super_hats** put on the super hat!",
+          "message-effect": "healed for 20hp!"
+        }
+      },
+      {
+        "itemId": 13,
+        "name": "Flight Ticket to Brazil",
+        "type": "melee",
+        "minDamage": 9,
+        "maxDamage": 13,
+        "critChance": 60,
+        "accuracy": 68,
+        "breakChance": 50,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "SENNA 🇧🇷",
+          "value": 5000,
+          "message": "**Senna** runs his blood along the ticket, a portal to Brazil opens under his opponent!",
+          "message-effect": "took an additional 5000 damage!"
+        }
+      },
+      {
+        "itemId": 14,
+        "name": "Mclovin's PC",
+        "type": "melee",
+        "minDamage": 12,
+        "maxDamage": 14,
+        "critChance": 40,
+        "accuracy": 70,
+        "breakChance": 60,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "McLovin",
+          "value": 35,
+          "message": "With no regard for Chasem, **McLovin** throws his pc with all he's got!",
+          "message-effect": "took an additional 35 damage!"
+        }
+      },
+      {
+        "itemId": 15,
+        "name": "Hook's Chair",
+        "type": "melee",
+        "minDamage": 14,
+        "maxDamage": 18,
+        "critChance": 20,
+        "accuracy": 50,
+        "breakChance": 90,
+        "special": null
+      },
+      {
+        "itemId": 16,
+        "name": "Trazac's Lasso",
+        "type": "ranged",
+        "minDamage": 11,
+        "maxDamage": 16,
+        "critChance": 10,
+        "accuracy": 72,
+        "breakChance": 50,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Trazac",
+          "value": 15,
+          "message": "**Trazac's** talent at wrangling cattle shines!",
+          "message-effect": "took an additional 15 damage!"
+        }
+      },
+      {
+        "itemId": 17,
+        "name": "Yenice Liver",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 4,
+        "critChance": 5,
+        "accuracy": 80,
+        "breakChance": 30,
+        "special": {
+          "type": "block",
+          "value": 80,
+          "message": "blocked with Yenice's Liver!"
+        }
+      },
+      {
+        "itemId": 18,
+        "name": "Razor Scooter",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 8,
+        "critChance": 90,
+        "accuracy": 60,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 19,
+        "name": "Disco's Wallet",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 7,
+        "critChance": 40,
+        "accuracy": 80,
+        "breakChance": 40,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "Nakkiel",
+          "value": 20,
+          "message": "**Nakkiel** makes a withdrawal from Disco's Wallet",
+          "message-effect": "healed for 20hp!"
+        }
+      },
+      {
+        "itemId": 20,
+        "name": "Juicy's Porn Collection",
+        "type": "ranged",
+        "minDamage": 10,
+        "maxDamage": 14,
+        "critChance": 69,
+        "accuracy": 69,
+        "breakChance": 69,
+        "special": null
+      },
+      {
+        "itemId": 21,
+        "name": "Mickey Mouse Sword",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 14,
+        "critChance": 50,
+        "accuracy": 75,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 22,
+        "name": "Nakk's Fight Stick",
+        "type": "melee",
+        "minDamage": 12,
+        "maxDamage": 16,
+        "critChance": 10,
+        "accuracy": 70,
+        "breakChance": 60,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Nakkiel",
+          "value": 35,
+          "message": "**Nakkiel** stunts on the opponent, dropping a bombo on their dome",
+          "message-effect": "took an additional 35 damage!"
+        }
+      },
+      {
+        "itemId": 23,
+        "name": "Nugget's Step Ladder",
+        "type": "melee",
+        "minDamage": 12,
+        "maxDamage": 16,
+        "critChance": 10,
+        "accuracy": 70,
+        "breakChance": 60,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "scholarbones",
+          "value": 100,
+          "message": "**scholarbones** rises up to his foe, smacking them on the dome",
+          "message-effect": "took an additional 100 damage!"
+        }
+      },
+      {
+        "itemId": 24,
+        "name": "Pitinn's Visa Card",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 14,
+        "critChance": 40,
+        "accuracy": 75,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 25,
+        "name": "Fortnites Bandwagon",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 11,
+        "critChance": 10,
+        "accuracy": 80,
+        "breakChance": 40,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "ArchAngel",
+          "value": 15,
+          "message": "**ArchAngel** hops on his bandwagon like how he hops from team to team",
+          "message-effect": "healed for 15hp!"
+        }
+      },
+      {
+        "itemId": 26,
+        "name": "Leeks Super Suit",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 14,
+        "critChance": 20,
+        "accuracy": 80,
+        "breakChance": 50,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "LeekTheGawd",
+          "value": 30,
+          "message": "**Leek** puts on his supersuit, a perfect fit",
+          "message-effect": "took an additional 30 damage in the name of BHM!"
+        }
+      },
+      {
+        "itemId": 27,
+        "name": "Bar_Bar's Hitbox",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 13,
+        "critChance": 25,
+        "accuracy": 70,
+        "breakChance": 50,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Bar_BarXII",
+          "value": 35,
+          "message": "**HE'S DOING STRINGS!**",
+          "message-effect": "took an additional 35 damage!"
+        }
+      },
+      {
+        "itemId": 28,
+        "name": "a stack of Kshue L's",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 8,
+        "critChance": 55,
+        "accuracy": 85,
+        "breakChance": 50,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Kshuewhatdamoo",
+          "value": 35,
+          "message": "The stack grows larger in **Kshuewhatdamoo's** hands!",
+          "message-effect": "took an additional 20 damage!"
+        }
+      }
+    ]
+  },
+
   "events": [
     {
       "eventId": 1,
@@ -239,16 +1014,18 @@
       "miss": "Mickey Mimic Kaio accidentally eats a fire hydrant and implodes!",
       "minDamage": 999,
       "maxDamage": 1000,
-      "accuracy": 5
+      "accuracy": 10,
+      "type": "damage"
     },
     {
       "eventId": 2,
-      "message": "**Mickey Mimic Disco causes a white woman stampede, watch out!**",
+      "message": "**Mickey Mimic Disco causes a white women stampede!!**",
       "attack": "*The duelists attempt to evade*",
       "miss": "The white women turned on Mickey Mimic Disco and trampled him instead",
       "minDamage": 15,
       "maxDamage": 25,
-      "accuracy": 40
+      "accuracy": 40,
+      "type": "damage"
     },
     {
       "eventId": 3,
@@ -257,7 +1034,8 @@
       "miss": "Both duelists avoid the explosion and continue over Mickey Mimic Chasem's remains",
       "minDamage": 30,
       "maxDamage": 50,
-      "accuracy": 40
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 4,
@@ -266,7 +1044,8 @@
       "miss": "Mickey Mimic Jet trips and then dies",
       "minDamage": 1,
       "maxDamage": 2,
-      "accuracy": 20
+      "accuracy": 20,
+      "type": "damage"
     },
     {
       "eventId": 5,
@@ -275,7 +1054,8 @@
       "miss": "Mickey Mimic Pitinn bounces off the ground and launches back into orbit",
       "minDamage": 27,
       "maxDamage": 54,
-      "accuracy": 40
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 6,
@@ -284,7 +1064,8 @@
       "miss": "He ends up cutting himself accidentally and bleeds out",
       "minDamage": 50,
       "maxDamage": 100,
-      "accuracy": 30
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 7,
@@ -293,7 +1074,8 @@
       "miss": "It is too much to handle as Mickey Mimic Bubbles is buried alive instead",
       "minDamage": 30,
       "maxDamage": 60,
-      "accuracy": 30
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 8,
@@ -302,7 +1084,8 @@
       "miss": "The duelists ignore Kshue and he just leaves",
       "minDamage": 1000,
       "maxDamage": 2000,
-      "accuracy": 5
+      "accuracy": 10,
+      "type": "damage"
     },
     {
       "eventId": 9,
@@ -311,7 +1094,8 @@
       "miss": "He misses every shot, just like the heat did against the bucks",
       "minDamage": 20,
       "maxDamage": 35,
-      "accuracy": 20
+      "accuracy": 20,
+      "type": "damage"
     },
     {
       "eventId": 10,
@@ -320,7 +1104,8 @@
       "miss": "Both players miraculously survive as Steven's rampage travels to Jet's house",
       "minDamage": 50,
       "maxDamage": 200,
-      "accuracy": 30
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 11,
@@ -329,7 +1114,8 @@
       "miss": "He gets hungry and eats it himself, he dies",
       "minDamage": 10000,
       "maxDamage": 10000,
-      "accuracy": 5
+      "accuracy": 10,
+      "type": "damage"
     },
     {
       "eventId": 12,
@@ -338,7 +1124,8 @@
       "miss": "He ends up getting bored and goes to olive garden",
       "minDamage": 20,
       "maxDamage": 50,
-      "accuracy": 40
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 13,
@@ -347,7 +1134,8 @@
       "miss": "A sudden JRPG drops from the sky, saving the duelists as Nakk leaves",
       "minDamage": 20,
       "maxDamage": 50,
-      "accuracy": 30
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 14,
@@ -356,7 +1144,8 @@
       "miss": "One of the duelists calls him M1D and he leaves in tears",
       "minDamage": 70,
       "maxDamage": 100,
-      "accuracy": 30
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 15,
@@ -365,7 +1154,8 @@
       "miss": "The duelists stay perfectly still until he's finally gone",
       "minDamage": 10,
       "maxDamage": 30,
-      "accuracy": 40
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 16,
@@ -374,7 +1164,8 @@
       "miss": "Neeko announces she has a bf on twitter, Gabe falls to his knees and dies",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 17,
@@ -383,7 +1174,8 @@
       "miss": "He ends up drifting into a whataburger and explodes",
       "minDamage": 40,
       "maxDamage": 80,
-      "accuracy": 35
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 18,
@@ -392,16 +1184,259 @@
       "miss": "A gateway opens underneath Mickey Mimic Senna that drags him to Brazil ",
       "minDamage": 40,
       "maxDamage": 80,
-      "accuracy": 35
+      "accuracy": 30,
+      "type": "damage"
     },
     {
       "eventId": 19,
       "message": "**Mickey Mimic Stormblaze launches out of a cannon!**",
       "attack": "*His forehead is on course to crash into the battle!*",
-      "miss": "He misses and flies into nearby town, reducing it to atoms",
+      "miss": "He misses and flies into a nearby town, reducing it to atoms",
       "minDamage": 40,
       "maxDamage": 80,
-      "accuracy": 35
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 20,
+      "message": "**Mickey Mimic Skinner comes marching in!**",
+      "attack": "*He's complaining about Hook with screeching volume!*",
+      "miss": "Hook miraculously boots on time and he stops screaming",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 21,
+      "message": "**Mickey Mimic Juicy summons his troops!**",
+      "attack": "*He's the commander of the feet fleet*",
+      "miss": "He gets distracted by the hub and takes his leave",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 22,
+      "message": "**Mickey Mimic Hook boots up onto the field!**",
+      "attack": "*He starts tossing labels, one more frfr*",
+      "miss": "His stomach rumbles as he leaves to go to the bathroom, never to be seen again",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 23,
+      "message": "**Mickey Mimic Kerra slowly approaches!**",
+      "attack": "*Extremely slow, one step per hour*",
+      "miss": "He turns to dust before anything can happen",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 1,
+      "type": "damage"
+    },
+    {
+      "eventId": 24,
+      "message": "**Mickey Mimic Kunai dashes onto the scene!**",
+      "attack": "*A sea of blades starts rushing through the air*",
+      "miss": "A ping from the selfie channel distracts Kunai, he's needed elsewhere",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 25,
+      "message": "**Mickey Mimic ChrisB walks ahead!**",
+      "attack": "*He doesn't really do much, at all*",
+      "miss": "He just keeps walking until he's out of sight",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 26,
+      "message": "**Mickey Mimic DarkSlash emerges from the ground!**",
+      "attack": "*He channels his negative luck into a massive attack*",
+      "miss": "A text from his roommate hinders his focus, causing the energy to erase him instead",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 27,
+      "message": "**Mickey Mimic Hank Flowers drives into battle!**",
+      "attack": "*He starts throwing doordash items at the duelists*",
+      "miss": "The duelists don't leave a tip and he quits the job forever",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 28,
+      "message": "**Mickey Mimic Obm's voice booms through the air!**",
+      "attack": "*He needs head and he needs it now*",
+      "miss": "a brave soul volunteers from out of the blue, as the duelists are spared",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 29,
+      "message": "**Mickey Mimic McLovin pulls out the spitfire!**",
+      "attack": "*You gotta love mags bro*",
+      "miss": "He misses every shot, a faint **HELLO?** can be heard in the distance",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 30,
+      "message": "**Mickey Mimic Tron pulls equips his visor!**",
+      "attack": "*The power of a thousand ratios charges from within*",
+      "miss": "While charging he spots a nearby lake, he decides to go fishing instead",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+
+    {
+      "eventId": 31,
+      "message": "**Mickey Mimic Bar_Bar is ready for action!**",
+      "attack": "*His hitbox has the power to control fate itself*",
+      "miss": "He ends up dropping the combo and spikes his controller into the dirt",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 32,
+      "message": "**Mickey Mimic Plant is ready to brawl!**",
+      "attack": "*They call him the dragon of IKEA*",
+      "miss": "While trying to remove his shirt he accidentally strangles himself and perishes",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 33,
+      "message": "**Mickey Mimic VHS pulls out the megaphone!**",
+      "attack": "*The word Slag ruptures out multiple times*",
+      "miss": "An alert broadcasts that the Queen has died, VHS turns to stone",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 34,
+      "message": "**Mickey Mimic Eternal cheers on the duelists!**",
+      "attack": "*He's clapping his hands too, what a good man*",
+      "miss": "The duelists have grown stronger thanks to Eternal's aid",
+      "minDamage": 8,
+      "maxDamage": 12,
+      "accuracy": 50,
+      "type": "heal"
+    },
+    {
+      "eventId": 35,
+      "message": "**Mickey Mimic Yenice finally wakes up!**",
+      "attack": "*He's violent while he's hungover*",
+      "miss": "His head is booming too hard, he goes back to sleep",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 36,
+      "message": "**Mickey Mimic Placeholder takes up a stance!**",
+      "attack": "*He starts throwing out electrics like crazy*",
+      "miss": "Tekken 8 was finally released, he korean backdashes out of view",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 37,
+      "message": "**Mickey Mimic Quzel appears out of thin air!**",
+      "attack": "*Nobody really knows what he's capable of*",
+      "miss": "He vanishes once again, doing absolutely nothing",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 38,
+      "message": "**Mickey Mimic Trashboat steers his boat through the battle!**",
+      "attack": "*Rumor says he's searching for the one piece*",
+      "miss": "He sinks his ship while trying to fistbump the duelists",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 39,
+      "message": "**Mickey Mimic Trashboat steers his boat through the battle!**",
+      "attack": "*Rumor says he's searching for the one piece*",
+      "miss": "He sinks his ship while trying to fistbump the duelists",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 40,
+      "message": "**Mickey Mimic Nugget says what's up!**",
+      "attack": "*He's waiting for an answer, patiently*",
+      "miss": "Nobody answers, he decides to go bomb Hats house",
+      "minDamage": 8,
+      "maxDamage": 12,
+      "accuracy": 50,
+      "type": "heal"
+    },
+    {
+      "eventId": 41,
+      "message": "**Mickey Mimic Jesse pulls up to scrap!**",
+      "attack": "*He's got a lot of homework so he can't really stay long*",
+      "miss": "He leaves after 24 seconds to go do homework",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 42,
+      "message": "**Mickey Mimic Trazac plows through the battlefield!**",
+      "attack": "*His tractor is made out of solid gold*",
+      "miss": "He bullies the duelists till he's bored and then goes back to the ranch",
+      "minDamage": 40,
+      "maxDamage": 80,
+      "accuracy": 30,
+      "type": "damage"
+    },
+    {
+      "eventId": 43,
+      "message": "**Lightning strikes down as LowTierGod appears in the sky!**",
+      "attack": "*The duelists look up like the summer ants they are*",
+      "miss": "By the grace of Allah the duelists are spared as LTG rage quits",
+      "minDamage": 9999,
+      "maxDamage": 10000,
+      "accuracy": 10,
+      "type": "damage"
     }
   ]
 }

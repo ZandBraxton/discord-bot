@@ -24,6 +24,7 @@ const SQLite = require("better-sqlite3");
 const sql = new SQLite("./scores.sqlite");
 const { BetterDuel } = require("./duel");
 let duelRunning = false;
+const prestigeRequirement = 5000;
 
 // When the client is ready, run this code (only once)
 client.on("ready", () => {
@@ -39,7 +40,7 @@ client.on("ready", () => {
     // If the table isn't there, create it and setup the database correctly.
     sql
       .prepare(
-        "CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, username TEXT, guild TEXT, points INTEGER);"
+        "CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, username TEXT, guild TEXT, points INTEGER, prestige INTEGER);"
       )
       .run();
     // Ensure that the "id" row is always unique and indexed.
@@ -53,7 +54,7 @@ client.on("ready", () => {
     "SELECT * FROM scores WHERE user = ? AND guild = ?"
   );
   client.setScore = sql.prepare(
-    "INSERT OR REPLACE INTO scores (id, user, username, guild, points) VALUES (@id, @user, @username, @guild, @points);"
+    "INSERT OR REPLACE INTO scores (id, user, username, guild, points, prestige) VALUES (@id, @user, @username, @guild, @points, @prestige);"
   );
 
   // client.updateScore = sql.prepare(
@@ -95,6 +96,7 @@ client.on("messageCreate", (message) => {
         username: message.author.username,
         guild: message.guild.id,
         points: 1,
+        prestige: 0,
       };
     }
     const filter = (reaction, user) => {
@@ -175,6 +177,7 @@ client.on("messageCreate", (message) => {
   if (command === "points") {
     return message.reply(`You currently have ${score.points} points!`);
   } // You can modify the code below to remove points from the mentioned user as well!
+
   if (command === "give") {
     // Limited to guild owner - adjust to your own preference!
     if (
@@ -205,6 +208,7 @@ client.on("messageCreate", (message) => {
         username: message.author.username,
         guild: message.guild.id,
         points: 0,
+        prestige: 0,
       };
     }
     userScore.points += pointsToAdd;
@@ -247,6 +251,7 @@ client.on("messageCreate", (message) => {
         username: user.username,
         guild: message.guild.id,
         points: 0,
+        prestige: 0,
       };
     }
     userScore.points -= pointsToRemove;
@@ -278,10 +283,36 @@ client.on("messageCreate", (message) => {
         username: user.username,
         guild: message.guild.id,
         points: 0,
+        prestige: 0,
       };
       client.setScore.run(userScore);
     }
     return message.channel.send(`${user.tag} has ${userScore.points} points`);
+  }
+
+  if (command === "level") {
+    const user =
+      message.mentions.users.first() || client.users.cache.get(args[0]);
+    console.log(user);
+    if (!user)
+      return message.reply("You must mention someone or give their ID!");
+    let userScore = client.getScore.get(user.id, message.guild.id);
+    if (!userScore) {
+      console.log("HERE");
+
+      userScore = {
+        id: `${message.guild.id}-${user.id}`,
+        user: user.id,
+        username: user.username,
+        guild: message.guild.id,
+        points: 0,
+        prestige: 0,
+      };
+      client.setScore.run(userScore);
+    }
+    return message.channel.send(
+      `${user.tag} is prestige level ${userScore.prestige}`
+    );
   }
 
   function ComparePoints() {
@@ -289,9 +320,9 @@ client.on("messageCreate", (message) => {
       message.mentions.users.first() || client.users.cache.get(args[0]);
     if (!user) return undefined;
     // doesn't let you duel yourself
-    // if (user.id === message.author.id) {
-    //   return undefined;
-    // }
+    if (user.id === message.author.id) {
+      return undefined;
+    }
     let authorScore = client.getScore.get(message.author.id, message.guild.id);
     let userScore = client.getScore.get(user.id, message.guild.id);
     if (!userScore) {
@@ -301,6 +332,7 @@ client.on("messageCreate", (message) => {
         username: user.username,
         guild: message.guild.id,
         points: 0,
+        prestige: 0,
       };
       client.setScore.run(userScore);
     }
@@ -315,6 +347,45 @@ client.on("messageCreate", (message) => {
     // console.log(pointsArray[0]);
     return message.channel.send(
       `${pointsArray[0].username} has ${pointsArray[0].points} points, while ${pointsArray[1].username} has ${pointsArray[1].points} points.`
+    );
+  }
+
+  if (command === "donate") {
+    let amount = parseInt(args[1], 10);
+    let pointsArray = ComparePoints();
+    if (pointsArray === undefined) {
+      return message.reply("You must mention someone or give their ID!");
+    }
+    let p1 = pointsArray[0];
+    let p2 = pointsArray[1];
+    if (!amount || amount <= 0) {
+      return message.reply("You need to specify how many points to donate");
+    }
+    if (p1.points < amount) {
+      return message.reply("You don't have that many points to donate");
+    }
+
+    p1.points -= amount;
+    p2.points += amount;
+    client.setScore.run(p1);
+    client.setScore.run(p2);
+    return message.reply(
+      `${p1.username} has donated ${amount} points to ${p2.username}`
+    );
+  }
+
+  if (command === "prestige") {
+    if (score.points < prestigeRequirement) {
+      return message.reply(
+        `You need ${prestigeRequirement} points in order to Prestige!`
+      );
+    }
+
+    score.points = 1;
+    score.prestige += 1;
+    client.setScore.run(score);
+    return message.reply(
+      `${score.username} prestiged to level ${score.prestige}`
     );
   }
 
@@ -395,44 +466,6 @@ client.on("messageCreate", (message) => {
     });
   }
 
-  // function Duel(p1, p2, message) {
-  //   const result = Math.random() < 0.5;
-  //   message.channel.send("hi lol");
-  //   if (result) {
-  //     return { winner: p1, loser: p2 };
-  //   } else {
-  //     return { winner: p2, loser: p1 };
-  //   }
-  // }
-
-  let p1 = {
-    name: "Jet",
-    hp: 100,
-    weapon: "",
-  };
-  let p2 = {
-    name: "Steven",
-    hp: 100,
-    weapon: "",
-  };
-
-  // if (command === "test2") {
-  //   BetterDuel(p1, p2, message);
-  // }
-
-  // function BetterDuel(p1, p2, message) {
-  //   //first init health values
-  //   Player1 = {
-  //     name: p1.username,
-  //     hp: 100,
-  //   };
-  //   Player2 = {
-  //     name: p2.username,
-  //     hp: 100,
-  //   };
-
-  // }
-
   if (command === "leaderboard") {
     const top10 = sql
       .prepare(
@@ -454,7 +487,7 @@ client.on("messageCreate", (message) => {
 
       embed.addFields({
         name: data.username,
-        value: `${data.points} points`,
+        value: `${data.points} points | Prestige ${data.prestige}`,
       });
     }
     return message.channel.send({ embeds: [embed] });

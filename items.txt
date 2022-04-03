@@ -1,0 +1,103 @@
+ weapons {
+     common [
+         25
+         Sword
+         Mace
+         Knife
+         Golf Club
+         M3D'd can of beans
+         Baseball bat
+         Boomerang
+         Duck
+         brass Knuckles
+         axe
+         shovel
+         handgun
+         wet paper bag
+         stick
+         spatula
+         shield
+         cardboard box
+         rock
+         piece of wood
+        a stick of deodorant
+        ps3 controller
+        screwdriver
+        fork
+        pool noodle
+        mcdonalds sprite
+
+
+     ],
+     rare [
+         25
+         barbed bat
+         greatsword
+         katana
+         Kunai
+         Keyblade
+         Bicycle
+         Ninja Dagger
+         Label
+         Laser Rifle
+         crossbow
+         sickle
+         nunchunks
+         shotgun
+         battle axe
+         great sword
+         playstation 5
+         copy of KOF
+         Gabe's amongus plush
+         walmart shopping cart
+         nakk's fight stick
+         cinderblock
+         energy sword
+         slash's popeyes order
+         black air force 1's
+         hammer
+     ].
+     legendary [
+         25
+         Kerra
+         bazooka
+         scythe
+         incredible hulk gloves
+         NERF Fortnite AR-L Elite Dart Blaster
+         Kaio's Jar
+         Mickey Mouse Gun
+         can of Four Loko
+         Chasem's hand grenade
+         Seraph's Hatred
+         bag of Taco Johns
+         super hat
+         flight ticket to Brazil
+         mclovins pc
+         hooks chair
+         trazacs lasso
+         Yenice's liver
+         Razor Scooter
+         Meat Mountain
+         Disco's wallet
+         Juicy's porn collection
+         mickey mouse sword
+         airfryer
+        nuggets stepladder
+        pitinns visa card
+     ]
+ }
+
+ items {
+     common [
+      stick of deodorant 
+     ],
+     rare [
+        slash's popeyes order
+     ].
+     legendary [
+         Meat Mountain
+         Disco's wallet
+         Juicy's porn collection
+         culvers burger
+     ]
+ }
