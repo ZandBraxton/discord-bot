@@ -19,7 +19,8 @@ const client = new Client({
     "GUILDS",
   ],
 });
-const config = require("./config.json");
+// const config = require("./config.json");
+require("dotenv").config();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite("./scores.sqlite");
 const { BetterDuel } = require("./duel");
@@ -73,17 +74,8 @@ client.on("ready", () => {
 
 client.on("messageCreate", (message) => {
   if (message.author.bot) return;
-  // if (message.content.indexOf(config.prefix) === 0) {
-  //   console.log("return");
-  //   return;
-  // }
+
   let score;
-  // const omegalulEmoji = message.guild.emojis.cache.find(
-  //   (emoji) => emoji.name.toLocaleLowerCase() === "omegalul"
-  // );
-  // const missEmoji = message.guild.emojis.cache.find(
-  //   (emoji) => emoji.name.toLocaleLowerCase === "acompletemiss"
-  // );
 
   if (message.guild) {
     score = client.getScore.get(message.author.id, message.guild.id);
@@ -168,9 +160,12 @@ client.on("messageCreate", (message) => {
     // }
     client.setScore.run(score);
   }
-  if (message.content.indexOf(config.prefix) !== 0) return;
+  if (message.content.indexOf(process.env.PREFIX) !== 0) return;
 
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  const args = message.content
+    .slice(process.env.PREFIX.length)
+    .trim()
+    .split(/ +/g);
   const command = args.shift().toLowerCase();
 
   // Command-specific code here!
@@ -499,4 +494,4 @@ function duelCheck() {
 }
 
 // Login to Discord with your client's token
-client.login(config.token);
+client.login(process.env.BOT_TOKEN);
