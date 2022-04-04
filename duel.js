@@ -346,7 +346,7 @@ function getEventResult(event, attacker, defender, message) {
   if (hit <= event.accuracy) {
     let strike = calculateDamage(event.minDamage, event.maxDamage, null);
     let result = Math.random() < 0.5;
-    if (event.type === heal) {
+    if (event.type === "heal") {
       if (result) {
         message.channel.send(`${attacker.name} was healed for ${strike} hp!`);
         attacker.hp += strike;

@@ -170,7 +170,7 @@
         "type": "melee",
         "minDamage": 3,
         "maxDamage": 4,
-        "critChance": 40,
+        "critChance": 75,
         "accuracy": 90,
         "breakChance": 18,
         "special": null
@@ -227,9 +227,9 @@
         "itemId": 20,
         "name": "stick of deodorant",
         "type": "melee",
-        "minDamage": 2,
-        "maxDamage": 4,
-        "critChance": 20,
+        "minDamage": 3,
+        "maxDamage": 5,
+        "critChance": 30,
         "accuracy": 95,
         "breakChance": 20,
         "special": null
@@ -492,9 +492,9 @@
         "itemId": 17,
         "name": "Amongus Plush",
         "type": "melee",
-        "minDamage": 2,
-        "maxDamage": 3,
-        "critChance": 70,
+        "minDamage": 3,
+        "maxDamage": 4,
+        "critChance": 99,
         "accuracy": 90,
         "breakChance": 30,
         "special": null
@@ -689,7 +689,14 @@
         "critChance": 60,
         "accuracy": 65,
         "breakChance": 40,
-        "special": null
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "Tron Maker",
+          "value": 20,
+          "message": "Those potato oles are seriously delicious!",
+          "message-effect": "healed for 20hp!"
+        }
       },
       {
         "itemId": 8,
@@ -1294,12 +1301,12 @@
       "miss": "He misses every shot, a faint **HELLO?** can be heard in the distance",
       "minDamage": 40,
       "maxDamage": 80,
-      "accuracy": 30,
+      "accuracy": 5,
       "type": "damage"
     },
     {
       "eventId": 30,
-      "message": "**Mickey Mimic Tron pulls equips his visor!**",
+      "message": "**Mickey Mimic Tron equips his visor!**",
       "attack": "*The power of a thousand ratios charges from within*",
       "miss": "While charging he spots a nearby lake, he decides to go fishing instead",
       "minDamage": 40,
@@ -1390,16 +1397,6 @@
     },
     {
       "eventId": 39,
-      "message": "**Mickey Mimic Trashboat steers his boat through the battle!**",
-      "attack": "*Rumor says he's searching for the one piece*",
-      "miss": "He sinks his ship while trying to fistbump the duelists",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
-      "type": "damage"
-    },
-    {
-      "eventId": 40,
       "message": "**Mickey Mimic Nugget says what's up!**",
       "attack": "*He's waiting for an answer, patiently*",
       "miss": "Nobody answers, he decides to go bomb Hats house",
@@ -1409,7 +1406,7 @@
       "type": "heal"
     },
     {
-      "eventId": 41,
+      "eventId": 40,
       "message": "**Mickey Mimic Jesse pulls up to scrap!**",
       "attack": "*He's got a lot of homework so he can't really stay long*",
       "miss": "He leaves after 24 seconds to go do homework",
@@ -1419,7 +1416,7 @@
       "type": "damage"
     },
     {
-      "eventId": 42,
+      "eventId": 41,
       "message": "**Mickey Mimic Trazac plows through the battlefield!**",
       "attack": "*His tractor is made out of solid gold*",
       "miss": "He bullies the duelists till he's bored and then goes back to the ranch",
@@ -1429,7 +1426,7 @@
       "type": "damage"
     },
     {
-      "eventId": 43,
+      "eventId": 42,
       "message": "**Lightning strikes down as LowTierGod appears in the sky!**",
       "attack": "*The duelists look up like the summer ants they are*",
       "miss": "By the grace of Allah the duelists are spared as LTG rage quits",
