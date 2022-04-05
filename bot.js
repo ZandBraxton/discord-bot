@@ -21,15 +21,11 @@ const discordClient = new Client({
 });
 const db = require("./database");
 
-// const config = require("./config.json");
 require("dotenv").config();
-// const SQLite = require("better-sqlite3");
-// const sql = new SQLite("./scores.sqlite");
 const { BetterDuel } = require("./duel");
 let duelRunning = {};
 const prestigeRequirement = 5000;
 
-// When the discordClient is ready, run this code (only once)
 discordClient.on("ready", () => {
   const Guilds = discordClient.guilds.cache.map((guild) => guild.id);
 
@@ -38,8 +34,8 @@ discordClient.on("ready", () => {
 
 discordClient.on("messageCreate", async (message) => {
   if (
-    // message.channelId === "960715020898029588" ||
-    // message.channelId === "959230884475719760" ||
+    message.channelId === "960715020898029588" ||
+    message.channelId === "959230884475719760" ||
     message.channelId === "958465258178109530"
   ) {
     if (message.author.bot) return;
@@ -127,13 +123,11 @@ discordClient.on("messageCreate", async (message) => {
       .split(/ +/g);
     const command = args.shift().toLowerCase();
 
-    // Command-specific code here!
     if (command === "points") {
       return message.reply(`You currently have ${score.points} points!`);
-    } // You can modify the code below to remove points from the mentioned user as well!
+    }
 
     if (command === "give") {
-      // Limited to guild owner - adjust to your own preference!
       if (
         !message.member.roles.cache.some(
           (role) => role.name === "Mods" || role.name === "Jr Mod"
@@ -192,7 +186,6 @@ discordClient.on("messageCreate", async (message) => {
     }
 
     if (command === "remove") {
-      // Limited to guild owner - adjust to your own preference!
       if (
         !message.member.roles.cache.some(
           (role) => role.name === "Mods" || role.name === "Jr Mod"
@@ -210,7 +203,6 @@ discordClient.on("messageCreate", async (message) => {
       if (!pointsToRemove)
         return message.reply("You didn't tell me how many points to remove...");
 
-      // Get their current points.
       let userScore;
       await db
         .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
@@ -219,7 +211,6 @@ discordClient.on("messageCreate", async (message) => {
         ])
         .then((res) => (userScore = res.rows[0]));
 
-      // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
@@ -235,7 +226,6 @@ discordClient.on("messageCreate", async (message) => {
         userScore.points = 0;
       }
 
-      // And we save it!
       await db.query(
         "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
         [
@@ -254,7 +244,6 @@ discordClient.on("messageCreate", async (message) => {
     }
 
     if (command === "drop") {
-      // Limited to guild owner - adjust to your own preference!
       let clickedDrop = [];
       if (
         !message.member.roles.cache.some(
@@ -302,7 +291,6 @@ discordClient.on("messageCreate", async (message) => {
             .then((res) => (userScore = res.rows[0]));
           userScore;
 
-          // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
           if (!userScore) {
             userScore = {
               id: `${message.guild.id}-${user.id}`,
@@ -315,7 +303,6 @@ discordClient.on("messageCreate", async (message) => {
           }
           userScore.points += amount;
 
-          // And we save it!
           await db.query(
             "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
             [
@@ -352,7 +339,6 @@ discordClient.on("messageCreate", async (message) => {
         ])
         .then((res) => (userScore = res.rows[0]));
 
-      // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
@@ -391,7 +377,6 @@ discordClient.on("messageCreate", async (message) => {
         ])
         .then((res) => (userScore = res.rows[0]));
 
-      // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
@@ -424,9 +409,9 @@ discordClient.on("messageCreate", async (message) => {
         discordClient.users.cache.get(args[0]);
       if (!user) return undefined;
       // doesn't let you duel yourself
-      // if (user.id === message.author.id) {
-      //   return undefined;
-      // }
+      if (user.id === message.author.id) {
+        return undefined;
+      }
       let authorScore;
       await db
         .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
@@ -443,7 +428,6 @@ discordClient.on("messageCreate", async (message) => {
         ])
         .then((res) => (userScore = res.rows[0]));
 
-      // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
@@ -455,7 +439,6 @@ discordClient.on("messageCreate", async (message) => {
         };
       }
 
-      // And we save it!
       await db.query(
         "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
         [
@@ -612,7 +595,6 @@ discordClient.on("messageCreate", async (message) => {
         if (message.user.id === p2.userid && message.customId === accept) {
           message.channel.send("Then let the duel commence");
           collector.stop("user accepted");
-          //duel function
           duelRunning[channelCheck] = true;
           await BetterDuel(
             p1,

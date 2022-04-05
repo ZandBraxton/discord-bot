@@ -159,31 +159,31 @@ function Battle(attacker, defender, message) {
         ` **${attacker.name}**(${attacker.hp}HP) attacks! HOWEVER!, **${defender.name}**(${defender.hp}HP) evades it!`
       );
     } else if (defender.weapon.special !== null) {
-      if (
-        defender.weapon.special["type"] === "block" &&
-        hit <= defender.weapon.special["value"]
-      ) {
-        message.channel.send(
-          ` **${attacker.name}**(${attacker.hp}HP) attacks! HOWEVER!, **${defender.name}**(${defender.hp}HP) ${defender.weapon.special["message"]}!`
-        );
-        defender.weapon.special["value"] -= 5;
-      } else {
-        let strike = calculateDamage(
-          attacker.weapon.minDamage,
-          attacker.weapon.maxDamage,
-          attacker.weapon.critChance
-        );
-        if (strike.criticalHit === true) {
+      if (defender.weapon.special["type"] === "block") {
+        defender.usedShield = defender.weapon.special["value"];
+        if (hit <= defender.usedShield) {
           message.channel.send(
-            `Critical hit! **${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for **${strike.dmg}** damage!`
+            ` **${attacker.name}**(${attacker.hp}HP) attacks! HOWEVER!, **${defender.name}**(${defender.hp}HP) ${defender.weapon.special["message"]}!`
           );
+          defender.usedShield -= 5;
         } else {
-          message.channel.send(
-            `**${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for ${strike.dmg} damage!`
+          let strike = calculateDamage(
+            attacker.weapon.minDamage,
+            attacker.weapon.maxDamage,
+            attacker.weapon.critChance
           );
+          if (strike.criticalHit === true) {
+            message.channel.send(
+              `Critical hit! **${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for **${strike.dmg}** damage!`
+            );
+          } else {
+            message.channel.send(
+              `**${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for ${strike.dmg} damage!`
+            );
+          }
+          defender.hp -= strike.dmg;
+          defender.evadeChance += 2;
         }
-        defender.hp -= strike.dmg;
-        defender.evadeChance += 2;
       }
     } else {
       let strike = calculateDamage(
@@ -213,7 +213,7 @@ function Battle(attacker, defender, message) {
   if (attacker.weapon.special !== null) {
     if (
       attacker.weapon.special["trigger-name"] === attacker.name &&
-      attacker.weapon.special["used"] === false
+      attacker.usedSpecial === false
     ) {
       if (attacker.weapon.special["type"] === "damage") {
         message.channel.send(
@@ -223,7 +223,7 @@ function Battle(attacker, defender, message) {
         message.channel.send(
           `**${defender.name}**(${defender.hp}HP) ${attacker.weapon.special["message-effect"]}`
         );
-        attacker.weapon.special["used"] = true;
+        attacker.usedSpecial = true;
         defender.hp -= attacker.weapon.special["value"];
       } else if (attacker.weapon.special["type"] === "heal") {
         message.channel.send(
@@ -233,14 +233,14 @@ function Battle(attacker, defender, message) {
         message.channel.send(
           `**${attacker.name}**(${attacker.hp}HP) ${attacker.weapon.special["message-effect"]}`
         );
-        attacker.weapon.special["used"] = true;
+        attacker.usedSpecial = true;
         attacker.hp += attacker.weapon.special["value"];
       }
     }
   } else if (defender.weapon.special !== null) {
     if (
       defender.weapon.special["trigger-name"] === defender.name &&
-      defender.weapon.special["used"] === false
+      defender.usedSpecial === false
     ) {
       if (defender.weapon.special["type"] === "heal") {
         message.channel.send(
@@ -250,7 +250,7 @@ function Battle(attacker, defender, message) {
         message.channel.send(
           `**${defender.name}**(${defender.hp}HP) ${defender.weapon.special["message-effect"]}`
         );
-        defender.weapon.special["used"] = true;
+        defender.usedSpecial = true;
         defender.hp += defender.weapon.special["value"];
       }
     }
@@ -427,6 +427,8 @@ async function BetterDuel(p1, p2, message, db, amount, duelCheck) {
     weapon: "",
     attacking: false,
     evadeChance: 2,
+    usedSpecial: false,
+    usedShield: 0,
   };
   let Player2 = {
     name: p2.username,
@@ -434,6 +436,8 @@ async function BetterDuel(p1, p2, message, db, amount, duelCheck) {
     weapon: "",
     attacking: false,
     evadeChance: 2,
+    usedSpecial: false,
+    usedShield: 0,
   };
   let result = Math.random() < 0.5;
   if (result) {
