@@ -328,9 +328,9 @@ client.on("messageCreate", (message) => {
       message.mentions.users.first() || client.users.cache.get(args[0]);
     if (!user) return undefined;
     // doesn't let you duel yourself
-    // if (user.id === message.author.id) {
-    //   return undefined;
-    // }
+    if (user.id === message.author.id) {
+      return undefined;
+    }
     let authorScore = client.getScore.get(message.author.id, message.guild.id);
     let userScore = client.getScore.get(user.id, message.guild.id);
     if (!userScore) {
