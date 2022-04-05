@@ -105,12 +105,12 @@ function getWeapon(Player1, Player2, message) {
   }
 }
 
-function Turn(Player1, Player2, message, client, p1, p2, amount, duelCheck) {
+async function Turn(Player1, Player2, message, db, p1, p2, amount, duelCheck) {
   if (Player1.hp <= 0) {
     message.channel.send(
       `**${Player2.name}** wins! **${Player1.name}** handed over ${amount} points`
     );
-    gameOver(Player2, message, client, p1, p2, amount);
+    await gameOver(Player2, message, db, p1, p2, amount);
     duelCheck(message.channelId);
     return;
   }
@@ -118,13 +118,13 @@ function Turn(Player1, Player2, message, client, p1, p2, amount, duelCheck) {
     message.channel.send(
       `**${Player1.name}** wins! **${Player2.name}** handed over ${amount} points`
     );
-    gameOver(Player1, message, client, p1, p2, amount);
+    await gameOver(Player1, message, db, p1, p2, amount);
     duelCheck(message.channelId);
     return;
   }
   let eventChance = randomInt(100) + 1;
   if (eventChance < 5) {
-    randomEvent(Player1, Player2, message, client, p1, p2, amount, duelCheck);
+    randomEvent(Player1, Player2, message, db, p1, p2, amount, duelCheck);
     return;
   } else {
     if (Player1.attacking === true) {
@@ -148,7 +148,7 @@ function Turn(Player1, Player2, message, client, p1, p2, amount, duelCheck) {
     }
   }
 
-  Round(Player1, Player2, message, client, p1, p2, amount, duelCheck);
+  Round(Player1, Player2, message, db, p1, p2, amount, duelCheck);
 }
 
 function Battle(attacker, defender, message) {
@@ -276,16 +276,28 @@ function Battle(attacker, defender, message) {
   }
 }
 
-function Round(Player1, Player2, message, client, p1, p2, amount, duelCheck) {
+function Round(Player1, Player2, message, db, p1, p2, amount, duelCheck) {
   getWeapon(Player1, Player2, message);
   setTimeout(() => {
-    Turn(Player1, Player2, message, client, p1, p2, amount, duelCheck);
+    Turn(Player1, Player2, message, db, p1, p2, amount, duelCheck);
   }, 2500);
 }
 
-function gameOver(winner, message, client, p1, p2, amount) {
-  let newP1 = client.getScore.get(p1.user, p1.guild);
-  let newP2 = client.getScore.get(p2.user, p1.guild);
+async function gameOver(winner, message, db, p1, p2, amount) {
+  await db
+    .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+      p1.userid,
+      p1.guild,
+    ])
+    .then((res) => (newP1 = res.rows[0]));
+
+  await db
+    .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+      p2.userid,
+      p2.guild,
+    ])
+    .then((res) => (newP2 = res.rows[0]));
+
   switch (winner.name) {
     case p1.username:
       newP1.points += amount;
@@ -293,8 +305,29 @@ function gameOver(winner, message, client, p1, p2, amount) {
       if (newP2.points < 0) {
         newP2.points = 0;
       }
-      client.setScore.run(newP1);
-      client.setScore.run(newP2);
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          newP1.id,
+          newP1.userid,
+          newP1.username,
+          newP1.guild,
+          newP1.points,
+          newP1.prestige,
+        ]
+      );
+
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          newP2.id,
+          newP2.userid,
+          newP2.username,
+          newP2.guild,
+          newP2.points,
+          newP2.prestige,
+        ]
+      );
       break;
     case p2.username:
       newP2.points += amount;
@@ -302,8 +335,29 @@ function gameOver(winner, message, client, p1, p2, amount) {
       if (newP2.points < 0) {
         newP2.points = 0;
       }
-      client.setScore.run(newP1);
-      client.setScore.run(newP2);
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          newP1.id,
+          newP1.userid,
+          newP1.username,
+          newP1.guild,
+          newP1.points,
+          newP1.prestige,
+        ]
+      );
+
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          newP2.id,
+          newP2.userid,
+          newP2.username,
+          newP2.guild,
+          newP2.points,
+          newP2.prestige,
+        ]
+      );
       break;
     default:
       break;
@@ -324,16 +378,7 @@ function getHP(amount) {
   }
 }
 
-function randomEvent(
-  Player1,
-  Player2,
-  message,
-  client,
-  p1,
-  p2,
-  amount,
-  duelCheck
-) {
+function randomEvent(Player1, Player2, message, db, p1, p2, amount, duelCheck) {
   let event = getRandomEvent(duelItems.events.length);
   message.channel.send(`**!!! EVENT !!!**`);
   setTimeout(() => {
@@ -341,7 +386,7 @@ function randomEvent(
     message.channel.send(`${event.attack}`);
     setTimeout(() => {
       getEventResult(event, Player1, Player2, message);
-      Round(Player1, Player2, message, client, p1, p2, amount, duelCheck);
+      Round(Player1, Player2, message, db, p1, p2, amount, duelCheck);
     }, 2000);
   }, 1000);
 }
@@ -374,7 +419,7 @@ function getEventResult(event, attacker, defender, message) {
   }
 }
 
-function BetterDuel(p1, p2, message, client, amount, duelCheck) {
+async function BetterDuel(p1, p2, message, db, amount, duelCheck) {
   let hp = getHP(amount);
   let Player1 = {
     name: p1.username,
@@ -397,7 +442,7 @@ function BetterDuel(p1, p2, message, client, amount, duelCheck) {
     Player2.attacking = true;
   }
   setTimeout(() => {
-    Round(Player1, Player2, message, client, p1, p2, amount, duelCheck);
+    Round(Player1, Player2, message, db, p1, p2, amount, duelCheck);
   }, 1000);
 }
 

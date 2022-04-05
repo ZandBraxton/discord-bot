@@ -11,7 +11,7 @@ const {
   MessageComponentInteraction,
 } = require("discord.js");
 const { v4: uuidv4 } = require("uuid");
-const client = new Client({
+const discordClient = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
@@ -19,75 +19,46 @@ const client = new Client({
     "GUILDS",
   ],
 });
+const db = require("./database");
+
 // const config = require("./config.json");
 require("dotenv").config();
-const SQLite = require("better-sqlite3");
-const sql = new SQLite("./scores.sqlite");
+// const SQLite = require("better-sqlite3");
+// const sql = new SQLite("./scores.sqlite");
 const { BetterDuel } = require("./duel");
 let duelRunning = {};
 const prestigeRequirement = 5000;
 
-// When the client is ready, run this code (only once)
-client.on("ready", () => {
-  const Guilds = client.guilds.cache.map((guild) => guild.id);
-  // Check if the table "points" exists.
-  const table = sql
-    .prepare(
-      "SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';"
-    )
-    .get();
-  if (!table["count(*)"]) {
-    // If the table isn't there, create it and setup the database correctly.
-    sql
-      .prepare(
-        "CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, username TEXT, guild TEXT, points INTEGER, prestige INTEGER);"
-      )
-      .run();
-    // Ensure that the "id" row is always unique and indexed.
-    sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (id);").run();
-    sql.pragma("synchronous = 1");
-    sql.pragma("journal_mode = wal");
-  }
+// When the discordClient is ready, run this code (only once)
+discordClient.on("ready", () => {
+  const Guilds = discordClient.guilds.cache.map((guild) => guild.id);
 
-  // And then we have two prepared statements to get and set the score data.
-  client.getScore = sql.prepare(
-    "SELECT * FROM scores WHERE user = ? AND guild = ?"
-  );
-  client.setScore = sql.prepare(
-    "INSERT OR REPLACE INTO scores (id, user, username, guild, points, prestige) VALUES (@id, @user, @username, @guild, @points, @prestige);"
-  );
-
-  // client.updateScore = sql.prepare(
-
-  // )
   console.log("ready!");
 });
 
-// client.on("messageCreate", (message) => {
-//   if (message.content.includes("sara jay")) {
-//     message.reply({
-//       content: "Did you mean triple h?",
-//     });
-//   }
-// });
-
-client.on("messageCreate", (message) => {
+discordClient.on("messageCreate", async (message) => {
   if (
-    message.channelId === "960715020898029588" ||
-    message.channelId === "959230884475719760" ||
+    // message.channelId === "960715020898029588" ||
+    // message.channelId === "959230884475719760" ||
     message.channelId === "958465258178109530"
   ) {
     if (message.author.bot) return;
+
     let score;
 
+    await db
+      .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
+        message.author.username,
+        message.guild.id,
+      ])
+      .then((res) => (score = res.rows[0]));
+
     if (message.guild) {
-      score = client.getScore.get(message.author.id, message.guild.id);
       let points = 0;
-      // x = score.points;
       if (!score) {
         score = {
           id: `${message.guild.id}-${message.author.id}`,
-          user: message.author.id,
+          userid: message.author.id,
           username: message.author.username,
           guild: message.guild.id,
           points: 1,
@@ -100,8 +71,8 @@ client.on("messageCreate", (message) => {
         );
       };
 
-      message.awaitReactions({ filter, time: 20000 }).then((collected) => {
-        collected.forEach((reaction) => {
+      message.awaitReactions({ filter, time: 5000 }).then(async (collected) => {
+        collected.forEach(async (reaction) => {
           if (reaction.emoji.name.toLocaleLowerCase() === "omegalul") {
             points += reaction.count * 2;
           } else if (reaction.emoji.name.toLocaleLowerCase() === "😭") {
@@ -114,13 +85,39 @@ client.on("messageCreate", (message) => {
         if (score.points < 0) {
           score.points = 0;
         }
-        score = client.getScore.get(message.author.id, message.guild.id);
+        await db
+          .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
+            message.author.username,
+            message.guild.id,
+          ])
+          .then((res) => (score = res.rows[0]));
+
         score.points += points;
 
-        client.setScore.run(score);
+        await db.query(
+          "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+          [
+            score.id,
+            score.userid,
+            score.username,
+            score.guild,
+            score.points,
+            score.prestige,
+          ]
+        );
       });
 
-      client.setScore.run(score);
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          score.id,
+          score.userid,
+          score.username,
+          score.guild,
+          score.points,
+          score.prestige,
+        ]
+      );
     }
     if (message.content.indexOf(process.env.PREFIX) !== 0) return;
 
@@ -145,7 +142,8 @@ client.on("messageCreate", (message) => {
         return message.reply("Only mods can give points to other users");
 
       const user =
-        message.mentions.users.first() || client.users.cache.get(args[0]);
+        message.mentions.users.first() ||
+        discordClient.users.cache.get(args[0]);
       if (!user)
         return message.reply("You must mention someone or give their ID!");
 
@@ -154,13 +152,19 @@ client.on("messageCreate", (message) => {
         return message.reply("You didn't tell me how many points to give...");
 
       // Get their current points.
-      let userScore = client.getScore.get(user.id, message.guild.id);
+      let userScore;
+      await db
+        .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
+          message.author.username,
+          message.guild.id,
+        ])
+        .then((res) => (userScore = res.rows[0]));
 
       // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
-          user: user.id,
+          userid: user.id,
           username: message.author.username,
           guild: message.guild.id,
           points: 0,
@@ -170,7 +174,17 @@ client.on("messageCreate", (message) => {
       userScore.points += pointsToAdd;
 
       // And we save it!
-      client.setScore.run(userScore);
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          userScore.id,
+          userScore.userid,
+          userScore.username,
+          userScore.guild,
+          userScore.points,
+          userScore.prestige,
+        ]
+      );
 
       return message.channel.send(
         `${user.tag} has received ${pointsToAdd} points and now stands at ${userScore.points} points.`
@@ -187,7 +201,8 @@ client.on("messageCreate", (message) => {
         return message.reply("Only mods can remove points of other users");
 
       const user =
-        message.mentions.users.first() || client.users.cache.get(args[0]);
+        message.mentions.users.first() ||
+        discordClient.users.cache.get(args[0]);
       if (!user)
         return message.reply("You must mention someone or give their ID!");
 
@@ -196,14 +211,20 @@ client.on("messageCreate", (message) => {
         return message.reply("You didn't tell me how many points to remove...");
 
       // Get their current points.
-      let userScore = client.getScore.get(user.id, message.guild.id);
+      let userScore;
+      await db
+        .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
+          message.author.username,
+          message.guild.id,
+        ])
+        .then((res) => (userScore = res.rows[0]));
 
       // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
-          user: user.id,
-          username: user.username,
+          userid: user.id,
+          username: message.author.username,
           guild: message.guild.id,
           points: 0,
           prestige: 0,
@@ -215,7 +236,17 @@ client.on("messageCreate", (message) => {
       }
 
       // And we save it!
-      client.setScore.run(userScore);
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          userScore.id,
+          userScore.userid,
+          userScore.username,
+          userScore.guild,
+          userScore.points,
+          userScore.prestige,
+        ]
+      );
 
       return message.channel.send(
         `${user.tag} has lost ${pointsToRemove} points and now stands at ${userScore.points} points.`
@@ -262,14 +293,20 @@ client.on("messageCreate", (message) => {
       collector.on("collect", async (message) => {
         if (message.customId === claim) {
           clickedDrop.push(message.user.id);
-          let userScore = client.getScore.get(
-            message.user.id,
-            message.guild.id
-          );
+          let userScore;
+          await db
+            .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+              message.user.id,
+              message.guild.id,
+            ])
+            .then((res) => (userScore = res.rows[0]));
+          userScore;
+
+          // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
           if (!userScore) {
             userScore = {
-              id: `${message.guild.id}-${message.user.id}`,
-              user: user.id,
+              id: `${message.guild.id}-${user.id}`,
+              userid: user.id,
               username: message.author.username,
               guild: message.guild.id,
               points: 0,
@@ -277,7 +314,19 @@ client.on("messageCreate", (message) => {
             };
           }
           userScore.points += amount;
-          client.setScore.run(userScore);
+
+          // And we save it!
+          await db.query(
+            "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+            [
+              userScore.id,
+              userScore.userid,
+              userScore.username,
+              userScore.guild,
+              userScore.points,
+              userScore.prestige,
+            ]
+          );
           message.channel.send(
             `${message.user.username} claimed ${amount} points, they now have ${userScore.points} points`
           );
@@ -291,70 +340,133 @@ client.on("messageCreate", (message) => {
 
     if (command === "check") {
       const user =
-        message.mentions.users.first() || client.users.cache.get(args[0]);
+        message.mentions.users.first() ||
+        discordClient.users.cache.get(args[0]);
       if (!user)
         return message.reply("You must mention someone or give their ID!");
-      let userScore = client.getScore.get(user.id, message.guild.id);
+      let userScore;
+      await db
+        .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+          user.id,
+          message.guild.id,
+        ])
+        .then((res) => (userScore = res.rows[0]));
+
+      // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
-          user: user.id,
-          username: user.username,
+          userid: user.id,
+          username: message.author.username,
           guild: message.guild.id,
           points: 0,
           prestige: 0,
         };
-        client.setScore.run(userScore);
+        await db.query(
+          "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+          [
+            userScore.id,
+            userScore.userid,
+            userScore.username,
+            userScore.guild,
+            userScore.points,
+            userScore.prestige,
+          ]
+        );
       }
       return message.channel.send(`${user.tag} has ${userScore.points} points`);
     }
 
     if (command === "level") {
       const user =
-        message.mentions.users.first() || client.users.cache.get(args[0]);
+        message.mentions.users.first() ||
+        discordClient.users.cache.get(args[0]);
       if (!user)
         return message.reply("You must mention someone or give their ID!");
-      let userScore = client.getScore.get(user.id, message.guild.id);
+      let userScore;
+      await db
+        .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+          user.id,
+          message.guild.id,
+        ])
+        .then((res) => (userScore = res.rows[0]));
+
+      // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
-          user: user.id,
-          username: user.username,
+          userid: user.id,
+          username: message.author.username,
           guild: message.guild.id,
           points: 0,
           prestige: 0,
         };
-        client.setScore.run(userScore);
+        await db.query(
+          "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+          [
+            userScore.id,
+            userScore.userid,
+            userScore.username,
+            userScore.guild,
+            userScore.points,
+            userScore.prestige,
+          ]
+        );
       }
       return message.channel.send(
         `${user.tag} is prestige level ${userScore.prestige}`
       );
     }
 
-    function ComparePoints() {
+    async function ComparePoints() {
       const user =
-        message.mentions.users.first() || client.users.cache.get(args[0]);
+        message.mentions.users.first() ||
+        discordClient.users.cache.get(args[0]);
       if (!user) return undefined;
       // doesn't let you duel yourself
-      if (user.id === message.author.id) {
-        return undefined;
-      }
-      let authorScore = client.getScore.get(
-        message.author.id,
-        message.guild.id
-      );
-      let userScore = client.getScore.get(user.id, message.guild.id);
+      // if (user.id === message.author.id) {
+      //   return undefined;
+      // }
+      let authorScore;
+      await db
+        .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+          message.author.id,
+          message.guild.id,
+        ])
+        .then((res) => (authorScore = res.rows[0]));
+
+      let userScore;
+      await db
+        .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+          user.id,
+          message.guild.id,
+        ])
+        .then((res) => (userScore = res.rows[0]));
+
+      // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
-          user: user.id,
-          username: user.username,
+          userid: user.id,
+          username: message.author.username,
           guild: message.guild.id,
           points: 0,
           prestige: 0,
         };
-        client.setScore.run(userScore);
       }
+
+      // And we save it!
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          userScore.id,
+          userScore.userid,
+          userScore.username,
+          userScore.guild,
+          userScore.points,
+          userScore.prestige,
+        ]
+      );
       return [authorScore, userScore];
     }
 
@@ -363,7 +475,7 @@ client.on("messageCreate", (message) => {
     }
 
     if (command === "compare") {
-      let pointsArray = ComparePoints();
+      let pointsArray = await ComparePoints();
       if (pointsArray === undefined) {
         return message.reply("You must mention someone.");
       }
@@ -374,7 +486,7 @@ client.on("messageCreate", (message) => {
 
     if (command === "donate") {
       let amount = parseInt(args[1], 10);
-      let pointsArray = ComparePoints();
+      let pointsArray = await ComparePoints();
       if (pointsArray === undefined) {
         return message.reply("You must mention someone or give their ID!");
       }
@@ -389,8 +501,16 @@ client.on("messageCreate", (message) => {
 
       p1.points -= amount;
       p2.points += amount;
-      client.setScore.run(p1);
-      client.setScore.run(p2);
+
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [p1.id, p1.userid, p1.username, p1.guild, p1.points, p1.prestige]
+      );
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [p2.id, p2.userid, p2.username, p2.guild, p2.points, p2.prestige]
+      );
+
       return message.reply(
         `${p1.username} has donated ${amount} points to ${p2.username}`
       );
@@ -405,7 +525,17 @@ client.on("messageCreate", (message) => {
 
       score.points = 1;
       score.prestige += 1;
-      client.setScore.run(score);
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          score.id,
+          score.userid,
+          score.username,
+          score.guild,
+          score.points,
+          score.prestige,
+        ]
+      );
       return message.reply(
         `${score.username} prestiged to level ${score.prestige}`
       );
@@ -420,7 +550,7 @@ client.on("messageCreate", (message) => {
         return message.channel.send("Another duel is happening!");
       }
       let amount = parseInt(args[1], 10);
-      let pointsArray = ComparePoints();
+      let pointsArray = await ComparePoints();
       if (pointsArray === undefined) {
         return message.channel.send(
           "You must mention someone or give their ID!"
@@ -441,7 +571,7 @@ client.on("messageCreate", (message) => {
           `That is more points than ${p2.username} has`
         );
       }
-      let filter = (i) => i.user.id === p2.user;
+      let filter = (i) => i.user.id === p2.userid;
 
       let accept = uuidv4();
       let decline = uuidv4();
@@ -460,7 +590,7 @@ client.on("messageCreate", (message) => {
         );
 
       message.channel.send({
-        content: `<@${p2.user}> ${p1.username} has challenged you to a duel for ${amount} points, do you accept?`,
+        content: `<@${p2.userid}> ${p1.username} has challenged you to a duel for ${amount} points, do you accept?`,
         components: [row],
       });
 
@@ -479,14 +609,22 @@ client.on("messageCreate", (message) => {
         if (duelRunning[channelCheck] === true) {
           return message.channel.send("Another duel is happening!");
         }
-        if (message.user.id === p2.user && message.customId === accept) {
+        if (message.user.id === p2.userid && message.customId === accept) {
           message.channel.send("Then let the duel commence");
           collector.stop("user accepted");
           //duel function
           duelRunning[channelCheck] = true;
-          BetterDuel(p1, p2, message, client, amount, duelCheck, channelCheck);
+          await BetterDuel(
+            p1,
+            p2,
+            message,
+            db,
+            amount,
+            duelCheck,
+            channelCheck
+          );
         } else if (
-          message.user.id === p2.user &&
+          message.user.id === p2.userid &&
           message.customId === decline
         ) {
           message.channel.send("Challenge Declined");
@@ -503,17 +641,19 @@ client.on("messageCreate", (message) => {
     }
 
     if (command === "leaderboard") {
-      const top10 = sql
-        .prepare(
-          "SELECT * FROM scores WHERE guild = ? ORDER BY points DESC LIMIT 10;"
+      let top10;
+      await db
+        .query(
+          "SELECT * FROM scores WHERE guild = $1 ORDER BY points DESC LIMIT 10",
+          [message.guild.id]
         )
-        .all(message.guild.id);
+        .then((res) => (top10 = res.rows));
 
       const embed = new MessageEmbed()
         .setTitle("Leader board")
         .setAuthor({
-          name: client.user.username,
-          iconUrl: client.user.avatarURL(),
+          name: discordClient.user.username,
+          iconUrl: discordClient.user.avatarURL(),
         })
         .setDescription("Our top 10 points leaders!")
         .setColor(0x00ae86);
@@ -531,5 +671,5 @@ client.on("messageCreate", (message) => {
   }
 });
 
-// Login to Discord with your client's token
-client.login(process.env.BOT_TOKEN);
+// Login to Discord with your discordClient's token
+discordClient.login(process.env.BOT_TOKEN);
