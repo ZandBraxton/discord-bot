@@ -73,9 +73,9 @@ client.on("ready", () => {
 
 client.on("messageCreate", (message) => {
   if (
-    message.channelId !== "960715020898029588" ||
-    message.channelId !== "959230884475719760" ||
-    message.channelId !== "958465258178109530"
+    message.channelId !== 960715020898029588 ||
+    message.channelId !== 959230884475719760 ||
+    message.channelId !== 958465258178109530
   )
     return false;
 
@@ -135,9 +135,9 @@ client.on("messageCreate", (message) => {
   // Command-specific code here!
   if (command === "points") {
     if (
-      message.channelId !== "960715020898029588" ||
-      message.channelId !== "959230884475719760" ||
-      message.channelId !== "958465258178109530"
+      message.channelId !== 960715020898029588 ||
+      message.channelId !== 959230884475719760 ||
+      message.channelId !== 958465258178109530
     )
       return false;
     return message.reply(`You currently have ${score.points} points!`);
@@ -550,9 +550,9 @@ client.on("messageCreate", (message) => {
 
   if (command === "leaderboard") {
     if (
-      message.channelId !== "960715020898029588" ||
-      message.channelId !== "959230884475719760" ||
-      message.channelId !== "958465258178109530"
+      message.channelId !== 960715020898029588 ||
+      message.channelId !== 959230884475719760 ||
+      message.channelId !== 958465258178109530
     )
       return false;
     const top10 = sql
