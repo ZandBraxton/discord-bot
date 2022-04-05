@@ -67,41 +67,43 @@ discordClient.on("messageCreate", async (message) => {
         );
       };
 
-      message.awaitReactions({ filter, time: 5000 }).then(async (collected) => {
-        collected.forEach(async (reaction) => {
-          if (reaction.emoji.name.toLocaleLowerCase() === "omegalul") {
-            points += reaction.count * 2;
-          } else if (reaction.emoji.name.toLocaleLowerCase() === "😭") {
-            points += reaction.count;
-          } else {
-            points -= reaction.count;
+      message
+        .awaitReactions({ filter, time: 20000 })
+        .then(async (collected) => {
+          collected.forEach(async (reaction) => {
+            if (reaction.emoji.name.toLocaleLowerCase() === "omegalul") {
+              points += reaction.count * 2;
+            } else if (reaction.emoji.name.toLocaleLowerCase() === "😭") {
+              points += reaction.count;
+            } else {
+              points -= reaction.count;
+            }
+          });
+
+          if (score.points < 0) {
+            score.points = 0;
           }
+          await db
+            .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
+              message.author.username,
+              message.guild.id,
+            ])
+            .then((res) => (score = res.rows[0]));
+
+          score.points += points;
+
+          await db.query(
+            "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+            [
+              score.id,
+              score.userid,
+              score.username,
+              score.guild,
+              score.points,
+              score.prestige,
+            ]
+          );
         });
-
-        if (score.points < 0) {
-          score.points = 0;
-        }
-        await db
-          .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
-            message.author.username,
-            message.guild.id,
-          ])
-          .then((res) => (score = res.rows[0]));
-
-        score.points += points;
-
-        await db.query(
-          "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
-          [
-            score.id,
-            score.userid,
-            score.username,
-            score.guild,
-            score.points,
-            score.prestige,
-          ]
-        );
-      });
 
       await db.query(
         "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
@@ -159,9 +161,9 @@ discordClient.on("messageCreate", async (message) => {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
           userid: user.id,
-          username: message.author.username,
+          username: user.username,
           guild: message.guild.id,
-          points: 0,
+          points: 1,
           prestige: 0,
         };
       }
@@ -215,9 +217,9 @@ discordClient.on("messageCreate", async (message) => {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
           userid: user.id,
-          username: message.author.username,
+          username: user.username,
           guild: message.guild.id,
-          points: 0,
+          points: 1,
           prestige: 0,
         };
       }
@@ -289,15 +291,14 @@ discordClient.on("messageCreate", async (message) => {
               message.guild.id,
             ])
             .then((res) => (userScore = res.rows[0]));
-          userScore;
 
           if (!userScore) {
             userScore = {
-              id: `${message.guild.id}-${user.id}`,
-              userid: user.id,
-              username: message.author.username,
+              id: `${message.guild.id}-${message.user.id}`,
+              userid: message.user.id,
+              username: message.user.username,
               guild: message.guild.id,
-              points: 0,
+              points: 1,
               prestige: 0,
             };
           }
@@ -345,7 +346,7 @@ discordClient.on("messageCreate", async (message) => {
           userid: user.id,
           username: message.author.username,
           guild: message.guild.id,
-          points: 0,
+          points: 1,
           prestige: 0,
         };
         await db.query(
@@ -434,7 +435,7 @@ discordClient.on("messageCreate", async (message) => {
           userid: user.id,
           username: message.author.username,
           guild: message.guild.id,
-          points: 0,
+          points: 1,
           prestige: 0,
         };
       }
