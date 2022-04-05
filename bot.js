@@ -148,8 +148,8 @@ discordClient.on("messageCreate", async (message) => {
       // Get their current points.
       let userScore;
       await db
-        .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
-          message.author.username,
+        .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+          user.id,
           message.guild.id,
         ])
         .then((res) => (userScore = res.rows[0]));
@@ -205,8 +205,8 @@ discordClient.on("messageCreate", async (message) => {
 
       let userScore;
       await db
-        .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
-          message.author.username,
+        .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+          user.id,
           message.guild.id,
         ])
         .then((res) => (userScore = res.rows[0]));
