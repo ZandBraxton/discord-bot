@@ -13,6 +13,7 @@ const {
 const { v4: uuidv4 } = require("uuid");
 const client = new Client({
   intents: [
+    Intents.FLAGS,
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
