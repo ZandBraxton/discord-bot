@@ -13,7 +13,6 @@ const {
 const { v4: uuidv4 } = require("uuid");
 const client = new Client({
   intents: [
-    Intents.FLAGS,
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
@@ -73,6 +72,13 @@ client.on("ready", () => {
 // });
 
 client.on("messageCreate", (message) => {
+  if (
+    message.channelId !== "960715020898029588" ||
+    message.channelId !== "959230884475719760" ||
+    message.channelId !== "958465258178109530"
+  )
+    return false;
+
   if (message.author.bot) return;
   let score;
 
@@ -128,10 +134,22 @@ client.on("messageCreate", (message) => {
 
   // Command-specific code here!
   if (command === "points") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
     return message.reply(`You currently have ${score.points} points!`);
   } // You can modify the code below to remove points from the mentioned user as well!
 
   if (command === "give") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
     // Limited to guild owner - adjust to your own preference!
     if (
       !message.member.roles.cache.some(
@@ -174,6 +192,12 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "remove") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
     // Limited to guild owner - adjust to your own preference!
     if (
       !message.member.roles.cache.some(
@@ -219,6 +243,12 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "drop") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
     // Limited to guild owner - adjust to your own preference!
     let clickedDrop = [];
     if (
@@ -283,6 +313,12 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "check") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
     const user =
       message.mentions.users.first() || client.users.cache.get(args[0]);
     if (!user)
@@ -303,6 +339,12 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "level") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
     const user =
       message.mentions.users.first() || client.users.cache.get(args[0]);
     if (!user)
@@ -349,6 +391,12 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "compare") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
     let pointsArray = ComparePoints();
     if (pointsArray === undefined) {
       return message.reply("You must mention someone.");
@@ -359,6 +407,12 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "donate") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
     let amount = parseInt(args[1], 10);
     let pointsArray = ComparePoints();
     if (pointsArray === undefined) {
@@ -383,6 +437,13 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "prestige") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
+    return false;
     if (score.points < prestigeRequirement) {
       return message.reply(
         `You need ${prestigeRequirement} points in order to Prestige!`
@@ -398,6 +459,12 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "duel") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
     let channelCheck = message.channelId;
     if (duelRunning[channelCheck] === undefined) {
       duelRunning[channelCheck] = false;
@@ -482,6 +549,12 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "leaderboard") {
+    if (
+      message.channelId !== "960715020898029588" ||
+      message.channelId !== "959230884475719760" ||
+      message.channelId !== "958465258178109530"
+    )
+      return false;
     const top10 = sql
       .prepare(
         "SELECT * FROM scores WHERE guild = ? ORDER BY points DESC LIMIT 10;"
