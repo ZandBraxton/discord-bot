@@ -177,17 +177,17 @@
       },
       {
         "itemId": 16,
-        "name": "Mickey Mouse Shield",
+        "name": "Trash Can Lid",
         "type": "melee",
-        "minDamage": 3,
-        "maxDamage": 5,
-        "critChance": 15,
-        "accuracy": 90,
-        "breakChance": 10,
+        "minDamage": 5,
+        "maxDamage": 6,
+        "critChance": 5,
+        "accuracy": 80,
+        "breakChance": 30,
         "special": {
           "type": "block",
-          "value": 35,
-          "message": "blocked with their shield!"
+          "value": 30,
+          "message": "blocked with the trash can lid!"
         }
       },
       {
@@ -286,6 +286,61 @@
         "maxDamage": 6,
         "critChance": 70,
         "accuracy": 80,
+        "breakChance": 70,
+        "special": null
+      },
+      {
+        "itemId": 26,
+        "name": "bar of Soap",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 5,
+        "critChance": 80,
+        "accuracy": 80,
+        "breakChance": 70,
+        "special": null
+      },
+      {
+        "itemId": 27,
+        "name": "Flashlight",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 8,
+        "critChance": 5,
+        "accuracy": 68,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 27,
+        "name": "Banana",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 6,
+        "critChance": 50,
+        "accuracy": 80,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 28,
+        "name": "Banana",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 6,
+        "critChance": 50,
+        "accuracy": 80,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 29,
+        "name": "Sharpened Pencil",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 5,
+        "critChance": 90,
+        "accuracy": 85,
         "breakChance": 70,
         "special": null
       }
@@ -506,8 +561,8 @@
         "minDamage": 10,
         "maxDamage": 14,
         "critChance": 15,
-        "accuracy": 35,
-        "breakChance": 50,
+        "accuracy": 45,
+        "breakChance": 65,
         "special": null
       },
       {
@@ -519,7 +574,14 @@
         "critChance": 40,
         "accuracy": 80,
         "breakChance": 30,
-        "special": null
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "DiscoWonderland",
+          "value": 20,
+          "message": "Clearly, his opponent didn't own an airfryer",
+          "message-effect": "took an additional 20 damage!"
+        }
       },
       {
         "itemId": 20,
@@ -582,6 +644,61 @@
         "accuracy": 80,
         "breakChance": 35,
         "special": null
+      },
+      {
+        "itemId": 25,
+        "name": "some Yams",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 11,
+        "critChance": 5,
+        "accuracy": 85,
+        "breakChance": 3,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "Jetleechan",
+          "value": 10,
+          "message": "**His mother would be proud",
+          "message-effect": "healed for 10hp!"
+        }
+      },
+      {
+        "itemId": 26,
+        "name": "Skull",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 10,
+        "critChance": 20,
+        "accuracy": 70,
+        "breakChance": 45,
+        "special": null
+      },
+      {
+        "itemId": 27,
+        "name": "Watermelon",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 11,
+        "critChance": 5,
+        "accuracy": 70,
+        "breakChance": 80,
+        "special": null
+      },
+      {
+        "itemId": 16,
+        "name": "Mickey Mouse Shield",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 5,
+        "critChance": 10,
+        "accuracy": 90,
+        "breakChance": 10,
+        "special": {
+          "type": "block",
+          "value": 45,
+          "message": "blocked with their shield!"
+        }
       }
     ],
     "Legendary": [
@@ -1009,6 +1126,96 @@
           "message": "The stack grows larger in **Kshuewhatdamoo's** hands!",
           "message-effect": "took an additional 20 damage!"
         }
+      },
+      {
+        "itemId": 29,
+        "name": "Jack's Timb's",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 14,
+        "critChance": 20,
+        "accuracy": 80,
+        "breakChance": 30,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "JustJack",
+          "value": 20,
+          "message": "Jack slips on the timbs, no socks???",
+          "message-effect": "took an additional 20 damage!"
+        }
+      },
+      {
+        "itemId": 30,
+        "name": "Obm's Yankee cap",
+        "type": "melee",
+        "minDamage": 8,
+        "maxDamage": 13,
+        "critChance": 25,
+        "accuracy": 86,
+        "breakChance": 30,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "ObMm",
+          "value": 20,
+          "message": "He flips the hat backwards, time to get serious",
+          "message-effect": "healed for 20hp!"
+        }
+      },
+      {
+        "itemId": 31,
+        "name": "Disco Hater Wristband",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 6,
+        "critChance": 95,
+        "accuracy": 80,
+        "breakChance": 33,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "plantation3",
+          "value": 20,
+          "message": "Plant slipped on the wristband, it fits like a glove",
+          "message-effect": "healed for 20hp!"
+        }
+      },
+      {
+        "itemId": 32,
+        "name": "Chris's Fedex Package",
+        "type": "melee",
+        "minDamage": 2,
+        "maxDamage": 16,
+        "critChance": 10,
+        "accuracy": 85,
+        "breakChance": 50,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "ChrisB",
+          "value": 20,
+          "message": "Chris repeated bashes his opponents head in with the package",
+          "message-effect": "took an additional 20 damage!"
+        }
+      },
+      {
+        "itemId": 33,
+        "name": "Quzel's Quesadilla",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 11,
+        "critChance": 40,
+        "accuracy": 75,
+        "breakChance": 20,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "Quzel",
+          "value": 20,
+          "message": "**Que el**- I mean **Queso**- BRO **QUZEL** EATS THE QUESADILLA",
+          "message-effect": "healed for 20hp!"
+        }
       }
     ]
   },
@@ -1039,9 +1246,9 @@
       "message": "**Mickey Mimic Chasem powerwalks onto the battlefield and pulls the pin**",
       "attack": "*A massive explosion erupts outwards!*",
       "miss": "Both duelists avoid the explosion and continue over Mickey Mimic Chasem's remains",
-      "minDamage": 30,
-      "maxDamage": 50,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1050,8 +1257,8 @@
       "attack": "*Like two wet noodles flipping about*",
       "miss": "Mickey Mimic Jet trips and then dies",
       "minDamage": 1,
-      "maxDamage": 2,
-      "accuracy": 20,
+      "maxDamage": 3,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1059,9 +1266,9 @@
       "message": "**Mickey Mimic Pitinn falls from the sky like a meteor**",
       "attack": "*His massive dumpy crashes down with a shattering boom*",
       "miss": "Mickey Mimic Pitinn bounces off the ground and launches back into orbit",
-      "minDamage": 27,
-      "maxDamage": 54,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1069,9 +1276,9 @@
       "message": "**Mickey Mimic Seraph warps onto the battlefield**",
       "attack": "*His anime theme starts to play as he draws his blade*",
       "miss": "He ends up cutting himself accidentally and bleeds out",
-      "minDamage": 50,
-      "maxDamage": 100,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1079,9 +1286,9 @@
       "message": "**Mickey Mimic Bubbles calls in a ratio**",
       "attack": "*Deadly omegaluls rain down from the sky*",
       "miss": "It is too much to handle as Mickey Mimic Bubbles is buried alive instead",
-      "minDamage": 30,
-      "maxDamage": 60,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1091,7 +1298,7 @@
       "miss": "The duelists ignore Kshue and he just leaves",
       "minDamage": 1000,
       "maxDamage": 2000,
-      "accuracy": 10,
+      "accuracy": 20,
       "type": "damage"
     },
     {
@@ -1099,9 +1306,9 @@
       "message": "**Mickey Mimic Fortnite dickrides into battle**",
       "attack": "*He tosses lightspeed basketballs at the duelists*",
       "miss": "He misses every shot, just like the heat did against the bucks",
-      "minDamage": 20,
-      "maxDamage": 35,
-      "accuracy": 20,
+      "minDamage": 15,
+      "maxDamage": 25,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1110,7 +1317,7 @@
       "attack": "*A war machine of unparalleled might*",
       "miss": "Both players miraculously survive as Steven's rampage travels to Jet's house",
       "minDamage": 50,
-      "maxDamage": 200,
+      "maxDamage": 100,
       "accuracy": 30,
       "type": "damage"
     },
@@ -1130,8 +1337,8 @@
       "attack": "*It's just Leek in a frozone costume, he launches an assault!*",
       "miss": "He ends up getting bored and goes to olive garden",
       "minDamage": 20,
-      "maxDamage": 50,
-      "accuracy": 30,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1140,8 +1347,8 @@
       "attack": "*He T-Poses on the duelists, striking fear into their hearts*",
       "miss": "A sudden JRPG drops from the sky, saving the duelists as Nakk leaves",
       "minDamage": 20,
-      "maxDamage": 50,
-      "accuracy": 30,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1149,9 +1356,9 @@
       "message": "**Mickey Mimic M3D devours a can of beans!**",
       "attack": "*He attempts to summon forth a storm of shit*",
       "miss": "One of the duelists calls him M1D and he leaves in tears",
-      "minDamage": 70,
-      "maxDamage": 100,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1161,7 +1368,7 @@
       "miss": "The duelists stay perfectly still until he's finally gone",
       "minDamage": 10,
       "maxDamage": 30,
-      "accuracy": 30,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1171,7 +1378,7 @@
       "miss": "Neeko announces she has a bf on twitter, Gabe falls to his knees and dies",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 30,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1179,8 +1386,8 @@
       "message": "**Mickey Mimic Enzo commits a drive-by!**",
       "attack": "*He's drifting while aiming out the window*",
       "miss": "He ends up drifting into a whataburger and explodes",
-      "minDamage": 40,
-      "maxDamage": 80,
+      "minDamage": 20,
+      "maxDamage": 40,
       "accuracy": 30,
       "type": "damage"
     },
@@ -1189,9 +1396,9 @@
       "message": "**Mickey Mimic Senna floats onto the battlefield!**",
       "attack": "*He sucks dick y'all*",
       "miss": "A gateway opens underneath Mickey Mimic Senna that drags him to Brazil ",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1199,9 +1406,9 @@
       "message": "**Mickey Mimic Stormblaze launches out of a cannon!**",
       "attack": "*His forehead is on course to crash into the battle!*",
       "miss": "He misses and flies into a nearby town, reducing it to atoms",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1209,9 +1416,9 @@
       "message": "**Mickey Mimic Skinner comes marching in!**",
       "attack": "*He's complaining about Hook with screeching volume!*",
       "miss": "Hook miraculously boots on time and he stops screaming",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1219,9 +1426,9 @@
       "message": "**Mickey Mimic Juicy summons his troops!**",
       "attack": "*He's the commander of the feet fleet*",
       "miss": "He gets distracted by the hub and takes his leave",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1229,9 +1436,9 @@
       "message": "**Mickey Mimic Hook boots up onto the field!**",
       "attack": "*He starts tossing labels, one more frfr*",
       "miss": "His stomach rumbles as he leaves to go to the bathroom, never to be seen again",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1239,8 +1446,8 @@
       "message": "**Mickey Mimic Kerra slowly approaches!**",
       "attack": "*Extremely slow, one step per hour*",
       "miss": "He turns to dust before anything can happen",
-      "minDamage": 40,
-      "maxDamage": 80,
+      "minDamage": 999,
+      "maxDamage": 9999,
       "accuracy": 1,
       "type": "damage"
     },
@@ -1249,9 +1456,9 @@
       "message": "**Mickey Mimic Kunai dashes onto the scene!**",
       "attack": "*A sea of blades starts rushing through the air*",
       "miss": "A ping from the selfie channel distracts Kunai, he's needed elsewhere",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1259,9 +1466,9 @@
       "message": "**Mickey Mimic ChrisB walks ahead!**",
       "attack": "*He doesn't really do much, at all*",
       "miss": "He just keeps walking until he's out of sight",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1269,9 +1476,9 @@
       "message": "**Mickey Mimic DarkSlash emerges from the ground!**",
       "attack": "*He channels his negative luck into a massive attack*",
       "miss": "A text from his roommate hinders his focus, causing the energy to erase him instead",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1279,9 +1486,9 @@
       "message": "**Mickey Mimic Hank Flowers drives into battle!**",
       "attack": "*He starts throwing doordash items at the duelists*",
       "miss": "The duelists don't leave a tip and he quits the job forever",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1289,9 +1496,9 @@
       "message": "**Mickey Mimic Obm's voice booms through the air!**",
       "attack": "*He needs head and he needs it now*",
       "miss": "a brave soul volunteers from out of the blue, as the duelists are spared",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1299,8 +1506,8 @@
       "message": "**Mickey Mimic McLovin pulls out the spitfire!**",
       "attack": "*You gotta love mags bro*",
       "miss": "He misses every shot, a faint **HELLO?** can be heard in the distance",
-      "minDamage": 40,
-      "maxDamage": 80,
+      "minDamage": 400,
+      "maxDamage": 800,
       "accuracy": 5,
       "type": "damage"
     },
@@ -1309,9 +1516,9 @@
       "message": "**Mickey Mimic Tron equips his visor!**",
       "attack": "*The power of a thousand ratios charges from within*",
       "miss": "While charging he spots a nearby lake, he decides to go fishing instead",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
 
@@ -1320,9 +1527,9 @@
       "message": "**Mickey Mimic Bar_Bar is ready for action!**",
       "attack": "*His hitbox has the power to control fate itself*",
       "miss": "He ends up dropping the combo and spikes his controller into the dirt",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1330,9 +1537,9 @@
       "message": "**Mickey Mimic Plant is ready to brawl!**",
       "attack": "*They call him the dragon of IKEA*",
       "miss": "While trying to remove his shirt he accidentally strangles himself and perishes",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1340,9 +1547,9 @@
       "message": "**Mickey Mimic VHS pulls out the megaphone!**",
       "attack": "*The word Slag ruptures out multiple times*",
       "miss": "An alert broadcasts that the Queen has died, VHS turns to stone",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1360,9 +1567,9 @@
       "message": "**Mickey Mimic Yenice finally wakes up!**",
       "attack": "*He's violent while he's hungover*",
       "miss": "His head is booming too hard, he goes back to sleep",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1370,9 +1577,9 @@
       "message": "**Mickey Mimic Placeholder takes up a stance!**",
       "attack": "*He starts throwing out electrics like crazy*",
       "miss": "Tekken 8 was finally released, he korean backdashes out of view",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1380,9 +1587,9 @@
       "message": "**Mickey Mimic Quzel appears out of thin air!**",
       "attack": "*Nobody really knows what he's capable of*",
       "miss": "He vanishes once again, doing absolutely nothing",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1390,9 +1597,9 @@
       "message": "**Mickey Mimic Trashboat steers his boat through the battle!**",
       "attack": "*Rumor says he's searching for the one piece*",
       "miss": "He sinks his ship while trying to fistbump the duelists",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1410,9 +1617,9 @@
       "message": "**Mickey Mimic Jesse pulls up to scrap!**",
       "attack": "*He's got a lot of homework so he can't really stay long*",
       "miss": "He leaves after 24 seconds to go do homework",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1420,9 +1627,9 @@
       "message": "**Mickey Mimic Trazac plows through the battlefield!**",
       "attack": "*His tractor is made out of solid gold*",
       "miss": "He bullies the duelists till he's bored and then goes back to the ranch",
-      "minDamage": 40,
-      "maxDamage": 80,
-      "accuracy": 30,
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
       "type": "damage"
     },
     {
@@ -1430,9 +1637,9 @@
       "message": "**Lightning strikes down as LowTierGod appears in the sky!**",
       "attack": "*The duelists look up like the summer ants they are*",
       "miss": "By the grace of Allah the duelists are spared as LTG rage quits",
-      "minDamage": 9999,
-      "maxDamage": 10000,
-      "accuracy": 10,
+      "minDamage": 99999,
+      "maxDamage": 100000,
+      "accuracy": 20,
       "type": "damage"
     }
   ]

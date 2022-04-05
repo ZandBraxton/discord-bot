@@ -24,7 +24,7 @@ require("dotenv").config();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite("./scores.sqlite");
 const { BetterDuel } = require("./duel");
-let duelRunning = false;
+let duelRunning = {};
 const prestigeRequirement = 5000;
 
 // When the client is ready, run this code (only once)
@@ -73,7 +73,6 @@ client.on("ready", () => {
 
 client.on("messageCreate", (message) => {
   if (message.author.bot) return;
-
   let score;
 
   if (message.guild) {
@@ -218,6 +217,70 @@ client.on("messageCreate", (message) => {
     );
   }
 
+  if (command === "drop") {
+    // Limited to guild owner - adjust to your own preference!
+    let clickedDrop = [];
+    if (
+      !message.member.roles.cache.some(
+        (role) => role.name === "Mods" || role.name === "Jr Mod"
+      )
+    )
+      return message.reply("Only mods can make drops");
+
+    let amount = parseInt(args[0], 10);
+
+    if (!amount || amount <= 0) {
+      return message.reply("You need to specify the drop value");
+    }
+    let filter = (i) => !clickedDrop.includes(i.user.id);
+    let claim = uuidv4();
+
+    let row2 = new MessageActionRow().addComponents(
+      new MessageButton()
+        .setCustomId(claim)
+        .setLabel("Claim Points")
+        .setStyle("SUCCESS")
+    );
+
+    message.channel.send({
+      content: `${score.username} has created a drop of ${amount} points!`,
+      maxComponents: 1,
+      components: [row2],
+    });
+
+    const collector = message.channel.createMessageComponentCollector({
+      filter,
+      componentType: "BUTTON",
+      time: 300000,
+    });
+
+    collector.on("collect", async (message) => {
+      if (message.customId === claim) {
+        clickedDrop.push(message.user.id);
+        let userScore = client.getScore.get(message.user.id, message.guild.id);
+        if (!userScore) {
+          userScore = {
+            id: `${message.guild.id}-${message.user.id}`,
+            user: user.id,
+            username: message.author.username,
+            guild: message.guild.id,
+            points: 0,
+            prestige: 0,
+          };
+        }
+        userScore.points += amount;
+        client.setScore.run(userScore);
+        message.channel.send(
+          `${message.user.username} claimed ${amount} points, they now have ${userScore.points} points`
+        );
+      }
+    });
+
+    collector.on("end", (collected) => {
+      message.reply("The drop has ended");
+    });
+  }
+
   if (command === "check") {
     const user =
       message.mentions.users.first() || client.users.cache.get(args[0]);
@@ -265,9 +328,9 @@ client.on("messageCreate", (message) => {
       message.mentions.users.first() || client.users.cache.get(args[0]);
     if (!user) return undefined;
     // doesn't let you duel yourself
-    if (user.id === message.author.id) {
-      return undefined;
-    }
+    // if (user.id === message.author.id) {
+    //   return undefined;
+    // }
     let authorScore = client.getScore.get(message.author.id, message.guild.id);
     let userScore = client.getScore.get(user.id, message.guild.id);
     if (!userScore) {
@@ -334,7 +397,11 @@ client.on("messageCreate", (message) => {
   }
 
   if (command === "duel") {
-    if (duelRunning) {
+    let channelCheck = message.channelId;
+    if (duelRunning[channelCheck] === undefined) {
+      duelRunning[channelCheck] = false;
+    }
+    if (duelRunning[channelCheck] === true) {
       return message.reply("Another duel is happening!");
     }
     let amount = parseInt(args[1], 10);
@@ -374,7 +441,6 @@ client.on("messageCreate", (message) => {
     message.channel.send({
       content: `<@${p2.user}> ${p1.username} has challenged you to a duel for ${amount} points, do you accept?`,
       components: [row],
-      id: 12345678,
     });
 
     const collector = message.channel.createMessageComponentCollector({
@@ -386,15 +452,18 @@ client.on("messageCreate", (message) => {
     });
 
     collector.on("collect", async (message) => {
-      if (duelRunning) {
-        return message.channel.send("Another duel is happening!");
+      if (duelRunning[channelCheck] === undefined) {
+        duelRunning[channelCheck] = false;
+      }
+      if (duelRunning[channelCheck] === true) {
+        return message.reply("Another duel is happening!");
       }
       if (message.user.id === p2.user && message.customId === accept) {
         message.reply("Then let the duel commence");
         collector.stop("user accepted");
         //duel function
-        duelRunning = true;
-        BetterDuel(p1, p2, message, client, amount, duelCheck);
+        duelRunning[channelCheck] = true;
+        BetterDuel(p1, p2, message, client, amount, duelCheck, channelCheck);
       } else if (message.user.id === p2.user && message.customId === decline) {
         message.reply("Challenge Declined");
         collector.stop("user declined");
@@ -435,8 +504,8 @@ client.on("messageCreate", (message) => {
   }
 });
 
-function duelCheck() {
-  duelRunning = !duelRunning;
+function duelCheck(channelCheck) {
+  duelRunning[channelCheck] = !duelRunning[channelCheck];
 }
 
 // Login to Discord with your client's token

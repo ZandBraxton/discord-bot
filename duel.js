@@ -1,4 +1,3 @@
-const cli = require("nodemon/lib/cli");
 const duelItems = require("./duel.json");
 
 function randomInt(max) {
@@ -32,6 +31,9 @@ function getRandomEvent(max) {
 }
 
 function getWeapon(Player1, Player2, message) {
+  if (Player1.hp <= 0 || Player2.hp <= 0) {
+    return;
+  }
   if (Player1.weapon === "") {
     let rarity = randomInt(100) + 1;
     if (rarity <= 50) {
@@ -109,7 +111,7 @@ function Turn(Player1, Player2, message, client, p1, p2, amount, duelCheck) {
       `**${Player2.name}** wins! **${Player1.name}** handed over ${amount} points`
     );
     gameOver(Player2, message, client, p1, p2, amount);
-    duelCheck();
+    duelCheck(message.channelId);
     return;
   }
   if (Player2.hp <= 0) {
@@ -117,7 +119,7 @@ function Turn(Player1, Player2, message, client, p1, p2, amount, duelCheck) {
       `**${Player1.name}** wins! **${Player2.name}** handed over ${amount} points`
     );
     gameOver(Player1, message, client, p1, p2, amount);
-    duelCheck();
+    duelCheck(message.channelId);
     return;
   }
   let eventChance = randomInt(100) + 1;
@@ -309,12 +311,16 @@ function gameOver(winner, message, client, p1, p2, amount) {
 }
 
 function getHP(amount) {
-  if (amount <= 50) {
-    return 1;
-  } else if (amount > 50 && amount <= 100) {
-    return 10;
+  if (amount <= 49) {
+    return 15;
+  } else if (amount >= 50 && amount <= 299) {
+    return 25;
+  } else if (amount >= 300 && amount <= 499) {
+    return 30;
+  } else if (amount >= 500 && amount <= 999) {
+    return 35;
   } else {
-    return 20;
+    return 45;
   }
 }
 
@@ -369,8 +375,7 @@ function getEventResult(event, attacker, defender, message) {
 }
 
 function BetterDuel(p1, p2, message, client, amount, duelCheck) {
-  // let hp = getHP(amount);
-  let hp = 25;
+  let hp = getHP(amount);
   let Player1 = {
     name: p1.username,
     hp: hp,
