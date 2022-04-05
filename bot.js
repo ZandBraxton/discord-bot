@@ -402,23 +402,25 @@ client.on("messageCreate", (message) => {
       duelRunning[channelCheck] = false;
     }
     if (duelRunning[channelCheck] === true) {
-      return message.reply("Another duel is happening!");
+      return message.channel.send("Another duel is happening!");
     }
     let amount = parseInt(args[1], 10);
     let pointsArray = ComparePoints();
     if (pointsArray === undefined) {
-      return message.reply("You must mention someone or give their ID!");
+      return message.channel.send("You must mention someone or give their ID!");
     }
     let p1 = pointsArray[0];
     let p2 = pointsArray[1];
     if (!amount || amount <= 0) {
-      return message.reply("You need to specify how many points to bet");
+      return message.channel.send("You need to specify how many points to bet");
     }
     if (p1.points < amount) {
-      return message.reply("You don't have that many points to bet");
+      return message.channel.send("You don't have that many points to bet");
     }
     if (p2.points < amount) {
-      return message.reply(`That is more points than ${p2.username} has`);
+      return message.channel.send(
+        `That is more points than ${p2.username} has`
+      );
     }
     let filter = (i) => i.user.id === p2.user;
 
@@ -456,16 +458,16 @@ client.on("messageCreate", (message) => {
         duelRunning[channelCheck] = false;
       }
       if (duelRunning[channelCheck] === true) {
-        return message.reply("Another duel is happening!");
+        return message.channel.send("Another duel is happening!");
       }
       if (message.user.id === p2.user && message.customId === accept) {
-        message.reply("Then let the duel commence");
+        message.channel.send("Then let the duel commence");
         collector.stop("user accepted");
         //duel function
         duelRunning[channelCheck] = true;
         BetterDuel(p1, p2, message, client, amount, duelCheck, channelCheck);
       } else if (message.user.id === p2.user && message.customId === decline) {
-        message.reply("Challenge Declined");
+        message.channel.send("Challenge Declined");
         collector.stop("user declined");
         return;
       }
@@ -473,7 +475,7 @@ client.on("messageCreate", (message) => {
 
     collector.on("end", (collected) => {
       if (collected.size === 0) {
-        message.reply("Duel terminated");
+        message.channel.send("Duel terminated");
       }
     });
   }
