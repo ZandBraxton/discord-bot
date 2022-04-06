@@ -158,32 +158,33 @@ function Battle(attacker, defender, message) {
       message.channel.send(
         ` **${attacker.name}**(${attacker.hp}HP) attacks! HOWEVER!, **${defender.name}**(${defender.hp}HP) evades it!`
       );
-    } else if (defender.weapon.special !== null) {
-      if (defender.weapon.special["type"] === "block") {
-        defender.usedShield = defender.weapon.special["value"];
-        if (hit <= defender.usedShield) {
+    } else if (
+      defender.weapon.special !== null &&
+      defender.weapon.special["type"] === "block"
+    ) {
+      defender.usedShield = defender.weapon.special["value"];
+      if (hit <= defender.usedShield) {
+        message.channel.send(
+          ` **${attacker.name}**(${attacker.hp}HP) attacks! HOWEVER!, **${defender.name}**(${defender.hp}HP) ${defender.weapon.special["message"]}!`
+        );
+        defender.usedShield -= 5;
+      } else {
+        let strike = calculateDamage(
+          attacker.weapon.minDamage,
+          attacker.weapon.maxDamage,
+          attacker.weapon.critChance
+        );
+        if (strike.criticalHit === true) {
           message.channel.send(
-            ` **${attacker.name}**(${attacker.hp}HP) attacks! HOWEVER!, **${defender.name}**(${defender.hp}HP) ${defender.weapon.special["message"]}!`
+            `Critical hit! **${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for **${strike.dmg}** damage!`
           );
-          defender.usedShield -= 5;
         } else {
-          let strike = calculateDamage(
-            attacker.weapon.minDamage,
-            attacker.weapon.maxDamage,
-            attacker.weapon.critChance
+          message.channel.send(
+            `**${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for ${strike.dmg} damage!`
           );
-          if (strike.criticalHit === true) {
-            message.channel.send(
-              `Critical hit! **${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for **${strike.dmg}** damage!`
-            );
-          } else {
-            message.channel.send(
-              `**${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for ${strike.dmg} damage!`
-            );
-          }
-          defender.hp -= strike.dmg;
-          defender.evadeChance += 2;
         }
+        defender.hp -= strike.dmg;
+        defender.evadeChance += 2;
       }
     } else {
       let strike = calculateDamage(
