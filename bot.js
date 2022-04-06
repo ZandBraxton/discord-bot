@@ -34,8 +34,8 @@ discordClient.on("ready", () => {
 
 discordClient.on("messageCreate", async (message) => {
   if (
-    message.channelId === "960715020898029588" ||
-    message.channelId === "959230884475719760" ||
+    // message.channelId === "960715020898029588" ||
+    // message.channelId === "959230884475719760" ||
     message.channelId === "958465258178109530"
   ) {
     if (message.author.bot) return;
@@ -155,6 +155,7 @@ discordClient.on("messageCreate", async (message) => {
           message.guild.id,
         ])
         .then((res) => (userScore = res.rows[0]));
+      console.log(user);
 
       // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
@@ -344,7 +345,7 @@ discordClient.on("messageCreate", async (message) => {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
           userid: user.id,
-          username: message.author.username,
+          username: user.username,
           guild: message.guild.id,
           points: 1,
           prestige: 0,
@@ -382,7 +383,7 @@ discordClient.on("messageCreate", async (message) => {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
           userid: user.id,
-          username: message.author.username,
+          username: user.username,
           guild: message.guild.id,
           points: 0,
           prestige: 0,
