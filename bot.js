@@ -433,7 +433,7 @@ discordClient.on("messageCreate", async (message) => {
         userScore = {
           id: `${message.guild.id}-${user.id}`,
           userid: user.id,
-          username: message.author.username,
+          username: user.username,
           guild: message.guild.id,
           points: 1,
           prestige: 0,
