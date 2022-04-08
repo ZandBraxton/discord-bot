@@ -408,7 +408,6 @@ discordClient.on("messageCreate", async (message) => {
           .setLabel("Claim Points")
           .setStyle("SUCCESS")
       );
-      console.log(message);
 
       message.channel.send({
         content: `${score.username} has created a fastdrop of ${amount} points!`,
@@ -814,7 +813,6 @@ discordClient.on("messageCreate", async (message) => {
           message.guild.id,
         ])
         .then((res) => (result = res.rows));
-      console.log(result);
       const generateEmbed = async (start) => {
         const current = result.slice(start, start + 10);
 
