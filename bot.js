@@ -19,6 +19,7 @@ const discordClient = new Client({
     "GUILDS",
   ],
 });
+const paginationEmbed = require("discord.js-pagination");
 const db = require("./database");
 
 require("dotenv").config();
@@ -33,77 +34,57 @@ discordClient.on("ready", () => {
 });
 
 discordClient.on("messageCreate", async (message) => {
-  if (
-    message.channelId === "960715020898029588" ||
-    message.channelId === "959230884475719760" ||
-    message.channelId === "958465258178109530"
-  ) {
-    if (message.author.bot) return;
+  if (message.author.bot) return;
 
-    let score;
+  let score;
 
-    await db
-      .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
-        message.author.username,
-        message.guild.id,
-      ])
-      .then((res) => (score = res.rows[0]));
+  await db
+    .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
+      message.author.username,
+      message.guild.id,
+    ])
+    .then((res) => (score = res.rows[0]));
 
-    if (message.guild) {
-      let points = 0;
-      if (!score) {
-        score = {
-          id: `${message.guild.id}-${message.author.id}`,
-          userid: message.author.id,
-          username: message.author.username,
-          guild: message.guild.id,
-          points: 1,
-          prestige: 0,
-        };
-      }
-      const filter = (reaction, user) => {
-        return ["omegalul", "acompletemiss", "😭"].includes(
-          reaction.emoji.name.toLocaleLowerCase()
-        );
+  if (message.guild) {
+    let points = 0;
+    if (!score) {
+      score = {
+        id: `${message.guild.id}-${message.author.id}`,
+        userid: message.author.id,
+        username: message.author.username,
+        guild: message.guild.id,
+        points: 1,
+        prestige: 0,
       };
+    }
+    const filter = (reaction, user) => {
+      return ["omegalul", "acompletemiss", "😭"].includes(
+        reaction.emoji.name.toLocaleLowerCase()
+      );
+    };
 
-      message
-        .awaitReactions({ filter, time: 20000 })
-        .then(async (collected) => {
-          collected.forEach(async (reaction) => {
-            if (reaction.emoji.name.toLocaleLowerCase() === "omegalul") {
-              points += reaction.count * 2;
-            } else if (reaction.emoji.name.toLocaleLowerCase() === "😭") {
-              points += reaction.count;
-            } else {
-              points -= reaction.count;
-            }
-          });
+    message.awaitReactions({ filter, time: 20000 }).then(async (collected) => {
+      collected.forEach(async (reaction) => {
+        if (reaction.emoji.name.toLocaleLowerCase() === "omegalul") {
+          points += reaction.count * 2;
+        } else if (reaction.emoji.name.toLocaleLowerCase() === "😭") {
+          points += reaction.count;
+        } else {
+          points -= reaction.count;
+        }
+      });
 
-          if (score.points < 0) {
-            score.points = 0;
-          }
-          await db
-            .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
-              message.author.username,
-              message.guild.id,
-            ])
-            .then((res) => (score = res.rows[0]));
+      if (score.points < 0) {
+        score.points = 0;
+      }
+      await db
+        .query("SELECT * FROM scores WHERE username = $1 AND guild = $2", [
+          message.author.username,
+          message.guild.id,
+        ])
+        .then((res) => (score = res.rows[0]));
 
-          score.points += points;
-
-          await db.query(
-            "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
-            [
-              score.id,
-              score.userid,
-              score.username,
-              score.guild,
-              score.points,
-              score.prestige,
-            ]
-          );
-        });
+      score.points += points;
 
       await db.query(
         "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
@@ -116,15 +97,33 @@ discordClient.on("messageCreate", async (message) => {
           score.prestige,
         ]
       );
-    }
-    if (message.content.indexOf(process.env.PREFIX) !== 0) return;
+    });
 
-    const args = message.content
-      .slice(process.env.PREFIX.length)
-      .trim()
-      .split(/ +/g);
-    const command = args.shift().toLowerCase();
+    await db.query(
+      "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+      [
+        score.id,
+        score.userid,
+        score.username,
+        score.guild,
+        score.points,
+        score.prestige,
+      ]
+    );
+  }
+  if (message.content.indexOf(process.env.PREFIX) !== 0) return;
 
+  const args = message.content
+    .slice(process.env.PREFIX.length)
+    .trim()
+    .split(/ +/g);
+  const command = args.shift().toLowerCase();
+
+  if (
+    message.channelId === "960715020898029588" ||
+    message.channelId === "959230884475719760" ||
+    message.channelId === "958465258178109530"
+  ) {
     if (command === "points") {
       return message.reply(`You currently have ${score.points} points!`);
     }
@@ -155,7 +154,6 @@ discordClient.on("messageCreate", async (message) => {
           message.guild.id,
         ])
         .then((res) => (userScore = res.rows[0]));
-      console.log(user);
 
       // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
       if (!userScore) {
@@ -246,6 +244,64 @@ discordClient.on("messageCreate", async (message) => {
       );
     }
 
+    if (command === "set") {
+      if (
+        !message.member.roles.cache.some(
+          (role) => role.name === "Mods" || role.name === "Jr Mod"
+        )
+      )
+        return message.reply("Only mods can set points of other users");
+
+      const user =
+        message.mentions.users.first() ||
+        discordClient.users.cache.get(args[0]);
+      if (!user)
+        return message.reply("You must mention someone or give their ID!");
+
+      const pointsToSet = parseInt(args[1], 10);
+      if (!pointsToSet)
+        return message.reply("You didn't tell me how many points to set...");
+
+      // Get their current points.
+      let userScore;
+      await db
+        .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+          user.id,
+          message.guild.id,
+        ])
+        .then((res) => (userScore = res.rows[0]));
+
+      // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
+      if (!userScore) {
+        userScore = {
+          id: `${message.guild.id}-${user.id}`,
+          userid: user.id,
+          username: user.username,
+          guild: message.guild.id,
+          points: 1,
+          prestige: 0,
+        };
+      }
+      userScore.points = pointsToSet;
+
+      // And we save it!
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          userScore.id,
+          userScore.userid,
+          userScore.username,
+          userScore.guild,
+          userScore.points,
+          userScore.prestige,
+        ]
+      );
+
+      return message.channel.send(
+        `${user.tag} points were set to ${pointsToSet}.`
+      );
+    }
+
     if (command === "drop") {
       let clickedDrop = [];
       if (
@@ -324,6 +380,91 @@ discordClient.on("messageCreate", async (message) => {
 
       collector.on("end", (collected) => {
         message.reply("The drop has ended");
+      });
+    }
+
+    if (command === "fastdrop") {
+      if (
+        !message.member.roles.cache.some(
+          (role) => role.name === "Mods" || role.name === "Jr Mod"
+        )
+      )
+        return message.reply("Only mods can make drops");
+
+      let amount = parseInt(args[0], 10);
+
+      if (!amount || amount <= 0) {
+        return message.reply("You need to specify the drop value");
+      }
+      let filter = (i) =>
+        !i.member.roles.cache.some(
+          (role) => role.name === "Mods" || role.name === "Jr Mod"
+        );
+      let claim = uuidv4();
+
+      let row2 = new MessageActionRow().addComponents(
+        new MessageButton()
+          .setCustomId(claim)
+          .setLabel("Claim Points")
+          .setStyle("SUCCESS")
+      );
+      console.log(message);
+
+      message.channel.send({
+        content: `${score.username} has created a fastdrop of ${amount} points!`,
+        max: 1,
+        maxComponents: 1,
+        components: [row2],
+      });
+
+      const collector = message.channel.createMessageComponentCollector({
+        filter,
+        componentType: "BUTTON",
+        max: 1,
+        time: 60000,
+      });
+
+      collector.on("collect", async (message) => {
+        if (message.customId === claim) {
+          let userScore;
+          await db
+            .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+              message.user.id,
+              message.guild.id,
+            ])
+            .then((res) => (userScore = res.rows[0]));
+
+          if (!userScore) {
+            userScore = {
+              id: `${message.guild.id}-${message.user.id}`,
+              userid: message.user.id,
+              username: message.user.username,
+              guild: message.guild.id,
+              points: 1,
+              prestige: 0,
+            };
+          }
+          userScore.points += amount;
+
+          await db.query(
+            "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+            [
+              userScore.id,
+              userScore.userid,
+              userScore.username,
+              userScore.guild,
+              userScore.points,
+              userScore.prestige,
+            ]
+          );
+          message.channel.send(
+            `${message.user.username} claimed ${amount} points, they now have ${userScore.points} points`
+          );
+        }
+      });
+
+      collector.on("end", (collected) => {
+        message.reply("The fastdrop has ended");
       });
     }
 
@@ -624,32 +765,154 @@ discordClient.on("messageCreate", async (message) => {
       });
     }
 
+    // if (command === "top10") {
+    //   let top10;
+    //   await db
+    //     .query(
+    //       "SELECT * FROM scores WHERE guild = $1 ORDER BY points DESC LIMIT 10",
+    //       [message.guild.id]
+    //     )
+    //     .then((res) => (top10 = res.rows));
+
+    //   const embed = new MessageEmbed()
+    //     .setTitle("Leader board")
+    //     .setAuthor({
+    //       name: discordClient.user.username,
+    //       iconUrl: discordClient.user.avatarURL(),
+    //     })
+    //     .setDescription("Our top 10 points leaders!")
+    //     .setColor(0x00ae86);
+
+    //   for (const data of top10) {
+    //     embed.addFields({
+    //       name: data.username,
+    //       value: `${data.points} points | Prestige ${data.prestige}`,
+    //     });
+    //   }
+    //   return message.channel.send({ embeds: [embed] });
+    // }
+
+    const backId = "back";
+    const forwardId = "forward";
+    const backButton = new MessageButton({
+      style: "SECONDARY",
+      label: "Back",
+      emoji: "⬅️",
+      customId: backId,
+    });
+    const forwardButton = new MessageButton({
+      style: "SECONDARY",
+      label: "Forward",
+      emoji: "➡️",
+      customId: forwardId,
+    });
+
     if (command === "leaderboard") {
-      let top10;
+      let result;
       await db
-        .query(
-          "SELECT * FROM scores WHERE guild = $1 ORDER BY points DESC LIMIT 10",
-          [message.guild.id]
-        )
-        .then((res) => (top10 = res.rows));
+        .query("SELECT * FROM scores WHERE guild = $1 ORDER BY points DESC", [
+          message.guild.id,
+        ])
+        .then((res) => (result = res.rows));
+      console.log(result);
+      const generateEmbed = async (start) => {
+        const current = result.slice(start, start + 10);
 
-      const embed = new MessageEmbed()
-        .setTitle("Leader board")
-        .setAuthor({
-          name: discordClient.user.username,
-          iconUrl: discordClient.user.avatarURL(),
-        })
-        .setDescription("Our top 10 points leaders!")
-        .setColor(0x00ae86);
-
-      for (const data of top10) {
-        embed.addFields({
-          name: data.username,
-          value: `${data.points} points | Prestige ${data.prestige}`,
+        // You can of course customise this embed however you want
+        return new MessageEmbed({
+          title: `Showing players ${start + 1}-${
+            start + current.length
+          } out of ${result.length}`,
+          fields: await Promise.all(
+            current.map(async (result) => ({
+              name: result.username,
+              value: `${result.points} points | Prestige ${result.prestige}`,
+            }))
+          ),
         });
-      }
-      return message.channel.send({ embeds: [embed] });
+      };
+
+      // Send the embed with the first 10 guilds
+      const canFitOnOnePage = result.length <= 10;
+      const embedMessage = await message.channel.send({
+        embeds: [await generateEmbed(0)],
+        components: canFitOnOnePage
+          ? []
+          : [new MessageActionRow({ components: [forwardButton] })],
+      });
+      // Exit if there is only one page of guilds (no need for all of this)
+      if (canFitOnOnePage) return;
+
+      // Collect button interactions (when a user clicks a button),
+      // but only when the button as clicked by the original message author
+      const collector = embedMessage.createMessageComponentCollector({
+        filter: ({ user }) => user.id === message.author.id,
+      });
+
+      let currentIndex = 0;
+      collector.on("collect", async (interaction) => {
+        // Increase/decrease index
+        interaction.customId === backId
+          ? (currentIndex -= 10)
+          : (currentIndex += 10);
+        // Respond to interaction by updating message with new embed
+        await interaction.update({
+          embeds: [await generateEmbed(currentIndex)],
+          components: [
+            new MessageActionRow({
+              components: [
+                // back button if it isn't the start
+                ...(currentIndex ? [backButton] : []),
+                // forward button if it isn't the end
+                ...(currentIndex + 10 < result.length ? [forwardButton] : []),
+              ],
+            }),
+          ],
+        });
+      });
     }
+
+    // if (command === "page") {
+    //   let result;
+    //   let index = 0;
+    //   await db
+    //     .query("SELECT * FROM scores WHERE guild = $1 ORDER BY points DESC", [
+    //       message.guild.id,
+    //     ])
+    //     .then((res) => (result = res.rows));
+    //   // console.log(result[index]);
+    //   const embed = new MessageEmbed()
+    //     .setTitle("Leader board")
+    //     .setAuthor({
+    //       name: discordClient.user.username,
+    //       iconUrl: discordClient.user.avatarURL(),
+    //     })
+    //     .setDescription("Our top 10 points leaders!")
+    //     .setColor(0x00ae86);
+
+    //   for (let i = 0; i < 10; i++) {
+    //     let name;
+    //     let value;
+    //     if (result[index] !== undefined) {
+    //       name = result[index].username;
+    //     } else {
+    //       name = "empty";
+    //     }
+
+    //     if (result[index] !== undefined) {
+    //       value = `${result[index].points} points | Prestige ${result[index].prestige}`;
+    //     } else {
+    //       value = "empty";
+    //     }
+    //     embed.addFields({
+    //       name: name,
+    //       value: value,
+    //     });
+    //     index++;
+    //   }
+    //   message.channel.send({ embeds: [embed] });
+
+    // }
   } else {
     return false;
   }
