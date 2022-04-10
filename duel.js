@@ -267,10 +267,10 @@ function Battle(attacker, defender, message) {
     attacker.weapon = {
       name: "Fists",
       type: "melee",
-      maxDamage: 6,
-      minDamage: 4,
-      critChance: 20,
-      accuracy: 90,
+      minDamage: 3,
+      maxDamage: 5,
+      critChance: 10,
+      accuracy: 85,
       breakChance: 0,
       special: null,
     };
