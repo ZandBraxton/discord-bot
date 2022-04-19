@@ -31,7 +31,7 @@
         "maxDamage": 4,
         "critChance": 45,
         "accuracy": 95,
-        "breakChance": 15,
+        "breakChance": 20,
         "special": null
       },
       {
@@ -64,7 +64,7 @@
         "maxDamage": 3,
         "critChance": 80,
         "accuracy": 90,
-        "breakChance": 15,
+        "breakChance": 25,
         "special": {
           "type": "heal",
           "used": false,
@@ -168,8 +168,8 @@
         "itemId": 15,
         "name": "Spatula",
         "type": "melee",
-        "minDamage": 3,
-        "maxDamage": 4,
+        "minDamage": 4,
+        "maxDamage": 5,
         "critChance": 75,
         "accuracy": 90,
         "breakChance": 18,
@@ -216,11 +216,11 @@
         "itemId": 19,
         "name": "piece of wood",
         "type": "melee",
-        "minDamage": 3,
+        "minDamage": 5,
         "maxDamage": 6,
-        "critChance": 10,
+        "critChance": 30,
         "accuracy": 89,
-        "breakChance": 25,
+        "breakChance": 35,
         "special": null
       },
       {
@@ -231,7 +231,7 @@
         "maxDamage": 5,
         "critChance": 30,
         "accuracy": 95,
-        "breakChance": 20,
+        "breakChance": 30,
         "special": null
       },
       {
@@ -260,11 +260,11 @@
         "itemId": 23,
         "name": "Fork",
         "type": "melee",
-        "minDamage": 3,
+        "minDamage": 4,
         "maxDamage": 6,
         "critChance": 20,
         "accuracy": 80,
-        "breakChance": 20,
+        "breakChance": 30,
         "special": null
       },
       {
@@ -275,7 +275,7 @@
         "maxDamage": 3,
         "critChance": 40,
         "accuracy": 90,
-        "breakChance": 40,
+        "breakChance": 60,
         "special": null
       },
       {
@@ -343,6 +343,138 @@
         "accuracy": 85,
         "breakChance": 70,
         "special": null
+      },
+      {
+        "itemId": 30,
+        "name": "Toothbrush",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 5,
+        "critChance": 55,
+        "accuracy": 92,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 31,
+        "name": "Flyswatter",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 7,
+        "critChance": 40,
+        "accuracy": 90,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 32,
+        "name": "Boxcutter",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 8,
+        "critChance": 60,
+        "accuracy": 81,
+        "breakChance": 42,
+        "special": null
+      },
+      {
+        "itemId": 32,
+        "name": "Skillet",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 7,
+        "critChance": 20,
+        "accuracy": 80,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 33,
+        "name": "Toaster",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 7,
+        "critChance": 30,
+        "accuracy": 75,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 34,
+        "name": "Lamp",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 7,
+        "critChance": 35,
+        "accuracy": 85,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 35,
+        "name": "Plunger",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 6,
+        "critChance": 30,
+        "accuracy": 85,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 36,
+        "name": "box of Matches",
+        "type": "melee",
+        "minDamage": 3,
+        "maxDamage": 5,
+        "critChance": 55,
+        "accuracy": 90,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 37,
+        "name": "Fire Extinguisher",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 8,
+        "critChance": 20,
+        "accuracy": 85,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 38,
+        "name": "Broom",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 8,
+        "critChance": 25,
+        "accuracy": 88,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 39,
+        "name": "Basketball",
+        "type": "melee",
+        "minDamage": 4,
+        "maxDamage": 7,
+        "critChance": 45,
+        "accuracy": 80,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 40,
+        "name": "Bendy Straw",
+        "type": "melee",
+        "minDamage": 2,
+        "maxDamage": 5,
+        "critChance": 70,
+        "accuracy": 90,
+        "breakChance": 45,
+        "special": null
       }
     ],
     "Rare": [
@@ -379,7 +511,7 @@
         "itemId": 3,
         "name": "Ninja Dagger",
         "type": "melee",
-        "minDamage": 5,
+        "minDamage": 4,
         "maxDamage": 9,
         "critChance": 45,
         "accuracy": 78,
@@ -417,7 +549,7 @@
         "type": "melee",
         "minDamage": 7,
         "maxDamage": 10,
-        "critChance": 40,
+        "critChance": 35,
         "accuracy": 80,
         "breakChance": 40,
         "special": null
@@ -485,7 +617,7 @@
         "maxDamage": 8,
         "critChance": 20,
         "accuracy": 90,
-        "breakChance": 15,
+        "breakChance": 20,
         "special": null
       },
       {
@@ -600,7 +732,7 @@
         "type": "melee",
         "minDamage": 6,
         "maxDamage": 10,
-        "critChance": 40,
+        "critChance": 30,
         "accuracy": 90,
         "breakChance": 45,
         "special": null
@@ -610,8 +742,8 @@
         "name": "Slash's Popeyes Order",
         "type": "melee",
         "minDamage": 5,
-        "maxDamage": 10,
-        "critChance": 45,
+        "maxDamage": 9,
+        "critChance": 40,
         "accuracy": 90,
         "breakChance": 45,
         "special": {
@@ -659,7 +791,7 @@
           "used": false,
           "trigger-name": "Jetleechan",
           "value": 10,
-          "message": "**His mother would be proud",
+          "message": "His mother would be proud",
           "message-effect": "healed for 10hp!"
         }
       },
@@ -678,15 +810,15 @@
         "itemId": 27,
         "name": "Watermelon",
         "type": "melee",
-        "minDamage": 10,
-        "maxDamage": 11,
+        "minDamage": 8,
+        "maxDamage": 10,
         "critChance": 5,
         "accuracy": 70,
         "breakChance": 80,
         "special": null
       },
       {
-        "itemId": 16,
+        "itemId": 28,
         "name": "Mickey Mouse Shield",
         "type": "melee",
         "minDamage": 3,
@@ -699,6 +831,138 @@
           "value": 45,
           "message": "blocked with their shield!"
         }
+      },
+      {
+        "itemId": 29,
+        "name": "Folding Chair",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 11,
+        "critChance": 10,
+        "accuracy": 80,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 30,
+        "name": "Flame Thrower",
+        "type": "melee",
+        "minDamage": 9,
+        "maxDamage": 12,
+        "critChance": 5,
+        "accuracy": 50,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 31,
+        "name": "Spear",
+        "type": "melee",
+        "minDamage": 8,
+        "maxDamage": 9,
+        "critChance": 35,
+        "accuracy": 80,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 32,
+        "name": "Tomahawk",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 8,
+        "critChance": 42,
+        "accuracy": 85,
+        "breakChance": 22,
+        "special": null
+      },
+      {
+        "itemId": 33,
+        "name": "Pickaxe",
+        "type": "melee",
+        "minDamage": 9,
+        "maxDamage": 10,
+        "critChance": 28,
+        "accuracy": 75,
+        "breakChance": 35,
+        "special": null
+      },
+      {
+        "itemId": 34,
+        "name": "Baked Potato",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 10,
+        "critChance": 48,
+        "accuracy": 75,
+        "breakChance": 35,
+        "special": null
+      },
+      {
+        "itemId": 35,
+        "name": "Bow and Quiver",
+        "type": "ranged",
+        "minDamage": 6,
+        "maxDamage": 9,
+        "critChance": 15,
+        "accuracy": 80,
+        "breakChance": 35,
+        "special": null
+      },
+      {
+        "itemId": 36,
+        "name": "Bowling Ball",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 10,
+        "critChance": 15,
+        "accuracy": 80,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 37,
+        "name": "Men's 13-1 Shampoo",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 8,
+        "critChance": 40,
+        "accuracy": 80,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 38,
+        "name": "can of Pepper Spray",
+        "type": "melee",
+        "minDamage": 6,
+        "maxDamage": 8,
+        "critChance": 10,
+        "accuracy": 75,
+        "breakChance": 40,
+        "special": null
+      },
+      {
+        "itemId": 39,
+        "name": "Bigger Rock",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 9,
+        "critChance": 30,
+        "accuracy": 89,
+        "breakChance": 35,
+        "special": null
+      },
+      {
+        "itemId": 40,
+        "name": "Electric Tennis Racket",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 9,
+        "critChance": 30,
+        "accuracy": 89,
+        "breakChance": 45,
+        "special": null
       }
     ],
     "Legendary": [
@@ -728,7 +992,7 @@
         "minDamage": 10,
         "maxDamage": 14,
         "critChance": 40,
-        "accuracy": 65,
+        "accuracy": 70,
         "breakChance": 40,
         "special": null
       },
@@ -757,7 +1021,7 @@
         "minDamage": 7,
         "maxDamage": 13,
         "critChance": 35,
-        "accuracy": 60,
+        "accuracy": 65,
         "breakChance": 25,
         "special": null
       },
@@ -786,7 +1050,7 @@
         "minDamage": 9,
         "maxDamage": 10,
         "critChance": 10,
-        "accuracy": 70,
+        "accuracy": 80,
         "breakChance": 40,
         "special": {
           "type": "damage",
@@ -804,7 +1068,7 @@
         "minDamage": 6,
         "maxDamage": 8,
         "critChance": 60,
-        "accuracy": 65,
+        "accuracy": 75,
         "breakChance": 40,
         "special": {
           "type": "heal",
@@ -884,7 +1148,7 @@
         "minDamage": 9,
         "maxDamage": 13,
         "critChance": 60,
-        "accuracy": 68,
+        "accuracy": 75,
         "breakChance": 50,
         "special": {
           "type": "damage",
@@ -931,7 +1195,7 @@
         "minDamage": 11,
         "maxDamage": 16,
         "critChance": 10,
-        "accuracy": 72,
+        "accuracy": 78,
         "breakChance": 50,
         "special": {
           "type": "damage",
@@ -964,7 +1228,7 @@
         "minDamage": 6,
         "maxDamage": 8,
         "critChance": 90,
-        "accuracy": 60,
+        "accuracy": 70,
         "breakChance": 50,
         "special": null
       },
@@ -972,10 +1236,10 @@
         "itemId": 19,
         "name": "Disco's Wallet",
         "type": "melee",
-        "minDamage": 5,
-        "maxDamage": 7,
-        "critChance": 40,
-        "accuracy": 80,
+        "minDamage": 6,
+        "maxDamage": 10,
+        "critChance": 55,
+        "accuracy": 72,
         "breakChance": 40,
         "special": {
           "type": "heal",
@@ -1015,13 +1279,13 @@
         "minDamage": 12,
         "maxDamage": 16,
         "critChance": 10,
-        "accuracy": 70,
+        "accuracy": 72,
         "breakChance": 60,
         "special": {
           "type": "damage",
           "used": false,
           "trigger-name": "Nakkiel",
-          "value": 35,
+          "value": 20,
           "message": "**Nakkiel** stunts on the opponent, dropping a bombo on their dome",
           "message-effect": "took an additional 35 damage!"
         }
@@ -1033,7 +1297,7 @@
         "minDamage": 12,
         "maxDamage": 16,
         "critChance": 10,
-        "accuracy": 70,
+        "accuracy": 72,
         "breakChance": 60,
         "special": {
           "type": "damage",
@@ -1098,7 +1362,7 @@
         "minDamage": 10,
         "maxDamage": 13,
         "critChance": 25,
-        "accuracy": 70,
+        "accuracy": 72,
         "breakChance": 50,
         "special": {
           "type": "damage",
@@ -1141,7 +1405,7 @@
           "used": false,
           "trigger-name": "JustJack",
           "value": 20,
-          "message": "Jack slips on the timbs, no socks???",
+          "message": "**Jack** slips on the timbs, no socks???",
           "message-effect": "took an additional 20 damage!"
         }
       },
@@ -1167,8 +1431,8 @@
         "itemId": 31,
         "name": "Disco Hater Wristband",
         "type": "melee",
-        "minDamage": 3,
-        "maxDamage": 6,
+        "minDamage": 4,
+        "maxDamage": 8,
         "critChance": 95,
         "accuracy": 80,
         "breakChance": 33,
@@ -1177,7 +1441,7 @@
           "used": false,
           "trigger-name": "plantation3",
           "value": 20,
-          "message": "Plant slipped on the wristband, it fits like a glove",
+          "message": "**Plant** slipped on the wristband, it fits like a glove",
           "message-effect": "healed for 20hp!"
         }
       },
@@ -1195,7 +1459,7 @@
           "used": false,
           "trigger-name": "ChrisB",
           "value": 20,
-          "message": "Chris repeatedly bashes his opponents head in with the package",
+          "message": "**Chris** repeatedly bashes his opponents head in with the package",
           "message-effect": "took an additional 20 damage!"
         }
       },
@@ -1215,6 +1479,111 @@
           "value": 20,
           "message": "**Que el**- I mean **Queso**- BRO **QUZEL** EATS THE QUESADILLA",
           "message-effect": "healed for 20hp!"
+        }
+      },
+      {
+        "itemId": 34,
+        "name": "Tim's Blunderbuss",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 12,
+        "critChance": 20,
+        "accuracy": 80,
+        "breakChance": 30,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Timskkrt",
+          "value": 20,
+          "message": "Rightio then,**Tim** hornswoggled out the blicky",
+          "message-effect": "took an additional 20 damage!"
+        }
+      },
+      {
+        "itemId": 35,
+        "name": "can of Prongles",
+        "type": "melee",
+        "minDamage": 8,
+        "maxDamage": 12,
+        "critChance": 35,
+        "accuracy": 70,
+        "breakChance": 30,
+        "special": null
+      },
+      {
+        "itemId": 36,
+        "name": "Hat's Scab",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 8,
+        "critChance": 95,
+        "accuracy": 80,
+        "breakChance": 50,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "super_hats",
+          "value": 2,
+          "message": "**super_hats** eats the scab",
+          "message-effect": "healed for 2hp!"
+        }
+      },
+      {
+        "itemId": 37,
+        "name": "Bubbles Meme Generator",
+        "type": "melee",
+        "minDamage": 8,
+        "maxDamage": 14,
+        "critChance": 33,
+        "accuracy": 80,
+        "breakChance": 50,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Bubbles",
+          "value": 20,
+          "message": "**Bubbles** turns your life into a meme, say goodbye to your reputation",
+          "message-effect": "took an additional 20 damage!"
+        }
+      },
+      {
+        "itemId": 38,
+        "name": "Kerra's Cane",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 10,
+        "critChance": 70,
+        "accuracy": 65,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 39,
+        "name": "Trident",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 12,
+        "critChance": 40,
+        "accuracy": 80,
+        "breakChance": 50,
+        "special": null
+      },
+      {
+        "itemId": 40,
+        "name": "Disco's Mixtape",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 12,
+        "critChance": 50,
+        "accuracy": 80,
+        "breakChance": 60,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "DiscoWonderland",
+          "value": 20,
+          "message": "**Disco** starts blasting his beats out loud, your eardrums rupture",
+          "message-effect": "took an additional 20 damage!"
         }
       }
     ]
@@ -1238,7 +1607,7 @@
       "miss": "The white women turned on Mickey Mimic Disco and trampled him instead",
       "minDamage": 15,
       "maxDamage": 25,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1248,7 +1617,7 @@
       "miss": "Both duelists avoid the explosion and continue over Mickey Mimic Chasem's remains",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1288,7 +1657,7 @@
       "miss": "It is too much to handle as Mickey Mimic Bubbles is buried alive instead",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1338,7 +1707,7 @@
       "miss": "He ends up getting bored and goes to olive garden",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1348,7 +1717,7 @@
       "miss": "A sudden JRPG drops from the sky, saving the duelists as Nakk leaves",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1358,7 +1727,7 @@
       "miss": "One of the duelists calls him M1D and he leaves in tears",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1368,7 +1737,7 @@
       "miss": "The duelists stay perfectly still until he's finally gone",
       "minDamage": 10,
       "maxDamage": 30,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1378,7 +1747,7 @@
       "miss": "Neeko announces she has a bf on twitter, Gabe falls to his knees and dies",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1398,7 +1767,7 @@
       "miss": "A gateway opens underneath Mickey Mimic Senna that drags him to Brazil ",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1408,7 +1777,7 @@
       "miss": "He misses and flies into a nearby town, reducing it to atoms",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1418,7 +1787,7 @@
       "miss": "Hook miraculously boots on time and he stops screaming",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1428,7 +1797,7 @@
       "miss": "He gets distracted by the hub and takes his leave",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1438,7 +1807,7 @@
       "miss": "His stomach rumbles as he leaves to go to the bathroom, never to be seen again",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1458,7 +1827,7 @@
       "miss": "A ping from the selfie channel distracts Kunai, he's needed elsewhere",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1468,7 +1837,7 @@
       "miss": "He just keeps walking until he's out of sight",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1478,7 +1847,7 @@
       "miss": "A text from his roommate hinders his focus, causing the energy to erase him instead",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1488,7 +1857,7 @@
       "miss": "The duelists don't leave a tip and he quits the job forever",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1498,7 +1867,7 @@
       "miss": "a brave soul volunteers from out of the blue, as the duelists are spared",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1518,7 +1887,7 @@
       "miss": "While charging he spots a nearby lake, he decides to go fishing instead",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
 
@@ -1529,7 +1898,7 @@
       "miss": "He ends up dropping the combo and spikes his controller into the dirt",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1539,7 +1908,7 @@
       "miss": "While trying to remove his shirt he accidentally strangles himself and perishes",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1549,7 +1918,7 @@
       "miss": "An alert broadcasts that the Queen has died, VHS turns to stone",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1569,7 +1938,7 @@
       "miss": "His head is booming too hard, he goes back to sleep",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1579,7 +1948,7 @@
       "miss": "Tekken 8 was finally released, he korean backdashes out of view",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1589,7 +1958,7 @@
       "miss": "He vanishes once again, doing absolutely nothing",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1599,7 +1968,7 @@
       "miss": "He sinks his ship while trying to fistbump the duelists",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1619,7 +1988,7 @@
       "miss": "He leaves after 24 seconds to go do homework",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1629,7 +1998,7 @@
       "miss": "He bullies the duelists till he's bored and then goes back to the ranch",
       "minDamage": 20,
       "maxDamage": 40,
-      "accuracy": 40,
+      "accuracy": 35,
       "type": "damage"
     },
     {
@@ -1640,6 +2009,36 @@
       "minDamage": 99999,
       "maxDamage": 100000,
       "accuracy": 20,
+      "type": "damage"
+    },
+    {
+      "eventId": 43,
+      "message": "**The sound of a train whistle can be heard closing in**",
+      "attack": "*The Ghost of Seraph's Hatred is piloting it*",
+      "miss": "The train ignores the duelists as it manuevers into the Culvers Drive-thru",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 35,
+      "type": "damage"
+    },
+    {
+      "eventId": 44,
+      "message": "**Bum1six3 is live on twitch!**",
+      "attack": "*He's about to have a real talk*",
+      "miss": "The duelists offer up their twitch primes as Bum grants them mercy",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 35,
+      "type": "damage"
+    },
+    {
+      "eventId": 45,
+      "message": "**Mickey Mimic Str8Stripping edits himself in!**",
+      "attack": "*He hasn't slept in thirty-six hours, don't set him off*",
+      "miss": "Hook forgot to pay him again, his soul leaves his body for good",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 35,
       "type": "damage"
     }
   ]

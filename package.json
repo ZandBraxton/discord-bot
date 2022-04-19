@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node bot.js",
     "devStart": "nodemon bot.js",
+    "testStart": "node devBot.js",
+    "testDevStart": "nodemon devBot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

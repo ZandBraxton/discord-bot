@@ -5,7 +5,6 @@ const {
   MessageEmbed,
   Interaction,
   MessageCollector,
-  createMessageComponentCollector,
   MessageActionRow,
   MessageButton,
   MessageComponentInteraction,
@@ -25,6 +24,8 @@ const db = require("./database");
 require("dotenv").config();
 const { BetterDuel } = require("./duel");
 let duelRunning = {};
+let lastDrop = 0;
+let loopRunning = false;
 const prestigeRequirement = 5000;
 
 discordClient.on("ready", () => {
@@ -596,7 +597,7 @@ discordClient.on("messageCreate", async (message) => {
     }
 
     function duelCheck(channelCheck) {
-      duelRunning[channelCheck] = !duelRunning[channelCheck];
+      duelRunning[channelCheck] = false;
     }
 
     if (command === "compare") {
@@ -610,6 +611,13 @@ discordClient.on("messageCreate", async (message) => {
     }
 
     if (command === "donate") {
+      let channelCheck = message.channelId;
+      if (
+        message.author.username === duelRunning[channelCheck].p1 ||
+        message.author.username === duelRunning[channelCheck].p2
+      ) {
+        return message.reply("You cannot donate while in a duel!");
+      }
       let amount = parseInt(args[1], 10);
       let pointsArray = await ComparePoints();
       if (pointsArray === undefined) {
@@ -666,15 +674,132 @@ discordClient.on("messageCreate", async (message) => {
       );
     }
 
+    if (command === "startdrop") {
+      if (
+        !message.member.roles.cache.some(
+          (role) => role.name === "Mods" || role.name === "Jr Mod"
+        )
+      )
+        return message.reply("Only mods can activate drops");
+      if (loopRunning) {
+        return message.channel.send("Drops are currently active!");
+      }
+      message.channel.send("Drops are currently active!");
+      loopRunning = true;
+      function doSomething() {
+        let clickedDrop = [];
+        let amount = 0;
+        let luckyChance = randomInt(100) + 1;
+        if (luckyChance <= 3) {
+          amount = 100;
+        } else {
+          amount = Math.floor(Math.random() * (25 - 10) + 10);
+        }
+
+        let filter = (i) => !clickedDrop.includes(i.user.id);
+        let claim = uuidv4();
+
+        let row2 = new MessageActionRow().addComponents(
+          new MessageButton()
+            .setCustomId(claim)
+            .setLabel("Claim Points")
+            .setStyle("SUCCESS")
+        );
+
+        message.channel.send({
+          content: `Scambot has created a drop of ${amount} points!`,
+          maxComponents: 1,
+          components: [row2],
+        });
+
+        const collector = message.channel.createMessageComponentCollector({
+          filter,
+          componentType: "BUTTON",
+          time: 1800000,
+        });
+
+        collector.on("collect", async (message) => {
+          if (message.customId === claim) {
+            clickedDrop.push(message.user.id);
+            let userScore;
+            await db
+              .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+                message.user.id,
+                message.guild.id,
+              ])
+              .then((res) => (userScore = res.rows[0]));
+
+            if (!userScore) {
+              userScore = {
+                id: `${message.guild.id}-${message.user.id}`,
+                userid: message.user.id,
+                username: message.user.username,
+                guild: message.guild.id,
+                points: 1,
+                prestige: 0,
+              };
+            }
+            userScore.points += amount;
+
+            await db.query(
+              "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+              [
+                userScore.id,
+                userScore.userid,
+                userScore.username,
+                userScore.guild,
+                userScore.points,
+                userScore.prestige,
+              ]
+            );
+            message.channel.send(
+              `${message.user.username} claimed ${amount} points, they now have ${userScore.points} points`
+            );
+          }
+        });
+
+        collector.on("end", (collected) => {
+          message.reply("The drop has ended");
+        });
+      }
+
+      function loop() {
+        let currentDate = new Date();
+        let timestamp = currentDate.getTime();
+        let rand = Math.round(Math.random() * (21600000 - 10800000)) + 10800000;
+        // let rand = Math.round(Math.random() * (120000 - 60000)) + 60000;
+        lastDrop = timestamp + rand;
+        let timeUntil = convertMsToHM(rand);
+        message.channel.send(
+          `${timeUntil[0]} hours and ${timeUntil[1]} minutes until the next drop`
+        );
+        setTimeout(function () {
+          doSomething();
+          loop();
+        }, rand);
+      }
+
+      loop();
+    }
+
+    if (command === "checkdrop") {
+      let currentDate = new Date();
+      let timestamp = currentDate.getTime();
+      let timeRemaining = lastDrop - timestamp;
+      let timeUntil = convertMsToHM(timeRemaining);
+      message.channel.send(
+        `${timeUntil[0]} hours and ${timeUntil[1]} minutes until the next drop`
+      );
+    }
+
     if (command === "duel") {
       let channelCheck = message.channelId;
       if (duelRunning[channelCheck] === undefined) {
         duelRunning[channelCheck] = false;
       }
-      if (duelRunning[channelCheck] === true) {
+      if (duelRunning[channelCheck].running === true) {
         return message.channel.send("Another duel is happening!");
       }
-      let amount = parseInt(args[1], 10);
       let pointsArray = await ComparePoints();
       if (pointsArray === undefined) {
         return message.channel.send(
@@ -683,9 +808,17 @@ discordClient.on("messageCreate", async (message) => {
       }
       let p1 = pointsArray[0];
       let p2 = pointsArray[1];
+
+      let amount;
+
+      if (args[1].toLocaleLowerCase() === "all") {
+        amount = p1.points;
+      } else {
+        amount = parseInt(args[1], 10);
+      }
       if (!amount || amount <= 0) {
         return message.channel.send(
-          "You need to specify how many points to bet"
+          'You need to specify how many points to bet, or use "all" to bet everything'
         );
       }
       if (p1.points < amount) {
@@ -731,13 +864,17 @@ discordClient.on("messageCreate", async (message) => {
         if (duelRunning[channelCheck] === undefined) {
           duelRunning[channelCheck] = false;
         }
-        if (duelRunning[channelCheck] === true) {
+        if (duelRunning[channelCheck].running === true) {
           return message.channel.send("Another duel is happening!");
         }
         if (message.user.id === p2.userid && message.customId === accept) {
           message.channel.send("Then let the duel commence");
           collector.stop("user accepted");
-          duelRunning[channelCheck] = true;
+          duelRunning[channelCheck] = {
+            running: true,
+            p1: p1.username,
+            p2: p2.username,
+          };
           await BetterDuel(
             p1,
             p2,
@@ -764,33 +901,111 @@ discordClient.on("messageCreate", async (message) => {
       });
     }
 
-    // if (command === "top10") {
-    //   let top10;
-    //   await db
-    //     .query(
-    //       "SELECT * FROM scores WHERE guild = $1 ORDER BY points DESC LIMIT 10",
-    //       [message.guild.id]
-    //     )
-    //     .then((res) => (top10 = res.rows));
+    if (command === "anyduel") {
+      let channelCheck = message.channelId;
+      if (duelRunning[channelCheck] === undefined) {
+        duelRunning[channelCheck] = false;
+      }
+      if (duelRunning[channelCheck].running === true) {
+        console.log(duelRunning);
+        return message.channel.send("Another duel is happening!");
+      }
 
-    //   const embed = new MessageEmbed()
-    //     .setTitle("Leader board")
-    //     .setAuthor({
-    //       name: discordClient.user.username,
-    //       iconUrl: discordClient.user.avatarURL(),
-    //     })
-    //     .setDescription("Our top 10 points leaders!")
-    //     .setColor(0x00ae86);
+      let p1;
+      await db
+        .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+          message.author.id,
+          message.guild.id,
+        ])
+        .then((res) => (p1 = res.rows[0]));
 
-    //   for (const data of top10) {
-    //     embed.addFields({
-    //       name: data.username,
-    //       value: `${data.points} points | Prestige ${data.prestige}`,
-    //     });
-    //   }
-    //   return message.channel.send({ embeds: [embed] });
-    // }
+      let amount;
+      if (args[0].toLocaleLowerCase() === "all") {
+        amount = p1.points;
+      } else {
+        amount = parseInt(args[0], 10);
+      }
 
+      if (!amount || amount <= 0) {
+        return message.channel.send(
+          'You need to specify how many points to bet, or use "all" to bet everything'
+        );
+      }
+
+      if (p1.points < amount) {
+        return message.channel.send("You don't have that many points to bet");
+      }
+
+      let filter = async (i) => {
+        let userScore;
+        await db
+          .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+            i.user.id,
+            message.guild.id,
+          ])
+          .then((res) => (userScore = res.rows[0]));
+        if (userScore.points >= amount && userScore.username !== p1.username) {
+          return true;
+        }
+      };
+
+      let accept = uuidv4();
+      const row = new MessageActionRow().addComponents(
+        new MessageButton()
+          .setCustomId(accept)
+          .setLabel("Accept Duel")
+          .setStyle("PRIMARY")
+      );
+
+      message.channel.send({
+        content: `${p1.username} has requested a duel for ${amount} points, do you accept?`,
+        max: 1,
+        maxComponents: 1,
+        components: [row],
+      });
+
+      const collector = message.channel.createMessageComponentCollector({
+        filter,
+        componentType: "BUTTON",
+        max: 1,
+        time: 60000,
+      });
+
+      collector.on("collect", async (message) => {
+        console.log(filter);
+        if (duelRunning[channelCheck] === undefined) {
+          duelRunning[channelCheck] = false;
+        }
+        if (duelRunning[channelCheck] === true) {
+          return message.channel.send("Another duel is happening!");
+        }
+        let p2;
+        await db
+          .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+            message.user.id,
+            message.guild.id,
+          ])
+          .then((res) => (p2 = res.rows[0]));
+        if (p2.points < amount) {
+          return message.channel.send("not enough points");
+        }
+        message.channel.send("Then let the duel commence");
+        collector.stop("user accepted");
+        duelRunning[channelCheck] = {
+          running: true,
+          p1: p1.username,
+          p2: p2.username,
+        };
+        console.log(duelRunning);
+        await BetterDuel(p1, p2, message, db, amount, duelCheck, channelCheck);
+      });
+
+      collector.on("end", (collected) => {
+        if (collected.size === 0) {
+          message.channel.send("Duel terminated");
+        }
+      });
+    }
     const backId = "back";
     const forwardId = "forward";
     const backButton = new MessageButton({
@@ -868,6 +1083,33 @@ discordClient.on("messageCreate", async (message) => {
           ],
         });
       });
+    }
+    function padTo2Digits(num) {
+      return num.toString().padStart(2, "0");
+    }
+
+    function convertMsToHM(milliseconds) {
+      let seconds = Math.floor(milliseconds / 1000);
+      let minutes = Math.floor(seconds / 60);
+      let hours = Math.floor(minutes / 60);
+
+      seconds = seconds % 60;
+      // if seconds are greater than 30, round minutes up (optional)
+      minutes = seconds >= 30 ? minutes + 1 : minutes;
+
+      minutes = minutes % 60;
+
+      // If you don't want to roll hours over, e.g. 24 to 00
+      // comment (or remove) the line below
+      // commenting next line gets you `24:00:00` instead of `00:00:00`
+      // or `36:15:31` instead of `12:15:31`, etc.
+      hours = hours % 24;
+
+      return [padTo2Digits(hours), padTo2Digits(minutes)];
+    }
+
+    function randomInt(max) {
+      return Math.floor(Math.random() * max);
     }
 
     // if (command === "page") {

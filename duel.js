@@ -20,6 +20,35 @@ function calculateDamage(min, max, crit) {
   return { dmg: dmg, criticalHit: criticalHit };
 }
 
+async function attack(attacker, defender, message) {
+  let strike = calculateDamage(
+    attacker.weapon.minDamage,
+    attacker.weapon.maxDamage,
+    attacker.weapon.critChance
+  );
+  if (defender.hp - strike.dmg <= 0) {
+    let surviveChance = randomInt(100) + 1;
+    if (surviveChance === 1) {
+      message.channel.send(
+        `**${attacker.name}**(${attacker.hp}HP) attacks, but **${defender.name}**(${defender.hp}HP) miraculously clings to life!`
+      );
+      defender.hp = 1;
+      return;
+    }
+  }
+  if (strike.criticalHit === true) {
+    message.channel.send(
+      `Critical hit! **${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for **${strike.dmg}** damage!`
+    );
+  } else {
+    message.channel.send(
+      `**${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for ${strike.dmg} damage!`
+    );
+  }
+  defender.hp -= strike.dmg;
+  defender.evadeChance += 2;
+}
+
 function getRandomItem(max, rarity) {
   let index = randomInt(max);
   return duelItems.weapons[rarity][index];
@@ -30,11 +59,8 @@ function getRandomEvent(max) {
   return duelItems.events[index];
 }
 
-function getWeapon(Player1, Player2, message) {
-  if (Player1.hp <= 0 || Player2.hp <= 0) {
-    return;
-  }
-  if (Player1.weapon === "") {
+function getWeapon(Player, message) {
+  if (Player.weapon === "") {
     let rarity = randomInt(100) + 1;
     if (rarity <= 50) {
       rarity = "Common";
@@ -44,61 +70,27 @@ function getWeapon(Player1, Player2, message) {
       rarity = "Legendary";
     }
     let item = getRandomItem(duelItems.weapons[rarity].length, rarity);
-    Player1.weapon = item;
+    Player.weapon = item;
     message.channel.send(
-      `**${Player1.name}** picked up a ${Player1.weapon.name} **[${rarity}]** `
-    );
-  }
-  if (Player2.weapon === "") {
-    rarity = randomInt(100) + 1;
-    if (rarity <= 40) {
-      rarity = "Common";
-    } else if (rarity >= 41 && rarity <= 75) {
-      rarity = "Rare";
-    } else {
-      rarity = "Legendary";
-    }
-    item = getRandomItem(duelItems.weapons[rarity].length, rarity);
-    Player2.weapon = item;
-    message.channel.send(
-      `**${Player2.name}** picked up a ${Player2.weapon.name} **[${rarity}]**`
+      `**${Player.name}** picked up a ${Player.weapon.name} **[${rarity}]**`
     );
   }
 
-  if (Player1.weapon.name === "Fists") {
+  if (Player.weapon.name === "Fists") {
     let roll = randomInt(100) + 1;
     if (roll < 40) {
       let rarity = randomInt(100) + 1;
-      if (rarity <= 40) {
+      if (rarity <= 50) {
         rarity = "Common";
-      } else if (rarity > 41 && rarity <= 75) {
+      } else if (rarity > 51 && rarity <= 80) {
         rarity = "Rare";
       } else {
         rarity = "Legendary";
       }
       item = getRandomItem(duelItems.weapons[rarity].length, rarity);
-      Player1.weapon = item;
+      Player.weapon = item;
       message.channel.send(
-        `**${Player1.name}** picked up a ${Player1.weapon.name} **[${rarity}]**`
-      );
-    }
-    return;
-  }
-  if (Player2.weapon.name === "Fists") {
-    let roll = randomInt(100) + 1;
-    if (roll < 40) {
-      let rarity = randomInt(100) + 1;
-      if (rarity <= 40) {
-        rarity = "Common";
-      } else if (rarity > 41 && rarity <= 75) {
-        rarity = "Rare";
-      } else {
-        rarity = "Legendary";
-      }
-      item = getRandomItem(duelItems.weapons[rarity].length, rarity);
-      Player2.weapon = item;
-      message.channel.send(
-        `**${Player2.name}** picked up a ${Player2.weapon.name} **[${rarity}]**`
+        `**${Player.name}** picked up a ${Player.weapon.name} **[${rarity}]**`
       );
     }
     return;
@@ -151,7 +143,7 @@ async function Turn(Player1, Player2, message, db, p1, p2, amount, duelCheck) {
   Round(Player1, Player2, message, db, p1, p2, amount, duelCheck);
 }
 
-function Battle(attacker, defender, message) {
+async function Battle(attacker, defender, message) {
   let hit = randomInt(100) + 1;
   if (hit <= attacker.weapon.accuracy) {
     if (hit <= defender.evadeChance) {
@@ -169,40 +161,10 @@ function Battle(attacker, defender, message) {
         );
         defender.usedShield -= 5;
       } else {
-        let strike = calculateDamage(
-          attacker.weapon.minDamage,
-          attacker.weapon.maxDamage,
-          attacker.weapon.critChance
-        );
-        if (strike.criticalHit === true) {
-          message.channel.send(
-            `Critical hit! **${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for **${strike.dmg}** damage!`
-          );
-        } else {
-          message.channel.send(
-            `**${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for ${strike.dmg} damage!`
-          );
-        }
-        defender.hp -= strike.dmg;
-        defender.evadeChance += 2;
+        await attack(attacker, defender, message);
       }
     } else {
-      let strike = calculateDamage(
-        attacker.weapon.minDamage,
-        attacker.weapon.maxDamage,
-        attacker.weapon.critChance
-      );
-      if (strike.criticalHit === true) {
-        message.channel.send(
-          `Critical hit! **${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for **${strike.dmg}** damage!`
-        );
-      } else {
-        message.channel.send(
-          `**${attacker.name}**(${attacker.hp}HP) attacks **${defender.name}**(${defender.hp}HP) for ${strike.dmg} damage!`
-        );
-      }
-      defender.hp -= strike.dmg;
-      defender.evadeChance += 2;
+      await attack(attacker, defender, message);
     }
   } else {
     message.channel.send(`**${attacker.name}**(${attacker.hp}HP) missed!`);
@@ -277,8 +239,11 @@ function Battle(attacker, defender, message) {
   }
 }
 
-function Round(Player1, Player2, message, db, p1, p2, amount, duelCheck) {
-  getWeapon(Player1, Player2, message);
+async function Round(Player1, Player2, message, db, p1, p2, amount, duelCheck) {
+  if (Player1.hp >= 0 && Player2.hp >= 0) {
+    await getWeapon(Player1, message);
+    await getWeapon(Player2, message);
+  }
   setTimeout(() => {
     Turn(Player1, Player2, message, db, p1, p2, amount, duelCheck);
   }, 2500);
