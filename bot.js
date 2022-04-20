@@ -987,14 +987,25 @@ discordClient.on("messageCreate", async (message) => {
         if (p2.points < amount) {
           return message.channel.send("not enough points");
         }
-        message.channel.send("Then let the duel commence");
-        collector.stop("user accepted");
-        duelRunning[channelCheck] = {
-          running: true,
-          p1: p1.username,
-          p2: p2.username,
-        };
-        await BetterDuel(p1, p2, message, db, amount, duelCheck, channelCheck);
+
+        if (message.customId === accept) {
+          message.channel.send("Then let the duel commence");
+          collector.stop("user accepted");
+          duelRunning[channelCheck] = {
+            running: true,
+            p1: p1.username,
+            p2: p2.username,
+          };
+          await BetterDuel(
+            p1,
+            p2,
+            message,
+            db,
+            amount,
+            duelCheck,
+            channelCheck
+          );
+        }
       });
 
       collector.on("end", (collected) => {
