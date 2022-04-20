@@ -907,7 +907,6 @@ discordClient.on("messageCreate", async (message) => {
         duelRunning[channelCheck] = false;
       }
       if (duelRunning[channelCheck].running === true) {
-        console.log(duelRunning);
         return message.channel.send("Another duel is happening!");
       }
 
@@ -972,7 +971,6 @@ discordClient.on("messageCreate", async (message) => {
       });
 
       collector.on("collect", async (message) => {
-        console.log(filter);
         if (duelRunning[channelCheck] === undefined) {
           duelRunning[channelCheck] = false;
         }
@@ -996,7 +994,6 @@ discordClient.on("messageCreate", async (message) => {
           p1: p1.username,
           p2: p2.username,
         };
-        console.log(duelRunning);
         await BetterDuel(p1, p2, message, db, amount, duelCheck, channelCheck);
       });
 
