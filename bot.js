@@ -811,7 +811,7 @@ discordClient.on("messageCreate", async (message) => {
 
       let amount;
 
-      if (args[1].toLocaleLowerCase() === "all") {
+      if (args[1] === "all" || args[1] === "All" || args[1] === "ALL") {
         amount = p1.points;
       } else {
         amount = parseInt(args[1], 10);
