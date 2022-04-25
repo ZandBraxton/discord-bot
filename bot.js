@@ -612,12 +612,15 @@ discordClient.on("messageCreate", async (message) => {
 
     if (command === "donate") {
       let channelCheck = message.channelId;
-      if (
-        message.author.username === duelRunning[channelCheck].p1 ||
-        message.author.username === duelRunning[channelCheck].p2
-      ) {
-        return message.reply("You cannot donate while in a duel!");
+      if (duelRunning[channelCheck] !== false) {
+        if (
+          message.author.username === duelRunning[channelCheck].p1 ||
+          message.author.username === duelRunning[channelCheck].p2
+        ) {
+          return message.reply("You cannot donate while in a duel!");
+        }
       }
+
       let amount = parseInt(args[1], 10);
       let pointsArray = await ComparePoints();
       if (pointsArray === undefined) {
@@ -759,7 +762,7 @@ discordClient.on("messageCreate", async (message) => {
         });
 
         collector.on("end", (collected) => {
-          message.reply("The drop has ended");
+          message.channel.send("The previous Scamdrop has ended");
         });
       }
 
