@@ -613,7 +613,7 @@ discordClient.on("messageCreate", async (message) => {
     if (command === "donate") {
       let channelCheck = message.channelId;
       if (
-        duelRunning[channelCheck] !== false ||
+        duelRunning[channelCheck] !== false &&
         duelRunning[channelCheck] !== undefined
       ) {
         if (
