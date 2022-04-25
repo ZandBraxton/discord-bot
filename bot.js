@@ -612,7 +612,10 @@ discordClient.on("messageCreate", async (message) => {
 
     if (command === "donate") {
       let channelCheck = message.channelId;
-      if (duelRunning[channelCheck] !== false) {
+      if (
+        duelRunning[channelCheck] !== false ||
+        duelRunning[channelCheck] !== undefined
+      ) {
         if (
           message.author.username === duelRunning[channelCheck].p1 ||
           message.author.username === duelRunning[channelCheck].p2
