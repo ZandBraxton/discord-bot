@@ -158,7 +158,11 @@ function getWeapon(Player, message) {
         } else {
           rarity = "Legendary";
         }
-        item = getRandomItem(duelItems.weapons[rarity].length, rarity, Player);
+        let item = getRandomItem(
+          duelItems.weapons[rarity].length,
+          rarity,
+          Player
+        );
         Player.weapon = item;
         message.channel.send(
           `**${Player.name}** picked up a ${Player.weapon.name} **[${rarity}]**`
