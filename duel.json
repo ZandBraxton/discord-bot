@@ -1600,7 +1600,7 @@
         "special": {
           "type": "damage",
           "used": false,
-          "trigger-name": "ExSeraph",
+          "trigger-name": "EXSeraph",
           "value": 25,
           "message": "**Seraph** activates his limit break, hold this Omnislash",
           "message-effect": "took an additional 25 damage!"
@@ -2072,7 +2072,7 @@
       "maxDamage": 40,
       "accuracy": 40,
       "type": "damage",
-      "trigger-name": "ExSeraph",
+      "trigger-name": "EXSeraph",
       "trigger-event": {
         "message": "**Edrick and Seraph call upon the hatred from within!**",
         "attack": "*Violins start playing out of nowhere, is that a choir too?*",

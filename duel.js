@@ -139,7 +139,7 @@ function getWeapon(Player, message) {
     let roll = randomInt(100) + 1;
     if (roll < 40) {
       let ultimateCheck = randomInt(100) + 1;
-      if (ultimateCheck <= 15) {
+      if (ultimateCheck <= 10) {
         let item = getRandomItem(
           duelItems.weapons["ULTIMATE"].length,
           "ULTIMATE",
@@ -429,7 +429,7 @@ function randomEvent(
   //ultimate check
 
   let ultimateCheck = randomInt(100) + 1;
-  if (ultimateCheck <= 10) {
+  if (ultimateCheck <= 15) {
     let event = getRandomEvent(
       duelItems["Ultimate Events"].length,
       "ultimate",
