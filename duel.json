@@ -1586,6 +1586,26 @@
           "message-effect": "took an additional 20 damage!"
         }
       }
+    ],
+    "ULTIMATE": [
+      {
+        "itemId": 1,
+        "name": "Seraph's Buster Sword",
+        "type": "melee",
+        "minDamage": 19,
+        "maxDamage": 25,
+        "critChance": 5,
+        "accuracy": 20,
+        "breakChance": 70,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "ExSeraph",
+          "value": 25,
+          "message": "**Seraph** activates his limit break, hold this Omnislash",
+          "message-effect": "took an additional 25 damage!"
+        }
+      }
     ]
   },
 
@@ -2040,6 +2060,80 @@
       "maxDamage": 40,
       "accuracy": 35,
       "type": "damage"
+    }
+  ],
+  "Ultimate Events": [
+    {
+      "eventId": 1,
+      "message": "**Mickey Mimic Edrick instigates his way onto the scene!**",
+      "attack": "*He begins to dox the duelists on his twitter*",
+      "miss": "His dad turns off his wifi before the leak can finish",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "ExSeraph",
+      "trigger-event": {
+        "message": "**Edrick and Seraph call upon the hatred from within!**",
+        "attack": "*Violins start playing out of nowhere, is that a choir too?*",
+        "minDamage": 50,
+        "maxDamage": 60,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 2,
+      "message": "**Mickey Mimic Nugget shows you his funny dog shaped like an egg**",
+      "attack": "*The duelists can't help but smile in the face of something so great*",
+      "miss": "The duelists were filled with happiness and continue the brawl",
+      "minDamage": 10,
+      "maxDamage": 20,
+      "accuracy": 45,
+      "type": "heal",
+      "trigger-name": "scholarbones",
+      "trigger-event": {
+        "message": "**Nugget calls upon his funny dog shaped like an egg**",
+        "attack": "*Nugget starts to glow brightly as he is overhwhelmed by cuteness*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "heal"
+      }
+    },
+    {
+      "eventId": 3,
+      "message": "**Mickey Mimic Super Hats is being spammed with pings!**",
+      "attack": "*His phone turns so hot it burns, he tosses it at the duelists*",
+      "miss": "He misses entirely, the phone melts through the crust of the planet",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "super_hats",
+      "trigger-event": {
+        "message": "**Super Hats raises his palms to the sky, the air begins to tremble**",
+        "attack": "*A meteor descends from the sky, harboring the strength of a trillion pings*",
+        "minDamage": 50,
+        "maxDamage": 60,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 4,
+      "message": "**A warcry belts out as the Trench Tribe charges forward!**",
+      "attack": "*Rallied behind their leader Mickey Mimic Saf*",
+      "miss": "All of them are defeated by the duelists as they return to the trenches",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "saf",
+      "trigger-event": {
+        "message": "**Saf unleashes the full power of the trenches as his army dashes ahead**",
+        "attack": "*Warriors with nothing to lose, they attack without mercy*",
+        "minDamage": 50,
+        "maxDamage": 60,
+        "type": "damage"
+      }
     }
   ]
 }
