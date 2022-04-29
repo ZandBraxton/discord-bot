@@ -104,7 +104,7 @@ function getRandomEvent(max, type, P1, P2) {
 function getWeapon(Player, message) {
   if (Player.weapon === "") {
     let ultimateCheck = randomInt(100) + 1;
-    if (ultimateCheck <= 10) {
+    if (ultimateCheck <= 5) {
       let item = getRandomItem(
         duelItems.weapons["ULTIMATE"].length,
         "ULTIMATE",
