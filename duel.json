@@ -1595,7 +1595,7 @@
         "minDamage": 19,
         "maxDamage": 25,
         "critChance": 5,
-        "accuracy": 20,
+        "accuracy": 30,
         "breakChance": 70,
         "special": {
           "type": "damage",
@@ -1611,7 +1611,7 @@
         "name": "Kunai's Spirit Gun",
         "type": "melee",
         "minDamage": 5,
-        "maxDamage": 15,
+        "maxDamage": 12,
         "critChance": 100,
         "accuracy": 100,
         "breakChance": 90,
@@ -1621,6 +1621,24 @@
           "trigger-name": "Kunai",
           "value": 20,
           "message": "Kunai aims his finger forward, he becomes the YuYu Hakusho",
+          "message-effect": "took an additional 20 damage!"
+        }
+      },
+      {
+        "itemId": 2,
+        "name": "Tron's hearing aid",
+        "type": "melee",
+        "minDamage": 8,
+        "maxDamage": 16,
+        "critChance": 5,
+        "accuracy": 95,
+        "breakChance": 90,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Tron Maker",
+          "value": 20,
+          "message": "Tron shoves the hearing aid into his foes ear and then exclaims ***COCK*** into it",
           "message-effect": "took an additional 20 damage!"
         }
       }
@@ -2148,6 +2166,24 @@
       "trigger-event": {
         "message": "**Saf unleashes the full power of the trenches as his army dashes ahead**",
         "attack": "*Warriors with nothing to lose, they attack without mercy*",
+        "minDamage": 50,
+        "maxDamage": 60,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 5,
+      "message": "**Mickey Mimic Kunai draws a transmutation circle on the ground!**",
+      "attack": "*By the power of equivalent exchange, a duelist shall be sacraficed.*",
+      "miss": "Mickey Mimic Kunai fails as he turns into a chimera, \"Eduardo?\" He cries out",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "Kunai",
+      "trigger-event": {
+        "message": "**Kunai claps his hands together as the Gate of Truth appears behind him!**",
+        "attack": "*Open God's domain and be transformed into a Sajam sub*",
         "minDamage": 50,
         "maxDamage": 60,
         "type": "damage"
