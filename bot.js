@@ -121,8 +121,8 @@ discordClient.on("messageCreate", async (message) => {
   const command = args.shift().toLowerCase();
 
   if (
-    message.channelId === "960715020898029588" ||
-    message.channelId === "959230884475719760" ||
+    // message.channelId === "960715020898029588" ||
+    // message.channelId === "959230884475719760" ||
     message.channelId === "958465258178109530"
   ) {
     if (command === "points") {
@@ -624,15 +624,24 @@ discordClient.on("messageCreate", async (message) => {
         }
       }
 
-      let amount = parseInt(args[1], 10);
       let pointsArray = await ComparePoints();
       if (pointsArray === undefined) {
         return message.reply("You must mention someone or give their ID!");
       }
       let p1 = pointsArray[0];
       let p2 = pointsArray[1];
+
+      let amount = parseInt(args[1], 10);
+
+      if (args[1] === "all" || args[1] === "All" || args[1] === "ALL") {
+        amount = p1.points;
+      } else {
+        amount = parseInt(args[1], 10);
+      }
       if (!amount || amount <= 0) {
-        return message.reply("You need to specify how many points to donate");
+        return message.reply(
+          'You need to specify how many points to bet, or use "all" to donate everything'
+        );
       }
       if (p1.points < amount) {
         return message.reply("You don't have that many points to donate");
@@ -680,7 +689,7 @@ discordClient.on("messageCreate", async (message) => {
       );
     }
 
-    if (command === "setPrestige") {
+    if (command === "setprestige") {
       if (
         !message.member.roles.cache.some(
           (role) => role.name === "Mods" || role.name === "Jr Mod"
@@ -695,7 +704,7 @@ discordClient.on("messageCreate", async (message) => {
         return message.reply("You must mention someone or give their ID!");
 
       const prestigeToSet = parseInt(args[1], 10);
-      if (!pointsToSet)
+      if (!prestigeToSet)
         return message.reply("You didn't tell me what prestige to set...");
 
       // Get their current points.

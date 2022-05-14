@@ -60,8 +60,8 @@
         "itemId": 6,
         "name": "M3D's can of beans",
         "type": "melee",
-        "minDamage": 2,
-        "maxDamage": 3,
+        "minDamage": 3,
+        "maxDamage": 4,
         "critChance": 80,
         "accuracy": 90,
         "breakChance": 25,
@@ -2210,7 +2210,7 @@
     {
       "eventId": 5,
       "message": "**Mickey Mimic Kunai draws a transmutation circle on the ground!**",
-      "attack": "*By the power of equivalent exchange, a duelist shall be sacraficed.*",
+      "attack": "*By the power of equivalent exchange, a duelist shall be sacraficed*",
       "miss": "Mickey Mimic Kunai fails as he turns into a chimera, \"Eduardo?\" He cries out",
       "minDamage": 20,
       "maxDamage": 40,
@@ -2222,6 +2222,24 @@
         "attack": "*Open God's domain and be transformed into a Sajam sub*",
         "minDamage": 50,
         "maxDamage": 60,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 6,
+      "message": "**CUM BOOGER CUM BOOGER CUM BOOGER CUM BOOGER CUM BOOGER CUM BOOGER **",
+      "attack": "*The duelists gaze upon the face of God, it is weeping*",
+      "miss": "They are spared, and yet, they will never be the same again",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 30,
+      "type": "heal",
+      "trigger-name": "Cum Booger",
+      "trigger-event": {
+        "message": "**HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA**",
+        "attack": "*Սատանան ձեր ճիրաններում կպահի ձեր հոգին, նա ձեզ կմղի դեպի հավերժական խավար, կզգաք դժոխքի կրակոտ փոսերը, կայրեք, մինչ մենք ծիծաղենք*",
+        "minDamage": 9999999,
+        "maxDamage": 10000000,
         "type": "damage"
       }
     }
