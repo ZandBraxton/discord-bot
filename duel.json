@@ -1585,6 +1585,24 @@
           "message": "**Disco** starts blasting his beats out loud, your eardrums rupture",
           "message-effect": "took an additional 20 damage!"
         }
+      },
+      {
+        "itemId": 41,
+        "name": "Bacon's expired infant role",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 12,
+        "critChance": 50,
+        "accuracy": 80,
+        "breakChance": 60,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "baconbon",
+          "value": 20,
+          "message": "**Bacon** slaps the role onto his foe, they are never taken seriously again",
+          "message-effect": "took an additional 20 damage!"
+        }
       }
     ],
     "ULTIMATE": [
@@ -1625,7 +1643,7 @@
         }
       },
       {
-        "itemId": 2,
+        "itemId": 3,
         "name": "Tron's hearing aid",
         "type": "melee",
         "minDamage": 8,
@@ -1639,6 +1657,24 @@
           "trigger-name": "Tron Maker",
           "value": 20,
           "message": "Tron shoves the hearing aid into his foes ear and then exclaims ***COCK*** into it",
+          "message-effect": "took an additional 20 damage!"
+        }
+      },
+      {
+        "itemId": 4,
+        "name": "Kaio's Chew Toy",
+        "type": "melee",
+        "minDamage": 12,
+        "maxDamage": 18,
+        "critChance": 5,
+        "accuracy": 95,
+        "breakChance": 90,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Bubbles",
+          "value": 20,
+          "message": "Bubbles tosses the chew toy at his foe as Kaio charges forward on all fours",
           "message-effect": "took an additional 20 damage!"
         }
       }

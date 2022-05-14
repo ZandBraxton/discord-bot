@@ -680,112 +680,174 @@ discordClient.on("messageCreate", async (message) => {
       );
     }
 
-    if (command === "startdrop") {
+    if (command === "setPrestige") {
       if (
         !message.member.roles.cache.some(
           (role) => role.name === "Mods" || role.name === "Jr Mod"
         )
       )
-        return message.reply("Only mods can activate drops");
-      if (loopRunning) {
-        return message.channel.send("Drops are currently active!");
+        return message.reply("Only mods can set prestige of other users");
+
+      const user =
+        message.mentions.users.first() ||
+        discordClient.users.cache.get(args[0]);
+      if (!user)
+        return message.reply("You must mention someone or give their ID!");
+
+      const prestigeToSet = parseInt(args[1], 10);
+      if (!pointsToSet)
+        return message.reply("You didn't tell me what prestige to set...");
+
+      // Get their current points.
+      let userScore;
+      await db
+        .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
+          user.id,
+          message.guild.id,
+        ])
+        .then((res) => (userScore = res.rows[0]));
+
+      // It's possible to give points to a user we haven't seen, so we need to initiate defaults here too!
+      if (!userScore) {
+        userScore = {
+          id: `${message.guild.id}-${user.id}`,
+          userid: user.id,
+          username: user.username,
+          guild: message.guild.id,
+          points: 1,
+          prestige: 0,
+        };
       }
-      message.channel.send("Drops are currently active!");
-      loopRunning = true;
-      function doSomething() {
-        let clickedDrop = [];
-        let amount = 0;
-        let luckyChance = randomInt(100) + 1;
-        if (luckyChance <= 3) {
-          amount = 100;
-        } else {
-          amount = Math.floor(Math.random() * (25 - 10) + 10);
+      userScore.points = 1;
+      userScore.prestige = prestigeToSet;
+
+      // And we save it!
+      await db.query(
+        "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+        [
+          userScore.id,
+          userScore.userid,
+          userScore.username,
+          userScore.guild,
+          userScore.points,
+          userScore.prestige,
+        ]
+      );
+
+      return message.channel.send(
+        `${user.tag} prestige were set to ${prestigeToSet}.`
+      );
+    }
+
+    if (command === "startdrop") {
+      if (message.channelId === "960715020898029588") {
+        // if (
+        //   !message.member.roles.cache.some(
+        //     (role) => role.name === "Mods" || role.name === "Jr Mod"
+        //   )
+        // )
+        //   return message.reply("Only mods can activate drops");
+        if (loopRunning) {
+          return message.channel.send("Drops are currently active!");
+        }
+        message.channel.send("Drops are currently active!");
+        loopRunning = true;
+        function doSomething() {
+          let clickedDrop = [];
+          let amount = 0;
+          let luckyChance = randomInt(100) + 1;
+          if (luckyChance <= 3) {
+            amount = 100;
+          } else {
+            amount = Math.floor(Math.random() * (25 - 10) + 10);
+          }
+
+          let filter = (i) => !clickedDrop.includes(i.user.id);
+          let claim = uuidv4();
+
+          let row2 = new MessageActionRow().addComponents(
+            new MessageButton()
+              .setCustomId(claim)
+              .setLabel("Claim Points")
+              .setStyle("SUCCESS")
+          );
+
+          message.channel.send({
+            content: `Scambot has created a drop of ${amount} points!`,
+            maxComponents: 1,
+            components: [row2],
+          });
+
+          const collector = message.channel.createMessageComponentCollector({
+            filter,
+            componentType: "BUTTON",
+            time: 1800000,
+          });
+
+          collector.on("collect", async (message) => {
+            if (message.customId === claim) {
+              clickedDrop.push(message.user.id);
+              let userScore;
+              await db
+                .query(
+                  "SELECT * FROM scores WHERE userid = $1 AND guild = $2",
+                  [message.user.id, message.guild.id]
+                )
+                .then((res) => (userScore = res.rows[0]));
+
+              if (!userScore) {
+                userScore = {
+                  id: `${message.guild.id}-${message.user.id}`,
+                  userid: message.user.id,
+                  username: message.user.username,
+                  guild: message.guild.id,
+                  points: 1,
+                  prestige: 0,
+                };
+              }
+              userScore.points += amount;
+
+              await db.query(
+                "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
+                [
+                  userScore.id,
+                  userScore.userid,
+                  userScore.username,
+                  userScore.guild,
+                  userScore.points,
+                  userScore.prestige,
+                ]
+              );
+              message.channel.send(
+                `${message.user.username} claimed ${amount} points, they now have ${userScore.points} points`
+              );
+            }
+          });
+
+          collector.on("end", (collected) => {
+            message.channel.send("The previous Scamdrop has ended");
+          });
         }
 
-        let filter = (i) => !clickedDrop.includes(i.user.id);
-        let claim = uuidv4();
+        function loop() {
+          let currentDate = new Date();
+          let timestamp = currentDate.getTime();
+          let rand =
+            Math.round(Math.random() * (21600000 - 10800000)) + 10800000;
+          // let rand = Math.round(Math.random() * (120000 - 60000)) + 60000;
+          lastDrop = timestamp + rand;
+          let timeUntil = convertMsToHM(rand);
+          message.channel.send(
+            `${timeUntil[0]} hours and ${timeUntil[1]} minutes until the next drop`
+          );
+          setTimeout(function () {
+            doSomething();
+            loop();
+          }, rand);
+        }
 
-        let row2 = new MessageActionRow().addComponents(
-          new MessageButton()
-            .setCustomId(claim)
-            .setLabel("Claim Points")
-            .setStyle("SUCCESS")
-        );
-
-        message.channel.send({
-          content: `Scambot has created a drop of ${amount} points!`,
-          maxComponents: 1,
-          components: [row2],
-        });
-
-        const collector = message.channel.createMessageComponentCollector({
-          filter,
-          componentType: "BUTTON",
-          time: 1800000,
-        });
-
-        collector.on("collect", async (message) => {
-          if (message.customId === claim) {
-            clickedDrop.push(message.user.id);
-            let userScore;
-            await db
-              .query("SELECT * FROM scores WHERE userid = $1 AND guild = $2", [
-                message.user.id,
-                message.guild.id,
-              ])
-              .then((res) => (userScore = res.rows[0]));
-
-            if (!userScore) {
-              userScore = {
-                id: `${message.guild.id}-${message.user.id}`,
-                userid: message.user.id,
-                username: message.user.username,
-                guild: message.guild.id,
-                points: 1,
-                prestige: 0,
-              };
-            }
-            userScore.points += amount;
-
-            await db.query(
-              "INSERT INTO scores (id, userid, username, guild, points, prestige) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO UPDATE SET (userid, username, guild, points, prestige) = (EXCLUDED.userid, EXCLUDED.username, EXCLUDED.guild, EXCLUDED.points, EXCLUDED.prestige)",
-              [
-                userScore.id,
-                userScore.userid,
-                userScore.username,
-                userScore.guild,
-                userScore.points,
-                userScore.prestige,
-              ]
-            );
-            message.channel.send(
-              `${message.user.username} claimed ${amount} points, they now have ${userScore.points} points`
-            );
-          }
-        });
-
-        collector.on("end", (collected) => {
-          message.channel.send("The previous Scamdrop has ended");
-        });
+        loop();
       }
-
-      function loop() {
-        let currentDate = new Date();
-        let timestamp = currentDate.getTime();
-        let rand = Math.round(Math.random() * (21600000 - 10800000)) + 10800000;
-        // let rand = Math.round(Math.random() * (120000 - 60000)) + 60000;
-        lastDrop = timestamp + rand;
-        let timeUntil = convertMsToHM(rand);
-        message.channel.send(
-          `${timeUntil[0]} hours and ${timeUntil[1]} minutes until the next drop`
-        );
-        setTimeout(function () {
-          doSomething();
-          loop();
-        }, rand);
-      }
-
-      loop();
     }
 
     if (command === "checkdrop") {
@@ -1039,6 +1101,70 @@ discordClient.on("messageCreate", async (message) => {
       let result;
       await db
         .query("SELECT * FROM scores WHERE guild = $1 ORDER BY points DESC", [
+          message.guild.id,
+        ])
+        .then((res) => (result = res.rows));
+      const generateEmbed = async (start) => {
+        const current = result.slice(start, start + 10);
+
+        // You can of course customise this embed however you want
+        return new MessageEmbed({
+          title: `Showing players ${start + 1}-${
+            start + current.length
+          } out of ${result.length}`,
+          fields: await Promise.all(
+            current.map(async (result) => ({
+              name: result.username,
+              value: `${result.points} points | Prestige ${result.prestige}`,
+            }))
+          ),
+        });
+      };
+
+      // Send the embed with the first 10 guilds
+      const canFitOnOnePage = result.length <= 10;
+      const embedMessage = await message.channel.send({
+        embeds: [await generateEmbed(0)],
+        components: canFitOnOnePage
+          ? []
+          : [new MessageActionRow({ components: [forwardButton] })],
+      });
+      // Exit if there is only one page of guilds (no need for all of this)
+      if (canFitOnOnePage) return;
+
+      // Collect button interactions (when a user clicks a button),
+      // but only when the button as clicked by the original message author
+      const collector = embedMessage.createMessageComponentCollector({
+        filter: ({ user }) => user.id === message.author.id,
+      });
+
+      let currentIndex = 0;
+      collector.on("collect", async (interaction) => {
+        // Increase/decrease index
+        interaction.customId === backId
+          ? (currentIndex -= 10)
+          : (currentIndex += 10);
+        // Respond to interaction by updating message with new embed
+        await interaction.update({
+          embeds: [await generateEmbed(currentIndex)],
+          components: [
+            new MessageActionRow({
+              components: [
+                // back button if it isn't the start
+                ...(currentIndex ? [backButton] : []),
+                // forward button if it isn't the end
+                ...(currentIndex + 10 < result.length ? [forwardButton] : []),
+              ],
+            }),
+          ],
+        });
+      });
+    }
+
+    if (command === "prestigeboard") {
+      let result;
+      await db
+        .query("SELECT * FROM scores WHERE guild = $1 ORDER BY prestige DESC", [
           message.guild.id,
         ])
         .then((res) => (result = res.rows));
