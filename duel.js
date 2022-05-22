@@ -433,7 +433,7 @@ function randomEvent(
   //ultimate check
 
   let ultimateCheck = randomInt(100) + 1;
-  if (ultimateCheck <= 15) {
+  if (ultimateCheck <= 10) {
     let event = getRandomEvent(
       duelItems["Ultimate Events"].length,
       "ultimate",

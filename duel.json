@@ -1677,6 +1677,42 @@
           "message": "Bubbles tosses the chew toy at his foe as Kaio charges forward on all fours",
           "message-effect": "took an additional 20 damage!"
         }
+      },
+      {
+        "itemId": 5,
+        "name": "Guts Sword",
+        "type": "melee",
+        "minDamage": 14,
+        "maxDamage": 20,
+        "critChance": 5,
+        "accuracy": 80,
+        "breakChance": 95,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "saf",
+          "value": 20,
+          "message": "Saf tries to pick up the sword but it's far too heavy, he instead slaps his opponent",
+          "message-effect": "took an additional 20 damage!"
+        }
+      },
+      {
+        "itemId": 6,
+        "name": "Bacon's Boxing Gloves",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 15,
+        "critChance": 20,
+        "accuracy": 90,
+        "breakChance": 85,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "baconbon",
+          "value": 20,
+          "message": "Bacon slips the gloves on, becoming the Hajime No Ippo",
+          "message-effect": "took an additional 20 damage!"
+        }
       }
     ]
   },
