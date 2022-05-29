@@ -761,7 +761,7 @@ discordClient.on("messageCreate", async (message) => {
         }
         message.channel.send("Drops are currently active!");
         loopRunning = true;
-        function doSomething() {
+        function dropStart() {
           let clickedDrop = [];
           let amount = 0;
           let luckyChance = randomInt(100) + 1;
@@ -782,7 +782,7 @@ discordClient.on("messageCreate", async (message) => {
           );
 
           message.channel.send({
-            content: `Scambot has created a drop of ${amount} points!`,
+            content: `<@&980511400206147655> Scambot has created a drop of ${amount} points!`,
             maxComponents: 1,
             components: [row2],
           });
@@ -838,6 +838,8 @@ discordClient.on("messageCreate", async (message) => {
           });
         }
 
+        dropStart();
+
         function loop() {
           let currentDate = new Date();
           let timestamp = currentDate.getTime();
@@ -850,7 +852,7 @@ discordClient.on("messageCreate", async (message) => {
             `${timeUntil[0]} hours and ${timeUntil[1]} minutes until the next drop`
           );
           setTimeout(function () {
-            doSomething();
+            dropStart();
             loop();
           }, rand);
         }
