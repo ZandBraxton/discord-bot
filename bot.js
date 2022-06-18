@@ -123,9 +123,9 @@ discordClient.on("messageCreate", async (message) => {
   const command = args.shift().toLowerCase();
 
   if (
-    // message.channelId === "960715020898029588" ||
-    message.channelId === "959230884475719760"
-    // message.channelId === "958465258178109530"
+    message.channelId === "960715020898029588" ||
+    message.channelId === "959230884475719760" ||
+    message.channelId === "958465258178109530"
   ) {
     if (command === "points") {
       return message.reply(`You currently have ${score.points} points!`);
