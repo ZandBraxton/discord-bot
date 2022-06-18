@@ -20,6 +20,8 @@ const discordClient = new Client({
 });
 const paginationEmbed = require("discord.js-pagination");
 const db = require("./database");
+const { MongoClient } = require("mongodb");
+const mongoClient = new MongoClient(process.env.MONGO_URI);
 
 require("dotenv").config();
 const { BetterDuel } = require("./duel");
@@ -121,9 +123,9 @@ discordClient.on("messageCreate", async (message) => {
   const command = args.shift().toLowerCase();
 
   if (
-    message.channelId === "960715020898029588" ||
-    message.channelId === "959230884475719760" ||
-    message.channelId === "958465258178109530"
+    // message.channelId === "960715020898029588" ||
+    message.channelId === "959230884475719760"
+    // message.channelId === "958465258178109530"
   ) {
     if (command === "points") {
       return message.reply(`You currently have ${score.points} points!`);
@@ -611,6 +613,12 @@ discordClient.on("messageCreate", async (message) => {
     }
 
     if (command === "donate") {
+      let betting = await getBetters(mongoClient, message);
+      if (!betting)
+        return message.channel.send(
+          "You cannot use this while betting in the mickey games!"
+        );
+
       let channelCheck = message.channelId;
       if (
         duelRunning[channelCheck] !== false &&
@@ -665,6 +673,11 @@ discordClient.on("messageCreate", async (message) => {
     }
 
     if (command === "prestige") {
+      let betting = await getBetters(mongoClient, message);
+      if (!betting)
+        return message.channel.send(
+          "You cannot use this while betting in the mickey games!"
+        );
       if (score.points < prestigeRequirement) {
         return message.reply(
           `You need ${prestigeRequirement} points in order to Prestige!`
@@ -872,6 +885,11 @@ discordClient.on("messageCreate", async (message) => {
     }
 
     if (command === "duel") {
+      let betting = await getBetters(mongoClient, message);
+      if (!betting)
+        return message.channel.send(
+          "You cannot use this while betting in the mickey games!"
+        );
       let channelCheck = message.channelId;
       if (duelRunning[channelCheck] === undefined) {
         duelRunning[channelCheck] = false;
@@ -981,6 +999,11 @@ discordClient.on("messageCreate", async (message) => {
     }
 
     if (command === "anyduel") {
+      let betting = await getBetters(mongoClient, message);
+      if (!betting)
+        return message.channel.send(
+          "You cannot use this while betting in the mickey games!"
+        );
       let channelCheck = message.channelId;
       if (duelRunning[channelCheck] === undefined) {
         duelRunning[channelCheck] = false;
@@ -1263,47 +1286,30 @@ discordClient.on("messageCreate", async (message) => {
       return Math.floor(Math.random() * max);
     }
 
-    // if (command === "page") {
-    //   let result;
-    //   let index = 0;
-    //   await db
-    //     .query("SELECT * FROM scores WHERE guild = $1 ORDER BY points DESC", [
-    //       message.guild.id,
-    //     ])
-    //     .then((res) => (result = res.rows));
-    //   // console.log(result[index]);
-    //   const embed = new MessageEmbed()
-    //     .setTitle("Leader board")
-    //     .setAuthor({
-    //       name: discordClient.user.username,
-    //       iconUrl: discordClient.user.avatarURL(),
-    //     })
-    //     .setDescription("Our top 10 points leaders!")
-    //     .setColor(0x00ae86);
+    async function getBetters(mongoClient, message) {
+      await mongoClient.connect();
+      const result = await mongoClient
+        .db("hunger-games")
+        .collection("active-tributes")
+        .findOne({
+          guild: message.guild.id,
+        });
 
-    //   for (let i = 0; i < 10; i++) {
-    //     let name;
-    //     let value;
-    //     if (result[index] !== undefined) {
-    //       name = result[index].username;
-    //     } else {
-    //       name = "empty";
-    //     }
+      // console.log(result);
+      if (result.bets.length === 0) return true;
+      console.log(result.bet);
 
-    //     if (result[index] !== undefined) {
-    //       value = `${result[index].points} points | Prestige ${result[index].prestige}`;
-    //     } else {
-    //       value = "empty";
-    //     }
-    //     embed.addFields({
-    //       name: name,
-    //       value: value,
-    //     });
-    //     index++;
-    //   }
-    //   message.channel.send({ embeds: [embed] });
-
-    // }
+      await result.bets.map((user) => {
+        console.log(user);
+        if (message.author.username === user.username) {
+          console.log("yes");
+          return false;
+        } else {
+          console.log("no");
+          return true;
+        }
+      });
+    }
   } else {
     return false;
   }
