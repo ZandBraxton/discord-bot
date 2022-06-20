@@ -1,7 +1,11 @@
 Duelbot is a discord bot that allows users to earn points through reactions, and automated drops created by the bot. 
+
 With points, users can duel other users in a luck-based battle system, utilizing various weapons, events, and values.
+
 Each weapon and event have different and unique values, such as damage points, break chance, crticial rate, and more.
-Users can use their points to prestige as well, earning them prestige levels which will raise their spot on the prestige leaderboard
+
+Users can use their points to prestige as well, earning them prestige levels which will raise their spot on the prestige leaderboard.
+
 The leaderboard displays 10 users per page, ordered by points or prestige
 
 An example snippet from a duel
