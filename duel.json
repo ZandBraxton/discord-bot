@@ -1613,6 +1613,17 @@
         "critChance": 45,
         "accuracy": 85,
         "breakChance": 70,
+        "special": null
+      },
+      {
+        "itemId": 42,
+        "name": "The Biggest Rock",
+        "type": "melee",
+        "minDamage": 11,
+        "maxDamage": 15,
+        "critChance": 30,
+        "accuracy": 70,
+        "breakChance": 70,
         "special": {
           "type": "damage",
           "used": false,
@@ -1747,7 +1758,7 @@
           "trigger-name": "Kunai",
           "value": 25,
           "message": "Kunai whips up a delicious batch of pancakes, how hard can it be?",
-          "message-effect": "healed for 25hp"
+          "message-effect": "healed for 25hp!"
         }
       },
       {
@@ -1802,6 +1813,60 @@
           "value": 20,
           "message": "One trillion Lions VS the Sun, who would win? **KAIO**.",
           "message-effect": "took an additional 30 damage!"
+        }
+      },
+      {
+        "itemId": 10,
+        "name": "Tron's Fishing Rod",
+        "type": "melee",
+        "minDamage": 8,
+        "maxDamage": 16,
+        "critChance": 5,
+        "accuracy": 95,
+        "breakChance": 85,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "Tron Maker",
+          "value": 25,
+          "message": "Tron casts his line into the vast sea, it's going to be a big catch",
+          "message-effect": "healed for 25hp!"
+        }
+      },
+      {
+        "itemId": 11,
+        "name": "Kunai's Sketchbook",
+        "type": "melee",
+        "minDamage": 7,
+        "maxDamage": 13,
+        "critChance": 25,
+        "accuracy": 80,
+        "breakChance": 70,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Kunai",
+          "value": 20,
+          "message": "Kunai finds his opponent easy to draw, they fall to their knees",
+          "message-effect": "took an additional 20 damage!"
+        }
+      },
+      {
+        "itemId": 12,
+        "name": "Seraph's Train Ticket",
+        "type": "melee",
+        "minDamage": 8,
+        "maxDamage": 10,
+        "critChance": 50,
+        "accuracy": 70,
+        "breakChance": 80,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "EXSeraph",
+          "value": 20,
+          "message": "Seraph stares into your eyes as you then find yourself on a train, **forever**",
+          "message-effect": "took an additional 20 damage!"
         }
       }
     ]
@@ -2402,6 +2467,96 @@
         "attack": "*It's like if Jotaro fused with Snow White, except he's 5'8 and this is all in his head*",
         "minDamage": 60,
         "maxDamage": 80,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 9,
+      "message": "**Mickey Mimic Senna drives a ford explorer through the battlefield!**",
+      "attack": "*He's screaming **YERRRRRRRRR** out of the window*",
+      "miss": "He takes a detour to CVS, where he ends up sitting in the parking lot for 45 minutes",
+      "minDamage": 30,
+      "maxDamage": 50,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "SENNA 🇧🇷",
+      "trigger-event": {
+        "message": "**Senna snaps his fingers as the duelists are transported to church**",
+        "attack": "*Together with his boys, they unleash the loudest **AUGHHHHHHHH** the world has ever known*",
+        "minDamage": 60,
+        "maxDamage": 80,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 10,
+      "message": "**Mickey Mimic Kunai takes a bite out of a mysterious fruit he found!**",
+      "attack": "*The wings of a phoenix consume his arms, as he unleashes a wave of blue flames forward*",
+      "miss": "The flames fizzle out before anything can happen, the manga has gone on hiatus it seems",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "Kunai",
+      "trigger-event": {
+        "message": "**Kunai bites into a fruit he found, transforming into a mythical blue phoenix!**",
+        "attack": "*Enshrouded in the blue flames of resurrection, Kunai is born anew*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "heal"
+      }
+    },
+    {
+      "eventId": 11,
+      "message": "**Enzo's coconut doggy stumbles into the area!**",
+      "attack": "*The ferocious muncher is looking for something to feast on*",
+      "miss": "He found a watermelon and he's fucking that shit up, EAT EAT EAT",
+      "minDamage": 1,
+      "maxDamage": 2,
+      "accuracy": 80,
+      "type": "damage",
+      "trigger-name": "scholarbones",
+      "trigger-event": {
+        "message": "**Enzo's coconut doggy unites with nuggets funny dog shaped like an egg!**",
+        "attack": "*A single tear rolls down nuggets cheek, a sight too beautiful for words*",
+        "minDamage": 1,
+        "maxDamage": 3,
+        "type": "heal"
+      }
+    },
+    {
+      "eventId": 12,
+      "message": "**A sudden, large, sphere shaped stick figure starts rolling towards the duelists!**",
+      "attack": "*The clinking sound of his gold chains can be heard around the world*",
+      "miss": "His velocity is too great as he tears a rift in space, transporting to the nearest Banana King",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "EXSeraph",
+      "trigger-event": {
+        "message": "**Seraph slashes his fingers and begins to draw on the ground with his blood!**",
+        "attack": "*A fat fucking circle with a gold chain, suffer the same fate as a gaming chair long ago*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 13,
+      "message": "**Mickey Mimic Bubbles types out his ultimate event!**",
+      "attack": "*Like that's literally it, I'm doing that right now. Man*",
+      "miss": "The event missed ig you can stop clenching your ass cheeks now",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "Bubbles",
+      "trigger-event": {
+        "message": "**You thought you could beat me at my own game?**",
+        "attack": "*I am the creator, perish in the cum and weep for your sins*",
+        "minDamage": 40,
+        "maxDamage": 50,
         "type": "damage"
       }
     }
