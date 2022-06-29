@@ -1776,7 +1776,7 @@
           "trigger-name": "EXSeraph",
           "value": 20,
           "message": "Legend says these chompers can bite through reality itself",
-          "message-effect": "took an additional 25 damage!"
+          "message-effect": "took an additional 20 damage!"
         }
       },
       {
