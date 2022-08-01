@@ -10,13 +10,15 @@ The leaderboard displays 10 users per page, ordered by points or prestige
 
 An example snippet from a duel
 
-![Discord_2022-06-20_17-08-05](https://user-images.githubusercontent.com/81108459/174683229-71116a2a-7f87-48e5-904b-d2f71ba05069.png)
+![chrome_2022-07-22_14-50-15](https://user-images.githubusercontent.com/81108459/180517255-ea63c642-9bd4-47ae-86d8-dbf9c32f7c73.png)
 
 
 An example snippet from the leaderboard
 
-![Discord_2022-06-20_17-08-30](https://user-images.githubusercontent.com/81108459/174683240-6fef29bd-e4d2-4e26-be57-e6d9b2842783.png)
+![chrome_2022-07-22_14-50-43](https://user-images.githubusercontent.com/81108459/180517234-4a022ee2-8a03-4175-86af-5683b1a35d56.png)
+
 
 An example snippet from an automated drop
 
-![Discord_2022-06-20_17-09-42](https://user-images.githubusercontent.com/81108459/174683312-85a7cf07-4998-4b2c-a201-4b985c779ad0.png)
+![chrome_2022-07-22_14-49-10](https://user-images.githubusercontent.com/81108459/180517213-f174d97b-ce8f-473e-94f8-dca281ec449a.png)
+
