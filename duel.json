@@ -1868,6 +1868,42 @@
           "message": "Seraph stares into your eyes as you then find yourself on a train, **forever**",
           "message-effect": "took an additional 20 damage!"
         }
+      },
+      {
+        "itemId": 13,
+        "name": "Seraph's slice of meat lovers pizza",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 8,
+        "critChance": 75,
+        "accuracy": 80,
+        "breakChance": 70,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "EXSeraph",
+          "value": 20,
+          "message": "Pizza Hut's Original Stuffed Crust Meat Lovers Pizza, now only $6.99 with Carryout",
+          "message-effect": "healed for 20hp!"
+        }
+      },
+      {
+        "itemId": 14,
+        "name": "Tim's Winchester Model 1897",
+        "type": "ranged",
+        "minDamage": 8,
+        "maxDamage": 10,
+        "critChance": 50,
+        "accuracy": 70,
+        "breakChance": 80,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Timskkrt",
+          "value": 20,
+          "message": "blud are you dumb?! are you getting rude to man?! **BOP**",
+          "message-effect": "took an additional 20 damage!"
+        }
       }
     ]
   },
@@ -2536,7 +2572,7 @@
       "trigger-name": "EXSeraph",
       "trigger-event": {
         "message": "**Seraph slashes his fingers and begins to draw on the ground with his blood!**",
-        "attack": "*A fat fucking circle with a gold chain, suffer the same fate as a gaming chair long ago*",
+        "attack": "*A fat fucking circle with a gold chain appears, suffer the same fate as a gaming chair long ago*",
         "minDamage": 40,
         "maxDamage": 50,
         "type": "damage"
@@ -2555,6 +2591,96 @@
       "trigger-event": {
         "message": "**You thought you could beat me at my own game?**",
         "attack": "*I am the creator, perish in the cum and weep for your sins*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 14,
+      "message": "**Mickey Mimic Nugget calls one of the duelist's dogs ugly!**",
+      "attack": "*Emotional damage gunning straight for the heart, don't let Mclovin hear this*",
+      "miss": "The opponent was unphased, they know their dog is too cute for nuggets words to hurt them",
+      "minDamage": 4,
+      "maxDamage": 8,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "scholarbones",
+      "trigger-event": {
+        "message": "**Nugget's opponent flips the script as he calls Nugget's dog ugly instead!**",
+        "attack": "*Nugget lunges at his foe and bites down on their ankles, mortal kombat x-ray attack*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 15,
+      "message": "**Mickey Mimic somethingjacket wanders onto the scene!**",
+      "attack": "*A traveling pacifist, he uses the wisdom of his journey to heal others*",
+      "miss": "A tingle on the back of his neck, Jacket takes off at the speed of sound as there is a new drop to be collected",
+      "minDamage": 10,
+      "maxDamage": 20,
+      "accuracy": 45,
+      "type": "heal",
+      "trigger-name": "somethingjacket",
+      "trigger-event": {
+        "message": "**Scambot has created a drop that falls from the heavens, landing on Jacket's opponent**",
+        "attack": "*somethingjacket claimed victory, -23 hours and -34 minutes till the next drop*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 16,
+      "message": "**Mickey Mimic Bacon is finally here and prepared for battle!**",
+      "attack": "*It took as long for this event to be added as it did for him to beat Yakuza 0*",
+      "miss": "This event has been locked, please beat the Yakuza series to unlock the rest",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "baconbon",
+      "trigger-event": {
+        "message": "**Bacon taps into his hidden agression, his strength is magnified x100!**",
+        "attack": "*His fist collides into his foes jaw, sending them through the stars and into the sun itself*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 17,
+      "message": "**Mickey Mimic Kaio adds another game to his backlog!**",
+      "attack": "*His mental stability grows weaker, he might just lash out at those near*",
+      "miss": "The stamina on his gacha games has been restored, he survives another day",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "diego",
+      "trigger-event": {
+        "message": "**The light shines on Kaio's face as his appearance is revealed to his foe!**",
+        "attack": "*For reasons unknown, his opponents mind melts as their life is changed forever*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 18,
+      "message": "**Mickey Mimic Kiryu Kazuma enters the fray!**",
+      "attack": "*A bike to his right, a karaoke bar to his left. Which will he choose?*",
+      "miss": "The duelists continue battling to the sound of Kiryu and Haruka singing together",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "plantation3",
+      "trigger-event": {
+        "message": "**Plant summons Mickey Mimic Kiryu to team up in battle!**",
+        "attack": "*Essence of Mickey Mouse, Kiryu and Plant work together to pummel the shit out of their enemy*",
         "minDamage": 40,
         "maxDamage": 50,
         "type": "damage"
