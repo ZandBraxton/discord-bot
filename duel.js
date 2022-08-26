@@ -73,29 +73,35 @@ function getRandomEvent(max, type, P1, P2) {
       return duelItems.events[index];
       break;
     case "ultimate":
-      let p1array = duelItems["Ultimate Events"].filter((event) =>
-        event["trigger-name"].includes(P1.name)
-      );
+      let ultimateCheck = randomInt(100) + 1;
+      if (ultimateCheck <= 15) {
+        let p1array = duelItems["Ultimate Events"].filter((event) =>
+          event["trigger-name"].includes(P1.name)
+        );
 
-      let p2array = duelItems["Ultimate Events"].filter((event) =>
-        event["trigger-name"].includes(P2.name)
-      );
-
-      if (p1array.length !== 0 && p2array.length !== 0) {
-        let joinArray = p1array.concat(p2array);
-        index = randomInt(joinArray.length);
-        return joinArray[index];
-      } else if (p1array.length !== 0) {
-        index = randomInt(p1array.length);
-        return p1array[index];
-      } else if (p2array.length !== 0) {
-        index = randomInt(p2array.length);
-        return p2array[index];
+        let p2array = duelItems["Ultimate Events"].filter((event) =>
+          event["trigger-name"].includes(P2.name)
+        );
+        if (p1array.length !== 0 && p2array.length !== 0) {
+          let joinArray = p1array.concat(p2array);
+          index = randomInt(joinArray.length);
+          return joinArray[index];
+        } else if (p1array.length !== 0) {
+          index = randomInt(p1array.length);
+          return p1array[index];
+        } else if (p2array.length !== 0) {
+          index = randomInt(p2array.length);
+          return p2array[index];
+        } else {
+          index = randomInt(duelItems["Ultimate Events"].length);
+          return duelItems["Ultimate Events"][index];
+        }
       } else {
         index = randomInt(duelItems["Ultimate Events"].length);
-        return duelItems["Ultimate Events"][index];
+        let event = duelItems["Ultimate Events"][index];
+        event["trigger-name"] = "";
+        return event;
       }
-      break;
     default:
       break;
   }
@@ -104,7 +110,7 @@ function getRandomEvent(max, type, P1, P2) {
 function getWeapon(Player, message) {
   if (Player.weapon === "") {
     let ultimateCheck = randomInt(100) + 1;
-    if (ultimateCheck <= 5) {
+    if (ultimateCheck <= 4) {
       let item = getRandomItem(
         duelItems.weapons["ULTIMATE"].length,
         "ULTIMATE",
@@ -139,7 +145,7 @@ function getWeapon(Player, message) {
     let roll = randomInt(100) + 1;
     if (roll < 40) {
       let ultimateCheck = randomInt(100) + 1;
-      if (ultimateCheck <= 5) {
+      if (ultimateCheck <= 4) {
         let item = getRandomItem(
           duelItems.weapons["ULTIMATE"].length,
           "ULTIMATE",
@@ -433,7 +439,7 @@ function randomEvent(
   //ultimate check
 
   let ultimateCheck = randomInt(100) + 1;
-  if (ultimateCheck <= 15) {
+  if (ultimateCheck <= 50) {
     let event = getRandomEvent(
       duelItems["Ultimate Events"].length,
       "ultimate",

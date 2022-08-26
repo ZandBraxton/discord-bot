@@ -1904,6 +1904,42 @@
           "message": "blud are you dumb?! are you getting rude to man?! **BOP**",
           "message-effect": "took an additional 20 damage!"
         }
+      },
+      {
+        "itemId": 15,
+        "name": "wolverine's Claws",
+        "type": "melee",
+        "minDamage": 5,
+        "maxDamage": 9,
+        "critChance": 90,
+        "accuracy": 85,
+        "breakChance": 60,
+        "special": {
+          "type": "damage",
+          "used": false,
+          "trigger-name": "Kunai",
+          "value": 20,
+          "message": "Adamantine claws are kinda like a bunch of knives, basically some kunai if you will",
+          "message-effect": "took an additional 20 damage!"
+        }
+      },
+      {
+        "itemId": 16,
+        "name": "Weaver's Corrupted Grail",
+        "type": "melee",
+        "minDamage": 10,
+        "maxDamage": 15,
+        "critChance": 15,
+        "accuracy": 75,
+        "breakChance": 70,
+        "special": {
+          "type": "heal",
+          "used": false,
+          "trigger-name": "corruptweaver",
+          "value": 20,
+          "message": "Weaver succumbs to the grails corruption, Weaver Alter rises to battle",
+          "message-effect": "healed for 20hp!"
+        }
       }
     ]
   },
@@ -2600,7 +2636,7 @@
       "eventId": 14,
       "message": "**Mickey Mimic Nugget calls one of the duelist's dogs ugly!**",
       "attack": "*Emotional damage gunning straight for the heart, don't let Mclovin hear this*",
-      "miss": "The opponent was unphased, they know their dog is too cute for nuggets words to hurt them",
+      "miss": "The opponent was unphased, they know their dog is too cute for Nuggets words to hurt them",
       "minDamage": 4,
       "maxDamage": 8,
       "accuracy": 40,
@@ -2681,6 +2717,78 @@
       "trigger-event": {
         "message": "**Plant summons Mickey Mimic Kiryu to team up in battle!**",
         "attack": "*Essence of Mickey Mouse, Kiryu and Plant work together to pummel the shit out of their enemy*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 19,
+      "message": "**A powerful naval warship rides the waves onto the scene!**",
+      "attack": "*Captain Mickey Mimic Weaver stands at the helm ready to fire at whim*",
+      "miss": "Crashing into a massive iceberg, Mickey Mimic Weaver frowns as he gets stuffed into Davy Jones Locker",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "corruptweaver",
+      "trigger-event": {
+        "message": "**A massive formation of deadly warships weighs anchor on the battlefield!**",
+        "attack": "*Captain's Weaver, Saf, and Bacon unleash the Naval Fleets full payload, mickey artillery*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 20,
+      "message": "**The ground breaks apart as Mickey Mimic Bacon rises from under it!**",
+      "attack": "*Drawing upon magical power, he attempts to buff himself with immense vitality*",
+      "miss": "Bacon remembers he has a college exam due tomorrow, he proceedes to bury himself back in the earth",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "heal",
+      "trigger-name": "baconbon",
+      "trigger-event": {
+        "message": "**Bacon prepares to deal his signature move, his energy rises rapidly!**",
+        "attack": "**OMEGALUL BOOST, GREATER RATIOS, MICKEY BOOST, DRACONIC REACTIONS, HEAVENLY GYAAAAT, ABSO-**",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 21,
+      "message": "**Mickey Mimic Chasem casually passes by the duelists on his morning bike ride!**",
+      "attack": "*An unhinged M3D chases behind him, leaving a path of destruction and carnage in his wake*",
+      "miss": "Chasem rides his bike through a tunnel as M3D crashes into it, it was just a tunnel painted onto a wall",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "Chasem121",
+      "trigger-event": {
+        "message": "**In the span of a second, Chasem's foe finds themselves trapped within a dark jail cell!**",
+        "attack": "*A single grenade gently rolls into the cell, a gleeful giggle coming from beyond the bars*",
+        "minDamage": 40,
+        "maxDamage": 50,
+        "type": "damage"
+      }
+    },
+    {
+      "eventId": 22,
+      "message": "**Mickey Mimic Leek challenges the duelists to a duel of his own!**",
+      "attack": "*By sending his tier 3 Poki sub to the graveyard, he can summon his ultimate card, Kaio*",
+      "miss": "Kaio appears and rubs his hands together, but that's about all he does. Pass revoked",
+      "minDamage": 20,
+      "maxDamage": 40,
+      "accuracy": 40,
+      "type": "damage",
+      "trigger-name": "LeekTheGawd",
+      "trigger-event": {
+        "message": "**Just as Leek's foe is about to strike, time slows down as the two meet eyes**",
+        "attack": "*\"Before you go ahead and do all that\" Leek says. \"Is it because I'm black?\"*",
         "minDamage": 40,
         "maxDamage": 50,
         "type": "damage"
