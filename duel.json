@@ -1439,7 +1439,7 @@
         "special": {
           "type": "heal",
           "used": false,
-          "trigger-name": "plantation3",
+          "trigger-name": "plant__3",
           "value": 20,
           "message": "**Plant** slipped on the wristband, it fits like a glove",
           "message-effect": "healed for 20hp!"
@@ -1791,7 +1791,7 @@
         "special": {
           "type": "damage",
           "used": false,
-          "trigger-name": "plantation3",
+          "trigger-name": "plant__3",
           "value": 20,
           "message": "A glimpse of the future appears by wielding this blade, Plant becomes the Xenoblade Chronicles: Definitive Edition (PAL)",
           "message-effect": "took an additional 20 damage!"
@@ -2713,7 +2713,7 @@
       "maxDamage": 40,
       "accuracy": 40,
       "type": "damage",
-      "trigger-name": "plantation3",
+      "trigger-name": "plant__3",
       "trigger-event": {
         "message": "**Plant summons Mickey Mimic Kiryu to team up in battle!**",
         "attack": "*Essence of Mickey Mouse, Kiryu and Plant work together to pummel the shit out of their enemy*",
